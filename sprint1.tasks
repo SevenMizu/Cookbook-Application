@@ -1,0 +1,51 @@
+# Sprint 1: Core System and Basic User Functionality
+
+☐ ## User Story 2: Log in to the application for personalization.
+- Acceptance Criteria:
+  ☐ - User can access a login screen.
+  ☐ - User can enter their username and password.
+  ☐ - Upon successful login, the user is directed to the personalized home screen.
+  ☐ - Upon unsuccessful login, appropriate error message is displayed.
+  ☐ - User remains logged in across sessions until explicitly logged out.
+
+☐ ## User Story 1: Start the application with a welcome animation.
+- Acceptance Criteria:
+  ☐ - When the application is launched, a visually appealing welcome animation is displayed.
+  ☐ - The animation runs smoothly without glitches or errors.
+  ☐ - The duration of the animation is appropriate and does not cause unnecessary delay in accessing the application's main features.
+  ☐ - Users have the option to skip the animation if desired.
+
+☐ ## User Story 30: Admin ability to add a new user.
+- Acceptance Criteria:
+  ☐ - Admin has access to a form or interface for adding a new user.
+  ☐ - Admin can input the new user's username, display name, and password.
+  ☐ - Upon submission, the new user is successfully added to the system.
+  ☐ - Validation is in place to ensure uniqueness of usernames and appropriate password strength.
+  ☐ - Admin receives confirmation of successful user addition.
+
+☐ ## User Story 31: Admin ability to modify an existing user.
+- Acceptance Criteria:
+  ☐ - Admin has access to a list of existing users.
+  ☐ - Admin can select a user from the list to modify.
+  ☐ - Admin can edit the user's username, display name, or password.
+  ☐ - Upon submission, the changes are successfully updated in the system.
+  ☐ - Validation is in place to prevent unauthorized changes and ensure data integrity.
+  ☐ - Admin receives confirmation of successful user modification.
+
+☐ ## User Story 32: Admin ability to delete an existing user.
+- Acceptance Criteria:
+  ☐ - Admin has access to a list of existing users.
+  ☐ - Admin can select a user from the list to delete.
+  ☐ - Admin receives a confirmation prompt before deleting the user.
+  ☐ - Upon confirmation, the selected user is successfully removed from the system.
+  ☐ - Deleted user's data and associated records are appropriately handled to maintain data consistency.
+  ☐ - Admin receives confirmation of successful user deletion.
+
+☐ ## User Story 28: Access to a help system with a tutorial.
+- Acceptance Criteria:
+  ☐ - Users can access the help system from any screen within the application.
+  ☐ - The help system provides clear navigation and organization of tutorial topics.
+  ☐ - Each tutorial topic provides concise and informative guidance on using a specific feature or aspect of the application.
+  ☐ - Users have the option to search for specific keywords or topics within the help system.
+  ☐ - The help system is visually appealing and easy to read, with appropriate formatting and illustrations.
+  ☐ - Users can easily exit the help system and return to their previous task within the application.

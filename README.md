@@ -1,4 +1,4 @@
-# Cookbook
+# cookbook
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.lnu.se/1dv508/student/rossums-universal-robots/cookbook.git
+git remote add origin https://gitlab.lnu.se/bb222qj/cookbook.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.lnu.se/1dv508/student/rossums-universal-robots/cookbook/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.lnu.se/bb222qj/cookbook/-/settings/integrations)
 
 ## Collaborate with your team
 
