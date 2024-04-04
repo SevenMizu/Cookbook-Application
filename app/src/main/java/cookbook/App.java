@@ -16,6 +16,7 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
+        
         // Trigger loginClicked event to connect to the database
         StartController controller = loader.getController();
         //controller.dbConnect.fire(); // Fire the event associated with the loginButton
