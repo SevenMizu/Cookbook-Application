@@ -2,7 +2,7 @@
 
 ☐ ## User Story 2: Log in to the application for personalization.
 - Acceptance Criteria:
-  ☐ - User can access a login screen.
+  ✔ - User can access a login screen. @done (04/04/2024, 14:01:52)
   ☐ - User can enter their username and password.
   ☐ - Upon successful login, the user is directed to the personalized home screen.
   ☐ - Upon unsuccessful login, appropriate error message is displayed.
@@ -49,3 +49,7 @@
   ☐ - Users have the option to search for specific keywords or topics within the help system.
   ☐ - The help system is visually appealing and easy to read, with appropriate formatting and illustrations.
   ☐ - Users can easily exit the help system and return to their previous task within the application.
+
+
+NOTES:
+  -for scenes where custom info is not being passed then we dont need to retrieve the controller
