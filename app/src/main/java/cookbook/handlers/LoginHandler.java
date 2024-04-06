@@ -27,6 +27,6 @@ public class LoginHandler {
         System.out.println("login button pressed");
         String username = usernameField.getText();
         String password = passwordField.getText();
-        DBUtils.authenticate(username, password);    }
+        DBUtils.authenticate(username, password, event);    }
 
 }

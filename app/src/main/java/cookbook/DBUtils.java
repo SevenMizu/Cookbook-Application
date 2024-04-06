@@ -103,9 +103,9 @@ public class DBUtils {
     }
 
     // Method to authenticate user
-    public static void authenticate(String username, String password) {
+    public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
         Querier que = new Querier(mainConn);
-        String userRow = que.checkForUser(username);
+        String userRow = que.checkForUser(inputUsername);
         if (userRow == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
