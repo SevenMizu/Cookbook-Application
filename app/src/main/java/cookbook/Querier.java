@@ -20,6 +20,7 @@ public class Querier {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 StringBuilder result = new StringBuilder();
+
                 int columnCount = rs.getMetaData().getColumnCount();
                 for (int i = 1; i <= columnCount; i++) {
                     result.append(rs.getString(i));
@@ -37,6 +38,7 @@ public class Querier {
     }
 
     public static String checkForUser(String username) {
+
         return getRow("User", "username", username, ":");
     }
 
