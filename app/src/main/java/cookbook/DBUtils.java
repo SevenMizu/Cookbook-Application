@@ -20,6 +20,9 @@ import java.util.Properties;
 
 public class DBUtils {
 
+    private static Connection mainConn;
+
+
     // Method to connect to the database
     public static void connectToDatabase(Stage stage) {
         // Add your database connection code here
@@ -42,6 +45,7 @@ public class DBUtils {
 
             // Establish the connection
             Connection conn = DriverManager.getConnection(connectionUrl);
+            mainConn = conn;
             return true; // Connection successful
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -64,7 +68,7 @@ public class DBUtils {
     public static void connectAndWelcome(ActionEvent event) {
         boolean connected = connectToDatabase();
         if (connected) {
-            changeScene("xmls/loginPane.fxml", event);
+            changeScene("xmls/loginScreen.fxml", event);
         } else {
                         System.out.println("Could not connect to database");
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -92,4 +96,17 @@ public class DBUtils {
             e.printStackTrace();
         }
     }
-}
+
+    // Method to authenticate user
+    public static void authenticate(String username, String password) {
+        Querier que = new Querier(mainConn);
+        String userRow = que.checkForUser(username);
+        if (userRow == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("User doesnt exist.");
+            alert.show();
+        } else {
+            System.out.println("User exists");
+        }
+    }}
