@@ -18,6 +18,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import cookbook.classes.User;
+import cookbook.classes.Admin;
+
 public class DBUtils {
 
     private static Connection mainConn;
@@ -76,7 +79,9 @@ public class DBUtils {
             alert.setContentText("Could not establish connection to the database.");
             alert.show();
         }
-        // gpt: add an else block, that prints "could not connect to database", add a alert of type error, context text(unable to reach database) and show it. i also want to close the app after this
+        // gpt: add an else block, that prints "could not connect to database", add a
+        // alert of type error, context text(unable to reach database) and show it. i
+        // also want to close the app after this
     }
     // Method to change scene
     public static void changeScene(String fxml, ActionEvent event) {
@@ -108,5 +113,28 @@ public class DBUtils {
             alert.show();
         } else {
             System.out.println("User exists");
+            String[] userData = userRow.split(":");
+            int userId = Integer.parseInt(userData[0]);
+            String storedUsername = userData[1];
+            String storedPassword = userData[2];
+            int isAdmin = Integer.parseInt(userData[3]);
+
+            User user = null; // Declare user variable outside if-else block
+            if (isAdmin == 1) {
+                user = new Admin(userId, storedUsername, storedPassword);
+                System.out.println(user.getUsername() + "Admin user created");
+            } else {
+                user = new User(userId, storedUsername, storedPassword);
+                System.out.println(user.getUsername() + "Regular user created");
+            }
+            if (user.checkPassword(inputPassword)) {
+                changeScene("xmls/userHomeScreen.fxml", event);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Invalid credentials.");
+                alert.show();
+            } 
         }
-    }}
+    }
+} 
