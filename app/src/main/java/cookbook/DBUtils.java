@@ -19,11 +19,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import cookbook.classes.User;
+import cookbook.classes.UserSingleton;
+import cookbook.handlers.UserScreenController;
 import cookbook.classes.Admin;
 
 public class DBUtils {
 
     private static Connection mainConn;
+    private static UserSingleton loggedInUser; // Static attribute to hold the logged-in user instance
+
 
 
     // Method to connect to the database
@@ -79,9 +83,6 @@ public class DBUtils {
             alert.setContentText("Could not establish connection to the database.");
             alert.show();
         }
-        // gpt: add an else block, that prints "could not connect to database", add a
-        // alert of type error, context text(unable to reach database) and show it. i
-        // also want to close the app after this
     }
     // Method to change scene
     public static void changeScene(String fxml, ActionEvent event) {
@@ -101,6 +102,33 @@ public class DBUtils {
             e.printStackTrace();
         }
     }
+
+        // Method to change scene
+        public static void changeToUserHomeScene(String fxml, ActionEvent event, User user) {
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            try {
+    
+                URL directory = DBUtils.class.getResource("/");
+                System.out.println("Looking for resources in directory: " + directory);
+    
+                URL resourceUrl = DBUtils.class.getResource(fxml);
+                System.out.println("Looking for resource at: " + resourceUrl);
+                FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxml));
+                Parent root = loader.load();
+                UserScreenController userScreenController = loader.getController();
+
+                if (user instanceof Admin) { // Check if the user is an Admin instance
+                    userScreenController.setActiveUserLabel(user.getUsername().toUpperCase()); // Set label text with username in uppercase
+                } else {
+                    userScreenController.setActiveUserLabel(user.getUsername()); // Set label text with username
+                }
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
@@ -128,7 +156,14 @@ public class DBUtils {
                 System.out.println(user.getUsername() + "Regular user created");
             }
             if (user.checkPassword(inputPassword)) {
-                changeScene("xmls/userHomeScreen.fxml", event);
+
+                loggedInUser = UserSingleton.getInstance(user);
+                changeToUserHomeScene("xmls/userHomeScreen.fxml", event, loggedInUser.getUser());
+                // Show success alert with a welcome message
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setContentText("Welcome back, " + user.getUsername());
+                successAlert.show();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
