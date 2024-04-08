@@ -1,5 +1,6 @@
 package cookbook;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 import cookbook.classes.User;
 import cookbook.classes.UserSingleton;
+import cookbook.handlers.ManageMemberController;
 import cookbook.handlers.UserScreenController;
 import cookbook.classes.Admin;
 
@@ -119,7 +121,8 @@ public class DBUtils {
             UserScreenController userScreenController = loader.getController();
 
             if (user instanceof Admin) { // Check if the user is an Admin instance
-                userScreenController.setActiveUserLabel(user.getUsername().toUpperCase()); // Set label text with
+                userScreenController.setActiveUserLabel(user.getUsername().toUpperCase());
+                userScreenController.showManageMembersButton(); // Set label text with
                                                                                            // username in uppercase
             } else {
                 userScreenController.setActiveUserLabel(user.getUsername()); // Set label text with username
@@ -132,6 +135,31 @@ public class DBUtils {
         }
     }
 
+    /**
+     * A method called changeToManageMember that takes (String fxml, ActionEvent event, ObservableList<String> users),
+     * loads and uses the ManageMemberController.setMemberList(users), users gotten from the querier's getAllRowsAsObservableList("User") method.
+     * @param fxml The path to the FXML file.
+     * @param event The ActionEvent.
+     * @param users The ObservableList of users to set as the member list.
+     */
+    public static void changeToManageMemberScreen(String fxml, ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        try {
+            URL directory = DBUtils.class.getResource("/");
+            System.out.println("Looking for resources in directory: " + directory);
+            
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxml));
+            Parent root = loader.load();
+            ManageMemberController manageMemberController = loader.getController();
+            ObservableList<String> users = Querier.getAllRowsAsObservableList("User");
+            manageMemberController.setMemberList(users);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     // Method to logout user
     public static void logout(ActionEvent event) {
         Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirmation", "Logout",
@@ -185,4 +213,5 @@ public class DBUtils {
             }
         }
     }
+
 } 

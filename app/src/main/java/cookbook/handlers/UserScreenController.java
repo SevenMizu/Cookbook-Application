@@ -16,12 +16,24 @@ public class UserScreenController {
     private Button logoutButton;
 
     @FXML
+    private Button manageMembersButton;
+
+    @FXML
     void logout(ActionEvent event) {
         DBUtils.logout(event);
     }
 
+    @FXML
+    void changeToMemberManagerScreen(ActionEvent event) {
+        DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml",event);
+    }
+
     public void setActiveUserLabel(String text) {
         activeUserLabel.setText(text);
+    }
+
+    public void showManageMembersButton() {
+        manageMembersButton.setVisible(true);
     }
 
 }
