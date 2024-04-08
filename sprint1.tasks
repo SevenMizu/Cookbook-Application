@@ -1,12 +1,12 @@
 # Sprint 1: Core System and Basic User Functionality
 
-☐ ## User Story 2: Log in to the application for personalization.
+✔ ## User Story 2: Log in to the application for personalization. @done (08/04/2024, 11:31:05)
 - Acceptance Criteria:
   ✔ - User can access a login screen. @done (04/04/2024, 14:01:52)
   ✔ - User can enter their username and password. @done (06/04/2024, 21:56:21)
   ✔ - Upon successful login, the user is directed to the personalized home screen. @done (06/04/2024, 21:56:23)
   ✔ - Upon unsuccessful login, appropriate error message is displayed. @done (06/04/2024, 21:56:25)
-  ☐ - User remains logged in across sessions until explicitly logged out.
+  ✔ - User remains logged in across sessions until explicitly logged out. @done (08/04/2024, 11:31:07)
 
 ☐ ## User Story 1: Start the application with a welcome animation.
 - Acceptance Criteria:
