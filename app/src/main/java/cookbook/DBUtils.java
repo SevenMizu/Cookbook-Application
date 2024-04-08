@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.Optional;
 
 import cookbook.classes.User;
 import cookbook.classes.UserSingleton;
@@ -27,8 +29,6 @@ public class DBUtils {
 
     private static Connection mainConn;
     private static UserSingleton loggedInUser; // Static attribute to hold the logged-in user instance
-
-
 
     // Method to connect to the database
     public static void connectToDatabase(Stage stage) {
@@ -77,13 +77,14 @@ public class DBUtils {
         if (connected) {
             changeScene("xmls/loginScreen.fxml", event);
         } else {
-                        System.out.println("Could not connect to database");
+            System.out.println("Could not connect to database");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Could not establish connection to the database.");
             alert.show();
         }
     }
+
     // Method to change scene
     public static void changeScene(String fxml, ActionEvent event) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -103,32 +104,44 @@ public class DBUtils {
         }
     }
 
-        // Method to change scene
-        public static void changeToUserHomeScene(String fxml, ActionEvent event, User user) {
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            try {
-    
-                URL directory = DBUtils.class.getResource("/");
-                System.out.println("Looking for resources in directory: " + directory);
-    
-                URL resourceUrl = DBUtils.class.getResource(fxml);
-                System.out.println("Looking for resource at: " + resourceUrl);
-                FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxml));
-                Parent root = loader.load();
-                UserScreenController userScreenController = loader.getController();
+    // Method to change scene
+    public static void changeToUserHomeScene(String fxml, ActionEvent event, User user) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        try {
 
-                if (user instanceof Admin) { // Check if the user is an Admin instance
-                    userScreenController.setActiveUserLabel(user.getUsername().toUpperCase()); // Set label text with username in uppercase
-                } else {
-                    userScreenController.setActiveUserLabel(user.getUsername()); // Set label text with username
-                }
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            URL directory = DBUtils.class.getResource("/");
+            System.out.println("Looking for resources in directory: " + directory);
+
+            URL resourceUrl = DBUtils.class.getResource(fxml);
+            System.out.println("Looking for resource at: " + resourceUrl);
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxml));
+            Parent root = loader.load();
+            UserScreenController userScreenController = loader.getController();
+
+            if (user instanceof Admin) { // Check if the user is an Admin instance
+                userScreenController.setActiveUserLabel(user.getUsername().toUpperCase()); // Set label text with
+                                                                                           // username in uppercase
+            } else {
+                userScreenController.setActiveUserLabel(user.getUsername()); // Set label text with username
             }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    // Method to logout user
+    public static void logout(ActionEvent event) {
+        Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirmation", "Logout",
+                "Are you sure you want to logout?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            loggedInUser = null; // Set the loggedInUser to null
+            changeScene("xmls/loginScreen.fxml", event); // Change scene to login screen
+        }
+    }
 
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
@@ -169,7 +182,7 @@ public class DBUtils {
                 alert.setTitle("Error");
                 alert.setContentText("Invalid credentials.");
                 alert.show();
-            } 
+            }
         }
     }
 } 
