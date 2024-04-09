@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
@@ -147,7 +148,7 @@ public class DBUtils {
         try {
             URL directory = DBUtils.class.getResource("/");
             System.out.println("Looking for resources in directory: " + directory);
-            
+
             FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxml));
             Parent root = loader.load();
             ManageMemberController manageMemberController = loader.getController();
@@ -169,6 +170,15 @@ public class DBUtils {
             loggedInUser = null; // Set the loggedInUser to null
             changeScene("xmls/loginScreen.fxml", event); // Change scene to login screen
         }
+    }
+
+        // Method to add a row to the specified table
+    public static void addRow(String table, String rowInfo) {
+        boolean rowAdded = Querier.addRow(table, rowInfo);
+        String alertMessage = rowAdded ? "Successfully added a " + table : "Something went wrong adding a " + table;
+        AlertType alertType = rowAdded ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "Row Addition", null, alertMessage);
+        alert.show();
     }
 
     // Method to authenticate user
@@ -214,4 +224,5 @@ public class DBUtils {
         }
     }
 
+    // an addrow method(params string table and string rowInfo with format "column1_info:column2_info:column3_info:..."), that calls the querier's addRow and passes the same params and if the method return true show alert "succcesfully added a {table param}", else "something wnet wrong adding a {table param}". use the AlertUtils for creating the alerts 
 } 

@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.DatabaseMetaData;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +51,7 @@ public class Querier {
     }
 
     // Close connection
-    public void closeConnection() {
+    public static void closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
@@ -115,4 +118,88 @@ public class Querier {
         return observableList;
     }
 
+        public static String getColumnsExceptFirst(String tableName) {
+        StringBuilder columnsBuilder = new StringBuilder();
+
+        try {
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet resultSet = metaData.getColumns(null, null, tableName, null);
+
+            boolean firstColumn = true;
+            while (resultSet.next()) {
+                if (!firstColumn) {
+                    columnsBuilder.append(resultSet.getString("COLUMN_NAME")).append(":");
+                } else {
+                    firstColumn = false;
+                }
+            }
+
+            // Remove the last ":" if there are columns
+            if (columnsBuilder.length() > 0) {
+                columnsBuilder.deleteCharAt(columnsBuilder.length() - 1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return columnsBuilder.toString();
+    }
+
+    
+
+    /**
+     * A method that takes the table name and row information in the string format "column1_info:column2_info:column3_info:...". 
+     * It adds the row with its column details into the table, omitting the ID column.
+     * Returns a boolean indicating successful row addition or not.
+     * 
+     * @param table The name of the table where the row will be added.
+     * @param rowInfo The information of the row to be added in the format "column1_info:column2_info:column3_info:...".
+     * @return true if the row addition is successful, false otherwise.
+     */
+    public static boolean addRow(String table, String rowInfo) {
+        try {
+            String[] columns = getColumnsExceptFirst(table).split(":");
+            String[] values = rowInfo.split(":");
+
+            
+            StringBuilder queryBuilder = new StringBuilder("INSERT INTO ");
+            queryBuilder.append(table).append(" (");
+
+            // Building the query and setting values for each column
+            for (int i = 0; i < columns.length; i++) {
+                if (i > 0) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append(columns[i]);
+            }
+            queryBuilder.append(") VALUES (");
+
+            // Adding placeholders for parameterized query
+            for (int i = 0; i < columns.length; i++) {
+                if (i > 0) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("?");
+            }
+            queryBuilder.append(")");
+
+            String query = queryBuilder.toString();
+            System.out.println(query);
+            
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                // Set values for each column
+                for (int i = 0; i < values.length; i++) {
+                    stmt.setString(i + 1, values[i]);
+                }
+                stmt.executeUpdate();
+                return true; // Row added successfully
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection after adding the row
+            System.out.println("handle closing connection");
+        }
+        return false; // Failed to add row
+    }
 }

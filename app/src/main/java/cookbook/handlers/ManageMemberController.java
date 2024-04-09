@@ -1,4 +1,5 @@
 package cookbook.handlers;
+import cookbook.DBUtils;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 
 public class ManageMemberController {
 
@@ -43,6 +45,9 @@ public class ManageMemberController {
     @FXML
     private TextField usernameCreate;
 
+    @FXML
+    private Label tableName;
+
 
     /**
      * A method that takes an ObservableList and sets it as the list for the memberList.
@@ -71,9 +76,29 @@ public class ManageMemberController {
      */
     @FXML
     void hideCreateAnchor(ActionEvent event) {
+        passwordCreate.clear();
+        usernameCreate.clear();
         createAnchor.setVisible(false);
         createButton.setVisible(true);
     }
+
+
+    
+    @FXML
+    void createUser(ActionEvent event) {
+        String username = usernameCreate.getText();
+        String password = passwordCreate.getText();
+        String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
+        String rowInfo = username + ":" + password + ":" + isAdmin;
+        
+        String tableNameText = tableName.getText();
+        DBUtils.addRow(tableNameText, rowInfo);
+        DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml",event); // refresh
+
+        
+        hideCreateAnchor(event);
+    }
+
 
     
 
