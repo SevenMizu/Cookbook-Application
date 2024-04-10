@@ -17,11 +17,11 @@
 
 ☐ ## User Story 30: Admin ability to add a new user.
 - Acceptance Criteria:
-  ☐ - Admin has access to a form or interface for adding a new user.
-  ☐ - Admin can input the new user's username, display name, and password.
-  ☐ - Upon submission, the new user is successfully added to the system.
+  ✔ - Admin has access to a form or interface for adding a new user. @done (10/04/2024, 14:43:10)
+  ✔ - Admin can input the new user's username, display name, and password. @done (10/04/2024, 14:43:11)
+  ✔ - Upon submission, the new user is successfully added to the system. @done (10/04/2024, 14:43:13)
   ☐ - Validation is in place to ensure uniqueness of usernames and appropriate password strength.
-  ☐ - Admin receives confirmation of successful user addition.
+  ✔ - Admin receives confirmation of successful user addition. @done (10/04/2024, 14:43:15)
 
 ☐ ## User Story 31: Admin ability to modify an existing user.
 - Acceptance Criteria:
