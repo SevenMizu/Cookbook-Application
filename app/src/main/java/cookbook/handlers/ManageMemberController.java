@@ -1,8 +1,11 @@
 package cookbook.handlers;
+import cookbook.AlertUtils;
 import cookbook.DBUtils;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -82,20 +85,47 @@ public class ManageMemberController {
         createButton.setVisible(true);
     }
 
+    /**
+     * A method to validate the content of the username and password fields.
+     * Checks that none of the fields' content is only spaces, tabs, or completely empty.
+     * @return true if the fields are valid, false otherwise.
+     */
+    private boolean validateFields() {
+        String username = usernameCreate.getText().trim(); // Remove leading and trailing spaces
+        String password = passwordCreate.getText().trim(); // Remove leading and trailing spaces
+
+        // Check if username or password is empty or contains only whitespace
+        if (username.isEmpty() || password.isEmpty() ||
+                username.isBlank() || password.isBlank()) {
+            return false;
+        }
+        return true;
+    }
 
     
+    /**
+     * Method to handle the creation of a user.
+     * Validates the fields and creates a new user if the fields are valid.
+     * Displays an error alert if the fields are invalid.
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     void createUser(ActionEvent event) {
-        String username = usernameCreate.getText();
-        String password = passwordCreate.getText();
-        String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
-        String rowInfo = username + ":" + password + ":" + isAdmin;
-        
-        String tableNameText = tableName.getText();
-        DBUtils.addRow(tableNameText, rowInfo);
-        DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml",event); // refresh
+        if (validateFields()) {
+            String username = usernameCreate.getText();
+            String password = passwordCreate.getText();
+            String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
+            String rowInfo = username + ":" + password + ":" + isAdmin;
+            
+            String tableNameText = tableName.getText();
+            DBUtils.addRow(tableNameText, rowInfo);
+            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh
+        } else {
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!"); // Display error alert
+            alert.show();
 
-        
+        }
+
         hideCreateAnchor(event);
     }
 
