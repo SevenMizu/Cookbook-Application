@@ -177,9 +177,18 @@ public class DBUtils {
         boolean rowAdded = Querier.addRow(table, rowInfo);
         String alertMessage = rowAdded ? "Successfully added a " + table : "Something went wrong adding a " + table;
         AlertType alertType = rowAdded ? AlertType.INFORMATION : AlertType.ERROR;
-        Alert alert = AlertUtils.createAlert(alertType, "Row Addition", null, alertMessage);
+        Alert alert = AlertUtils.createAlert(alertType, "User Addition", null, alertMessage);
         alert.show();
     }
+
+    // Method to add a row to the specified table
+    public static void modifyRow(String table, String setString, String rowSelector, String tobeModified) {
+        boolean rowmodified = Querier.modifyRow(table, setString, rowSelector);
+        String alertMessage = rowmodified ? "Successfully modified  " + tobeModified : "Something went wrong modifying " + tobeModified;
+        AlertType alertType = rowmodified ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "User Modification", null, alertMessage);
+        alert.show();
+            }
 
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {

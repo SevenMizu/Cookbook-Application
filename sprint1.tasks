@@ -15,27 +15,27 @@
   ☐ - The duration of the animation is appropriate and does not cause unnecessary delay in accessing the application's main features.
   ☐ - Users have the option to skip the animation if desired.
 
-☐ ## User Story 30: Admin ability to add a new user.
+✔ ## User Story 30: Admin ability to add a new user. @done (10/04/2024, 14:59:20)
 - Acceptance Criteria:
   ✔ - Admin has access to a form or interface for adding a new user. @done (10/04/2024, 14:43:10)
   ✔ - Admin can input the new user's username, display name, and password. @done (10/04/2024, 14:43:11)
   ✔ - Upon submission, the new user is successfully added to the system. @done (10/04/2024, 14:43:13)
-  ☐ - Validation is in place to ensure uniqueness of usernames and appropriate password strength.
+  ✔ - Validation is in place to ensure uniqueness of usernames and appropriate password strength. @done (10/04/2024, 14:59:17)
   ✔ - Admin receives confirmation of successful user addition. @done (10/04/2024, 14:43:15)
 
 ☐ ## User Story 31: Admin ability to modify an existing user.
 - Acceptance Criteria:
-  ☐ - Admin has access to a list of existing users.
-  ☐ - Admin can select a user from the list to modify.
-  ☐ - Admin can edit the user's username, display name, or password.
-  ☐ - Upon submission, the changes are successfully updated in the system.
-  ☐ - Validation is in place to prevent unauthorized changes and ensure data integrity.
-  ☐ - Admin receives confirmation of successful user modification.
+  ✔ - Admin has access to a list of existing users. @done (10/04/2024, 14:59:32)
+  ✔ - Admin can select a user from the list to modify. @done (11/04/2024, 14:36:31)
+  ✔ - Admin can edit the user's username, display name, or password. @done (11/04/2024, 14:36:33)
+  ✔ - Upon submission, the changes are successfully updated in the system. @done (11/04/2024, 14:36:35)
+  ✔ - Validation is in place to prevent unauthorized changes and ensure data integrity. @done (11/04/2024, 14:36:39)
+  ✔ - Admin receives confirmation of successful user modification. @done (11/04/2024, 14:36:41)
 
 ☐ ## User Story 32: Admin ability to delete an existing user.
 - Acceptance Criteria:
-  ☐ - Admin has access to a list of existing users.
-  ☐ - Admin can select a user from the list to delete.
+  ✔ - Admin has access to a list of existing users. @done (10/04/2024, 14:59:34)
+  ✔ - Admin can select a user from the list to delete. @done (11/04/2024, 14:36:47)
   ☐ - Admin receives a confirmation prompt before deleting the user.
   ☐ - Upon confirmation, the selected user is successfully removed from the system.
   ☐ - Deleted user's data and associated records are appropriately handled to maintain data consistency.

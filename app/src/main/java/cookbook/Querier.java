@@ -202,4 +202,29 @@ public class Querier {
         }
         return false; // Failed to add row
     }
+
+        /**
+     * A method that modifies a row in the specified table based on the provided set of values and row selector.
+     * @param table The name of the table where the row will be modified.
+     * @param setString The set of values to be updated in the format "column1 = 'value1', column2 = 'value2', ...".
+     * @param rowSelector The condition to identify the row to be updated in the format "column = 'value'".
+     * @return true if the row modification is successful, false otherwise.
+     */
+    public static boolean modifyRow(String table, String setString, String rowSelector) {
+        try {
+            StringBuilder queryBuilder = new StringBuilder("UPDATE ");
+            queryBuilder.append(table).append(" SET ").append(setString).append(" WHERE ").append(rowSelector);
+
+            String query = queryBuilder.toString();
+            System.out.println(query);
+
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                int affectedRows = stmt.executeUpdate();
+                return affectedRows > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Failed to modify row
+    }
 }
