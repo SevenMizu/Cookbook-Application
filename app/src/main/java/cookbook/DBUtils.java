@@ -61,8 +61,11 @@ public class DBUtils {
             e.printStackTrace();
             return false; // Connection failed
         }
-    }
 
+    }
+public static User getloggedInuser() {
+    return loggedInUser.getUser();
+}
     private static Properties loadProperties(String filename) throws IOException {
         Properties properties = new Properties();
         File file = new File(filename);
