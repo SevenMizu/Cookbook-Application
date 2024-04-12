@@ -1,12 +1,12 @@
 # Sprint 1: Core System and Basic User Functionality
 
-☐ ## User Story 2: Log in to the application for personalization.
+✔ ## User Story 2: Log in to the application for personalization. @done (08/04/2024, 11:31:05)
 - Acceptance Criteria:
-  ☐ - User can access a login screen.
-  ☐ - User can enter their username and password.
-  ☐ - Upon successful login, the user is directed to the personalized home screen.
-  ☐ - Upon unsuccessful login, appropriate error message is displayed.
-  ☐ - User remains logged in across sessions until explicitly logged out.
+  ✔ - User can access a login screen. @done (04/04/2024, 14:01:52)
+  ✔ - User can enter their username and password. @done (06/04/2024, 21:56:21)
+  ✔ - Upon successful login, the user is directed to the personalized home screen. @done (06/04/2024, 21:56:23)
+  ✔ - Upon unsuccessful login, appropriate error message is displayed. @done (06/04/2024, 21:56:25)
+  ✔ - User remains logged in across sessions until explicitly logged out. @done (08/04/2024, 11:31:07)
 
 ☐ ## User Story 1: Start the application with a welcome animation.
 - Acceptance Criteria:
@@ -15,31 +15,31 @@
   ☐ - The duration of the animation is appropriate and does not cause unnecessary delay in accessing the application's main features.
   ☐ - Users have the option to skip the animation if desired.
 
-☐ ## User Story 30: Admin ability to add a new user.
+✔ ## User Story 30: Admin ability to add a new user. @done (10/04/2024, 14:59:20)
 - Acceptance Criteria:
-  ☐ - Admin has access to a form or interface for adding a new user.
-  ☐ - Admin can input the new user's username, display name, and password.
-  ☐ - Upon submission, the new user is successfully added to the system.
-  ☐ - Validation is in place to ensure uniqueness of usernames and appropriate password strength.
-  ☐ - Admin receives confirmation of successful user addition.
+  ✔ - Admin has access to a form or interface for adding a new user. @done (10/04/2024, 14:43:10)
+  ✔ - Admin can input the new user's username, display name, and password. @done (10/04/2024, 14:43:11)
+  ✔ - Upon submission, the new user is successfully added to the system. @done (10/04/2024, 14:43:13)
+  ✔ - Validation is in place to ensure uniqueness of usernames and appropriate password strength. @done (10/04/2024, 14:59:17)
+  ✔ - Admin receives confirmation of successful user addition. @done (10/04/2024, 14:43:15)
 
 ☐ ## User Story 31: Admin ability to modify an existing user.
 - Acceptance Criteria:
-  ☐ - Admin has access to a list of existing users.
-  ☐ - Admin can select a user from the list to modify.
-  ☐ - Admin can edit the user's username, display name, or password.
-  ☐ - Upon submission, the changes are successfully updated in the system.
-  ☐ - Validation is in place to prevent unauthorized changes and ensure data integrity.
-  ☐ - Admin receives confirmation of successful user modification.
+  ✔ - Admin has access to a list of existing users. @done (10/04/2024, 14:59:32)
+  ✔ - Admin can select a user from the list to modify. @done (11/04/2024, 14:36:31)
+  ✔ - Admin can edit the user's username, display name, or password. @done (11/04/2024, 14:36:33)
+  ✔ - Upon submission, the changes are successfully updated in the system. @done (11/04/2024, 14:36:35)
+  ✔ - Validation is in place to prevent unauthorized changes and ensure data integrity. @done (11/04/2024, 14:36:39)
+  ✔ - Admin receives confirmation of successful user modification. @done (11/04/2024, 14:36:41)
 
 ☐ ## User Story 32: Admin ability to delete an existing user.
 - Acceptance Criteria:
-  ☐ - Admin has access to a list of existing users.
-  ☐ - Admin can select a user from the list to delete.
-  ☐ - Admin receives a confirmation prompt before deleting the user.
-  ☐ - Upon confirmation, the selected user is successfully removed from the system.
-  ☐ - Deleted user's data and associated records are appropriately handled to maintain data consistency.
-  ☐ - Admin receives confirmation of successful user deletion.
+  ✔ - Admin has access to a list of existing users. @done (10/04/2024, 14:59:34)
+  ✔ - Admin can select a user from the list to delete. @done (11/04/2024, 14:36:47)
+  ✔ - Admin receives a confirmation prompt before deleting the user. @done (12/04/2024, 17:01:48)
+  ✔ - Upon confirmation, the selected user is successfully removed from the system. @done (12/04/2024, 17:01:49)
+  ✔ - Deleted user's data and associated records are appropriately handled to maintain data consistency. @done (12/04/2024, 17:01:53)
+  ✔ - Admin receives confirmation of successful user deletion. @done (12/04/2024, 17:01:50)
 
 ☐ ## User Story 28: Access to a help system with a tutorial.
 - Acceptance Criteria:
@@ -55,3 +55,6 @@
 yess
   yes
   
+
+NOTES:
+  -for scenes where custom info is not being passed then we dont need to retrieve the controller
