@@ -188,8 +188,16 @@ public class DBUtils {
         AlertType alertType = rowmodified ? AlertType.INFORMATION : AlertType.ERROR;
         Alert alert = AlertUtils.createAlert(alertType, "User Modification", null, alertMessage);
         alert.show();
-            }
+        }
 
+    // Method to add a row to the specified table
+    public static void deleteRow(String table, String column, String value) {
+        boolean rowmodified = Querier.deleteRow(table, column, value);
+        String alertMessage = rowmodified ? "Successfully deleted  " + value : "Something went wrong modifying " + value;
+        AlertType alertType = rowmodified ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "User Deleting", null, alertMessage);
+        alert.show();
+        }
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
         Querier que = new Querier(mainConn);
@@ -233,5 +241,4 @@ public class DBUtils {
         }
     }
 
-    // an addrow method(params string table and string rowInfo with format "column1_info:column2_info:column3_info:..."), that calls the querier's addRow and passes the same params and if the method return true show alert "succcesfully added a {table param}", else "something wnet wrong adding a {table param}". use the AlertUtils for creating the alerts 
 } 

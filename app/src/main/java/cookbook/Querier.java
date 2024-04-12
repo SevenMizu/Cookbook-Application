@@ -227,4 +227,26 @@ public class Querier {
         }
         return false; // Failed to modify row
     }
+
+    /**
+     * A method that deletes a row from the specified table based on the provided row selector.
+     * 
+     * @param table       The name of the table from which the row will be deleted.
+     * @param rowSelector The condition to identify the row to be deleted in the format "column = 'value'".
+     * @return true if the row deletion is successful, false otherwise.
+     */
+    public static boolean deleteRow(String table, String column , String value) {
+        try {
+            String query = "DELETE FROM " + table + " WHERE " + column + " = '" + value + "'" ;
+            System.out.println(query); // For debugging
+
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                int affectedRows = stmt.executeUpdate();
+                return affectedRows > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Failed to delete row
+    }
 }
