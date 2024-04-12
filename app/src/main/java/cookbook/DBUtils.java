@@ -195,11 +195,16 @@ public class DBUtils {
 
     // Method to add a row to the specified table
     public static void deleteRow(String table, String column, String value) {
-        boolean rowmodified = Querier.deleteRow(table, column, value);
-        String alertMessage = rowmodified ? "Successfully deleted  " + value : "Something went wrong modifying " + value;
-        AlertType alertType = rowmodified ? AlertType.INFORMATION : AlertType.ERROR;
-        Alert alert = AlertUtils.createAlert(alertType, "User Deleting", null, alertMessage);
-        alert.show();
+        Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirmation", "Delete",
+        "Are you sure you want to delete " + value + "?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            boolean rowmodified = Querier.deleteRow(table, column, value);
+            String alertMessage = rowmodified ? "Successfully deleted  " + value : "Something went wrong modifying " + value;
+            AlertType alertType = rowmodified ? AlertType.INFORMATION : AlertType.ERROR;
+            Alert alert = AlertUtils.createAlert(alertType, "User Deleting", null, alertMessage);
+            alert.show();
+        }
         }
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
