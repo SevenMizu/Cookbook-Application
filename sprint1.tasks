@@ -36,10 +36,10 @@
 - Acceptance Criteria:
   ✔ - Admin has access to a list of existing users. @done (10/04/2024, 14:59:34)
   ✔ - Admin can select a user from the list to delete. @done (11/04/2024, 14:36:47)
-  ☐ - Admin receives a confirmation prompt before deleting the user.
-  ☐ - Upon confirmation, the selected user is successfully removed from the system.
-  ☐ - Deleted user's data and associated records are appropriately handled to maintain data consistency.
-  ☐ - Admin receives confirmation of successful user deletion.
+  ✔ - Admin receives a confirmation prompt before deleting the user. @done (12/04/2024, 17:01:48)
+  ✔ - Upon confirmation, the selected user is successfully removed from the system. @done (12/04/2024, 17:01:49)
+  ✔ - Deleted user's data and associated records are appropriately handled to maintain data consistency. @done (12/04/2024, 17:01:53)
+  ✔ - Admin receives confirmation of successful user deletion. @done (12/04/2024, 17:01:50)
 
 ☐ ## User Story 28: Access to a help system with a tutorial.
 - Acceptance Criteria:
