@@ -296,6 +296,13 @@ public class ManageMemberController {
         }
     }
 
+    @FXML
+    void backToUserScreen(ActionEvent event) {
+        DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
+
+
+    }
+
     /**
      * A method to clear all fields within the specified anchor pane, set its
      * visibility to false, and then set the visibility of a button to true.
@@ -350,5 +357,7 @@ public class ManageMemberController {
 
         return updateString.toString();
     }
+
+
 
 }
