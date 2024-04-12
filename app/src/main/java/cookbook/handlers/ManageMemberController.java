@@ -1,4 +1,5 @@
 package cookbook.handlers;
+
 import cookbook.AlertUtils;
 import cookbook.DBUtils;
 import javafx.collections.ObservableList;
@@ -82,19 +83,21 @@ public class ManageMemberController {
     @FXML
     private Label tableName;
 
-
     /**
-     * A method that takes an ObservableList and sets it as the list for the memberList.
+     * A method that takes an ObservableList and sets it as the list for the
+     * memberList.
+     * 
      * @param list The ObservableList to be set as the list for the memberList.
      */
     public void setMemberList(ObservableList<String> list) {
         memberList.setItems(list);
     }
 
-
     /**
-     * A method that enables or disables associated fields based on the state of checkboxes.
-     * For each checkbox, if it is checked, the associated field will be enabled; otherwise, it will be disabled.
+     * A method that enables or disables associated fields based on the state of
+     * checkboxes.
+     * For each checkbox, if it is checked, the associated field will be enabled;
+     * otherwise, it will be disabled.
      */
     @FXML
     void handleCheckbox(ActionEvent event) {
@@ -119,23 +122,28 @@ public class ManageMemberController {
             modifyAdminRadio.setDisable(true); // Disable the associated radio button
         }
     }
- 
+
     /**
      * Method to show the createAnchor when createButton is clicked.
-     * This method sets the visibility of the createButton to false and that of the createAnchor to true.
+     * This method sets the visibility of the createButton to false and that of the
+     * createAnchor to true.
+     * 
      * @param event The ActionEvent triggering the method.
      */
 
-     // gpt: make a  showAnchor method with params the anchor to show(e.g AnchorPane modifyAnchor and the button to hide e.g Button modifyButton) and sets the visibily of the anchor to true and that of the button to false
+    // gpt: make a showAnchor method with params the anchor to show(e.g AnchorPane
+    // modifyAnchor and the button to hide e.g Button modifyButton) and sets the
+    // visibily of the anchor to true and that of the button to false
     @FXML
     void showCreateAnchor(ActionEvent event) {
         showAnchor(createAnchor, createButton);
     }
 
-        /**
+    /**
      * Method to show the specified anchor pane and hide the specified button.
+     * 
      * @param anchorPane The anchor pane to be shown.
-     * @param button The button to be hidden.
+     * @param button     The button to be hidden.
      */
     private void showAnchor(AnchorPane anchorPane, Button button) {
         anchorPane.setVisible(true);
@@ -147,9 +155,11 @@ public class ManageMemberController {
         showAnchor(modifyAnchor, modifyButton);
     }
 
-        /**
+    /**
      * Method to hide the createAnchor and show the createButton.
-     * This method sets the visibility of the createAnchor to false and that of the createButton to true.
+     * This method sets the visibility of the createAnchor to false and that of the
+     * createButton to true.
+     * 
      * @param event The ActionEvent triggering the method.
      */
     @FXML
@@ -159,7 +169,8 @@ public class ManageMemberController {
     }
 
     /**
-     * A method that sets the selected item in the memberList ListView as the text in the TextField modifyUsernameField.
+     * A method that sets the selected item in the memberList ListView as the text
+     * in the TextField modifyUsernameField.
      */
     @FXML
     void setModifyUsernameFromList(MouseEvent event) {
@@ -168,8 +179,11 @@ public class ManageMemberController {
             modifyUsernameField.setText(selectedItem.toLowerCase());
         }
     }
-        /**
-     * A method to hide the modifyAnchor, clear its fields, and show the modifyButton.
+
+    /**
+     * A method to hide the modifyAnchor, clear its fields, and show the
+     * modifyButton.
+     * 
      * @param event The ActionEvent triggering the method.
      */
     @FXML
@@ -182,7 +196,7 @@ public class ManageMemberController {
         String tableNameText = tableName.getText();
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
         String setString = generateUpdateString();
-    
+
         if (setString.isEmpty()) {
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No changes made");
             alert.show();
@@ -193,11 +207,14 @@ public class ManageMemberController {
         }
     }
 
-    
-    // gpt: adjust the validateFields to validateTextFields and it should take a TextField[] of text fields to validate and loop through and perform the vlaidation, returing the success of failure boolean
+    // gpt: adjust the validateFields to validateTextFields and it should take a
+    // TextField[] of text fields to validate and loop through and perform the
+    // vlaidation, returing the success of failure boolean
     /**
      * A method to validate the content of the username and password fields.
-     * Checks that none of the fields' content is only spaces, tabs, or completely empty.
+     * Checks that none of the fields' content is only spaces, tabs, or completely
+     * empty.
+     * 
      * @return true if the fields are valid, false otherwise.
      */
     private boolean validateFields() {
@@ -212,9 +229,11 @@ public class ManageMemberController {
         return true;
     }
 
-        /**
+    /**
      * A method to validate an array of text fields.
-     * Checks that none of the fields' content is only spaces, tabs, or completely empty.
+     * Checks that none of the fields' content is only spaces, tabs, or completely
+     * empty.
+     * 
      * @param textFields The array of text fields to validate.
      * @return true if all text fields are valid, false otherwise.
      */
@@ -228,11 +247,11 @@ public class ManageMemberController {
         return true;
     }
 
-    
     /**
      * Method to handle the creation of a user.
      * Validates the fields and creates a new user if the fields are valid.
      * Displays an error alert if the fields are invalid.
+     * 
      * @param event The ActionEvent triggering the method.
      */
     @FXML
@@ -242,12 +261,14 @@ public class ManageMemberController {
             String password = passwordCreate.getText();
             String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
             String rowInfo = username + ":" + password + ":" + isAdmin;
-            
+
             String tableNameText = tableName.getText();
             DBUtils.addRow(tableNameText, rowInfo);
             DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh
         } else {
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!"); // Display error alert
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!"); // Display
+                                                                                                                   // error
+                                                                                                                   // alert
             alert.show();
 
         }
@@ -256,9 +277,32 @@ public class ManageMemberController {
     }
 
     /**
-     * A method to clear all fields within the specified anchor pane, set its visibility to false, and then set the visibility of a button to true.
+     * Method to handle the creation of a user.
+     * Validates the fields and creates a new user if the fields are valid.
+     * Displays an error alert if the fields are invalid.
+     * 
+     * @param event The ActionEvent triggering the method.
+     */
+    @FXML
+    void deleteUser(ActionEvent event) {
+        String tableNameText = tableName.getText();
+        String value = memberList.getSelectionModel().getSelectedItem().toLowerCase(); // lowercase for admin names
+        if (value.isEmpty()) {
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for deletion");
+            alert.show();
+        } else {
+            DBUtils.deleteRow(tableNameText, "username", value);
+            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh }
+        }
+    }
+
+    /**
+     * A method to clear all fields within the specified anchor pane, set its
+     * visibility to false, and then set the visibility of a button to true.
+     * 
      * @param anchorPane The anchor pane whose children's fields need to be cleared.
-     * @param button The button whose visibility needs to be set to true after hiding the anchor pane.
+     * @param button     The button whose visibility needs to be set to true after
+     *                   hiding the anchor pane.
      */
     private void clearAndHideAnchorPane(AnchorPane anchorPane, Button button) {
         for (Node node : anchorPane.getChildren()) {
@@ -268,17 +312,17 @@ public class ManageMemberController {
                 ((CheckBox) node).setSelected(false); // Uncheck checkboxes
             } else if (node instanceof RadioButton) {
                 ((RadioButton) node).setSelected(false); // Uncheck RadioButtons
-            // Add more conditions for other types of fields if needed
+                // Add more conditions for other types of fields if needed
             }
         }
-        
+
         anchorPane.setVisible(false); // Hide the anchor pane after clearing its fields
         button.setVisible(true); // Show the button
     }
 
-
-        /**
+    /**
      * Method to dynamically generate SQL update string based on enabled fields.
+     * 
      * @return The SQL update string.
      */
     private String generateUpdateString() {
@@ -306,10 +350,5 @@ public class ManageMemberController {
 
         return updateString.toString();
     }
-
-
-
-
-    
 
 }
