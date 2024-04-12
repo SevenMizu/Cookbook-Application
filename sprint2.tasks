@@ -1,0 +1,43 @@
+# Sprint 2: Recipe Viewing and Searching
+
+☐ ## User Story 9: Browse all recipes.
+- Acceptance Criteria:
+  ☐ - Users can access a comprehensive list of all available recipes.
+  ☐ - Recipes are displayed in a visually organized manner, allowing for easy browsing.
+  ☐ - Pagination or infinite scrolling is implemented for smooth navigation through large recipe collections.
+  ☐ - Users can filter and sort recipes based on different criteria (e.g., name, category).
+
+## User Story 6: Search for a recipe by name.
+- Acceptance Criteria:
+  ☐ - Users can enter a recipe name in the search bar.
+  ☐ - The search function provides real-time suggestions as the user types.
+  ☐ - Matching recipe names are displayed as search results.
+  ☐ - Users can click on a search result to view the corresponding recipe.
+
+☐ ## User Story 7: Search for a recipe by one or more ingredients.
+- Acceptance Criteria:
+  ☐ - Users can enter one or more ingredients in the search bar.
+  ☐ - The search function suggests ingredient options as the user types.
+  ☐ - Recipes containing all or some of the entered ingredients are displayed as search results.
+  ☐ - Users can further refine search results based on additional criteria.
+
+☐ ## User Story 8: Search for a recipe by one or more tags.
+- Acceptance Criteria:
+  ☐ - Users can select one or more tags from a predefined list or enter custom tags.
+  ☐ - Recipes tagged with the selected tag(s) are displayed as search results.
+  ☐ - Tag suggestions are provided to assist users in selecting relevant tags.
+  ☐ - Users can combine tag searches with other search criteria for more specific results.
+
+☐ ## User Story 10: See more of the short description of a dish from a search.
+- Acceptance Criteria:
+  ☐ - When viewing search results, users can hover over or click on a recipe to see a preview of its short description.
+  ☐ - The short description preview provides enough information to give users a glimpse of the recipe's content and relevance.
+  ☐ - Users can easily distinguish between different recipes in the search results based on their short descriptions.
+
+☐ ## User Story 13: See the selected recipe with formatting for easy viewing.
+- Acceptance Criteria:
+  ☐ - When a user selects a recipe from the search results or recipe list, it is displayed with clear formatting for easy reading.
+  ☐ - Recipe name is displayed prominently, possibly in bold or larger font size.
+  ☐ - Short description is presented in italics to differentiate it from other text.
+  ☐ - Ingredients are listed in a clear and structured format, possibly as a bulleted or numbered list.
+  ☐ - Detailed description is formatted for readability, possibly with appropriate line breaks and paragraph spacing.
