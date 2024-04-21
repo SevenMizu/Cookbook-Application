@@ -9,25 +9,25 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.StartController">
    <children>
-      <AnchorPane prefHeight="410.0" prefWidth="522.0" style="-fx-background-color: #FFFFF0;">
+      <AnchorPane prefHeight="410.0" prefWidth="522.0" style="-fx-background-color: #FFFFFF;">
          <children>
             <ImageView fitHeight="373.0" fitWidth="600.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../Users/skapo/Downloads/star.gif" />
+                  <Image url="@../pictures/star.gif" />
                </image>
             </ImageView>
             <Button fx:id="dbConnect" layoutX="193.0" layoutY="288.0" onAction="#connectToDb" prefHeight="78.0" prefWidth="214.0" text="Start Application" textAlignment="CENTER">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="18.0" />
+                  <Font name="Al Bayan Bold" size="18.0" />
                </font></Button>
             <ImageView fx:id="myimage" fitHeight="171.0" fitWidth="362.0" layoutX="178.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../Users/skapo/Downloads/talebot-wave.gif" />
+                  <Image url="@../pictures/talebot-wave.gif" />
                </image>
             </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="405.0" layoutX="223.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="62.0" fitWidth="405.0" layoutX="232.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../Users/skapo/Downloads/welcome.gif" />
+                  <Image url="@../pictures/welcome.gif" />
                </image>
             </ImageView>
          </children>
