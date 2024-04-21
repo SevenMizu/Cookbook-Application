@@ -19,7 +19,7 @@
                <children>
                   <ImageView fitHeight="441.0" fitWidth="230.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../Users/skapo/OneDrive/Desktop/Screenshot_Chrome.jpg" />
+                        <Image url="@../pictures/key.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -27,9 +27,9 @@
             <AnchorPane prefHeight="400.0" prefWidth="413.0" style="-fx-background-color: #FFFFF0;">
                <children>
                   <Button fx:id="loginButton" defaultButton="true" layoutX="151.0" layoutY="220.0" mnemonicParsing="false" onAction="#authenticate" text="Log in" />
-                  <Label fx:id="databaseStatus" alignment="CENTER" layoutY="56.0" prefHeight="76.0" prefWidth="350.0" text="Welcome!" textAlignment="RIGHT">
+                  <Label fx:id="databaseStatus" alignment="CENTER" layoutY="56.0" prefHeight="76.0" prefWidth="350.0" text="Login with your credentials" textAlignment="RIGHT">
                      <font>
-                        <Font name="Consolas" size="36.0" />
+                        <Font name="Consolas" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="usernameField" layoutX="115.0" layoutY="147.0" prefHeight="26.0" prefWidth="150.0" promptText="username" AnchorPane.bottomAnchor="227.4" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="135.39999999999998" AnchorPane.topAnchor="147.0">
