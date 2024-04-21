@@ -9,6 +9,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import cookbook.classes.Recipe;
+
 
 
 import javafx.collections.FXCollections;
@@ -248,5 +250,50 @@ public class Querier {
             e.printStackTrace();
         }
         return false; // Failed to delete row
+    }
+
+    public static ObservableList<Recipe> loadRecipes() {
+        ObservableList<Recipe> recipes = FXCollections.observableArrayList();
+        String sql_query = """
+            SELECT
+                 r.RecipeID AS id,
+                 r.Name AS name,
+                 r.ShortDescription AS short_description,
+                 r.DetailedDescription AS detailed_description,
+                 r.Servings AS servings,
+                 GROUP_CONCAT(DISTINCT t.Name ORDER BY t.Name SEPARATOR ', ') AS tags,
+                 GROUP_CONCAT(DISTINCT i.Name ORDER BY i.Name SEPARATOR ', ') AS ingredients
+             FROM
+                 Recipe r
+             LEFT JOIN
+                 RecipeTag rt ON r.RecipeID = rt.RecipeID
+             LEFT JOIN
+                 Tag t ON rt.TagID = t.TagID
+             LEFT JOIN
+                 RecipeIngredient ri ON r.RecipeID = ri.RecipeID
+             LEFT JOIN
+                 Ingredient i ON ri.IngredientID = i.IngredientID
+             GROUP BY
+                 r.RecipeID;
+            """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql_query)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String shortDescription = rs.getString("short_description");
+                String detailedDescription = rs.getString("detailed_description");
+                int servings = rs.getInt("servings");
+                String tags = rs.getString("tags");
+                String ingredients = rs.getString("ingredients");
+                
+                // Create a Recipe instance and add to the recipes list
+                Recipe recipe = new Recipe(id, name, shortDescription, detailedDescription, servings, ingredients, tags);
+                recipes.add(recipe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recipes;
     }
 }
