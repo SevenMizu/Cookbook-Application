@@ -27,6 +27,7 @@ import cookbook.classes.UserSingleton;
 import cookbook.handlers.ManageMemberController;
 import cookbook.handlers.UserScreenController;
 import cookbook.classes.Admin;
+import cookbook.classes.Recipe;
 
 public class DBUtils {
 
@@ -110,6 +111,10 @@ public class DBUtils {
         }
     }
 
+    public static ObservableList<Recipe> loadRecipes() {
+        return Querier.loadRecipes();
+    }
+
     // Method to change scene
     public static void changeToUserHomeScene(String fxml, ActionEvent event, User user) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -131,6 +136,7 @@ public class DBUtils {
             } else {
                 userScreenController.setActiveUserLabel(user.getUsername()); // Set label text with username
             }
+            userScreenController.loadRecipes();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
