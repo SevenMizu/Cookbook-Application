@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -7,24 +7,27 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.UserScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.UserScreenController">
    <children>
-      <Button fx:id="logoutButton" layoutX="531.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="log out" />
-      <Label fx:id="activeUserLabel" layoutX="455.0" layoutY="12.0" prefHeight="33.0" prefWidth="65.0" text="username" />
-      <ListView layoutX="455.0" layoutY="80.0" prefHeight="210.0" prefWidth="134.0" />
-      <TextField fx:id="recipeSearchBar" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="428.0" />
-      <Button layoutX="24.0" layoutY="357.0" mnemonicParsing="false" text="+ recipe" />
-      <Button layoutX="455.0" layoutY="303.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="+ weekly dinner" />
-      <Button layoutX="156.0" layoutY="357.0" mnemonicParsing="false" text="+ ingredients" />
-      <Button layoutX="272.0" layoutY="358.0" mnemonicParsing="false" text="+ tags" />
-      <Label layoutX="238.0" layoutY="52.0" text="&lt;&lt;  recipe content  &gt;&gt;" />
-      <Label layoutX="484.0" layoutY="53.0" text="week recipes" />
-      <Button fx:id="manageMembersButton" layoutX="455.0" layoutY="344.0" mnemonicParsing="false" onAction="#changeToMemberManagerScreen" prefHeight="39.0" prefWidth="123.0" text="manage members" visible="false" />
-      <TextArea fx:id="recipe" layoutX="156.0" layoutY="76.0" prefHeight="253.0" prefWidth="284.0" />
-      <Label layoutX="42.0" layoutY="52.0" text="Recipes" />
-      <ListView fx:id="recipesListView" layoutX="14.0" layoutY="76.0" prefHeight="253.0" prefWidth="134.0" />
-      <Button layoutX="339.0" layoutY="357.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="inbox" />
-      <Button layoutX="455.0" layoutY="48.0" mnemonicParsing="false" text="&lt;" />
-      <Button layoutX="566.0" layoutY="48.0" mnemonicParsing="false" text="&gt;" />
+      <Button fx:id="logoutButton" layoutX="731.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" text="log out" />
+      <Label fx:id="activeUserLabel" layoutX="652.0" layoutY="13.0" prefHeight="33.0" prefWidth="65.0" text="username" />
+      <ListView layoutX="650.0" layoutY="90.0" prefHeight="393.0" prefWidth="134.0" />
+      <TextField fx:id="recipeSearchBar" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="625.0" />
+      <Button layoutX="11.0" layoutY="551.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="+ recipe" />
+      <Button layoutX="650.0" layoutY="502.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="+ weekly dinner" />
+      <Button fx:id="showIngredients" layoutX="194.0" layoutY="551.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="155.0" text="+ ingredients" />
+      <Button fx:id="showTags" layoutX="354.0" layoutY="551.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="+ tags" />
+      <Label layoutX="340.0" layoutY="68.0" text="&lt;&lt;  short description  &gt;&gt;" />
+      <Label layoutX="681.0" layoutY="54.0" text="week recipes" />
+      <TextArea fx:id="longDescriptionField" layoutX="193.0" layoutY="209.0" prefHeight="300.0" prefWidth="443.0" wrapText="true" />
+      <Label layoutX="76.0" layoutY="54.0" text="Recipes" />
+      <ListView fx:id="recipesListView" layoutX="14.0" layoutY="76.0" onMouseClicked="#setRecipeDetails" prefHeight="466.0" prefWidth="174.0" />
+      <Button fx:id="showComments" layoutX="533.0" layoutY="551.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="comments" />
+      <Button layoutX="652.0" layoutY="50.0" mnemonicParsing="false" text="&lt;" />
+      <Button layoutX="758.0" layoutY="49.0" mnemonicParsing="false" text="&gt;" />
+      <TextArea fx:id="shortDescriptionField" layoutX="193.0" layoutY="85.0" prefHeight="107.0" prefWidth="443.0" />
+      <Button fx:id="manageMembersButton" layoutX="655.0" layoutY="542.0" mnemonicParsing="false" onAction="#changeToMemberManagerScreen" prefHeight="44.0" prefWidth="123.0" text="manage members" visible="false" />
+      <Label layoutX="342.0" layoutY="192.0" text="&lt;&lt;  long description  &gt;&gt;" />
+      <Button fx:id="deleteRecipeButton" layoutX="193.0" layoutY="515.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="443.0" text="delete recipe" />
    </children>
 </AnchorPane>
