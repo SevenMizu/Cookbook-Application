@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import cookbook.classes.Recipe; // Import Recipe class
 import javafx.collections.FXCollections;
+import javafx.scene.input.MouseEvent;
+
 
 
 
@@ -35,6 +37,21 @@ public class UserScreenController {
 
     @FXML
     private ListView<String> recipesListView; 
+
+    @FXML
+    private TextArea longDescriptionField;
+
+    @FXML
+    private TextArea shortDescriptionField;
+
+    @FXML
+    private Button showComments;
+
+    @FXML
+    private Button showIngredients;
+
+    @FXML
+    private Button showTags;
 
     private ObservableList<Recipe> recipes; // Added line
     private FilteredList<Recipe> filteredData;
@@ -130,4 +147,19 @@ public class UserScreenController {
         recipesListView.setItems(displayList);
     }
 
+    @FXML
+    void setRecipeDetails(MouseEvent event) {
+        String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
+        if (selectedRecipe != null) {
+            int id = Integer.parseInt(selectedRecipe.substring(0, selectedRecipe.indexOf(':')));
+            Recipe recipe = recipes.stream()
+                                   .filter(r -> r.getRecipeId() == (id))
+                                   .findFirst()
+                                   .orElse(null);
+            if (recipe != null) {
+                shortDescriptionField.setText(recipe.getShortDescription());
+                longDescriptionField.setText("Number of Servings: " +  recipe.getServings() + "\n" + recipe.getDetailedDescription());
+            }
+        }
+    }
 }
