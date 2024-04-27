@@ -158,4 +158,21 @@ public class Recipe {
     public void setFavorites(List<User> favorites) {
         this.favorites = favorites;
     }
+
+        /**
+     * Converts a list of RecipeItem objects to a comma-separated string.
+     * @param recipeItems The list of RecipeItem objects.
+     * @return Comma-separated string of items in the list.
+     */
+    public static String asString(List<? extends RecipeItem> recipeItems) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < recipeItems.size(); i++) {
+            RecipeItem item = recipeItems.get(i);
+            stringBuilder.append(item.getName());
+            if (i < recipeItems.size() - 1) {
+                stringBuilder.append(", ");
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

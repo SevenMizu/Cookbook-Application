@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import cookbook.classes.Recipe; // Import Recipe class
 import javafx.collections.FXCollections;
 
@@ -36,11 +37,53 @@ public class UserScreenController {
     private ListView<String> recipesListView; 
 
     private ObservableList<Recipe> recipes; // Added line
+    private FilteredList<Recipe> filteredData;
+
+        public void initialize() {
+        // Assuming initialize method is where you set up the bindings
+        if (recipes == null) {
+            recipes = FXCollections.observableArrayList();
+        }
+        filteredData = new FilteredList<>(recipes, p -> true);
+
+        recipeSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(recipe -> {
+                // If filter text is empty, display all recipes
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (recipe.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (recipe.asString(recipe.getIngredients()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (recipe.asString(recipe.getTags()).toLowerCase().contains(lowerCaseFilter)){
+                     return true;
+                 } // else if (recipe.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                //     return true;
+                // }
+
+                // Can add more conditions to check other properties
+
+                return false;
+            });
+            // After applying the filter, you might want to sort the list
+            ObservableList<Recipe> sortedList = FXCollections.observableArrayList(filteredData);
+            FXCollections.sort(sortedList, (recipe1, recipe2) -> 
+                recipe1.getName().compareToIgnoreCase(recipe2.getName())); // Sort by name, for example
+            updateListView(sortedList);
+        });
+
+        // ... rest of the initialize method ...
+    }
 
     @FXML
     void logout(ActionEvent event) {
         DBUtils.logout(event);
     }
+
 
     @FXML
     void changeToMemberManagerScreen(ActionEvent event) {
@@ -51,6 +94,7 @@ public class UserScreenController {
     public void loadRecipes() { // Changed method signature
         recipes = DBUtils.loadRecipes(); // Changed line
         setMemberList();
+        initialize();
     }
     public void setActiveUserLabel(String text) {
         activeUserLabel.setText(text);
@@ -58,6 +102,14 @@ public class UserScreenController {
 
     public void showManageMembersButton() {
         manageMembersButton.setVisible(true);
+    }
+
+    private void updateListView(ObservableList<Recipe> sortedList) {
+        ObservableList<String> displayList = FXCollections.observableArrayList();
+        for (Recipe recipe : sortedList) {
+            displayList.add(recipe.getRecipeId() + ": " + recipe.getName());
+        }
+        recipesListView.setItems(displayList);
     }
 
     /**
