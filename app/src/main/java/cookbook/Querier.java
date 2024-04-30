@@ -9,7 +9,11 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cookbook.classes.Tag;
+import cookbook.classes.Ingredient;
 import cookbook.classes.Recipe;
+
 
 
 
@@ -261,6 +265,7 @@ public class Querier {
                  r.ShortDescription AS short_description,
                  r.DetailedDescription AS detailed_description,
                  r.Servings AS servings,
+                 r.UserID as userid,
                  GROUP_CONCAT(DISTINCT t.Name ORDER BY t.Name SEPARATOR ', ') AS tags,
                  GROUP_CONCAT(DISTINCT i.Name ORDER BY i.Name SEPARATOR ', ') AS ingredients
              FROM
@@ -284,16 +289,144 @@ public class Querier {
                 String shortDescription = rs.getString("short_description");
                 String detailedDescription = rs.getString("detailed_description");
                 int servings = rs.getInt("servings");
-                String tags = rs.getString("tags");
-                String ingredients = rs.getString("ingredients");
+                int userId = rs.getInt("userid");
+                String tags = (rs.getString("tags") != null) ? rs.getString("tags") : "";
+                String ingredients = (rs.getString("ingredients") != null) ? rs.getString("ingredients") : "";
+                
                 
                 // Create a Recipe instance and add to the recipes list
-                Recipe recipe = new Recipe(id, name, shortDescription, detailedDescription, servings, ingredients, tags);
+                Recipe recipe = new Recipe(id, name, shortDescription, detailedDescription, servings, userId, ingredients, tags);
                 recipes.add(recipe);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return recipes;
+    }
+
+    public static boolean createRecipeInDatabase(Recipe recipe) {
+        Connection Recipeconn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rsKeys = null;
+        try {
+            Recipeconn = conn; // Assuming mainConn is your static connection instance managed elsewhere
+            Recipeconn.setAutoCommit(false); // Start transaction
+    
+            // Insert the recipe
+            String sqlRecipe = "INSERT INTO Recipe (Name, ShortDescription, DetailedDescription, Servings, UserID) VALUES (?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sqlRecipe, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, recipe.getName());
+            pstmt.setString(2, recipe.getShortDescription());
+            pstmt.setString(3, recipe.getDetailedDescription());
+            pstmt.setInt(4, recipe.getServings());
+            pstmt.setInt(5, recipe.getRecipeCreatorId());
+            pstmt.executeUpdate();
+    
+            rsKeys = pstmt.getGeneratedKeys();
+            if (rsKeys.next()) {
+                int recipeId = rsKeys.getInt(1);
+                recipe.setRecipeId(recipeId); // Set the generated ID back to the recipe
+            }
+    
+            // Handle tags
+            for (Tag tag : recipe.getTags()) {
+                insertOrUpdateTag(Recipeconn, tag, recipe.getRecipeId());
+            }
+    
+            // Similarly, handle ingredients
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                insertOrUpdateIngredient(Recipeconn, ingredient, recipe.getRecipeId());
+            }
+    
+            Recipeconn.commit(); // Commit transaction
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (Recipeconn != null) {
+                try {
+                    Recipeconn.rollback(); // Rollback transaction
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            // Clean up resources but do not close the connection
+            if (rsKeys != null) {
+                try {
+                    rsKeys.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            // Do not close the conn here as it is managed elsewhere
+        }
+    }
+
+    private static void insertOrUpdateTag(Connection conn, Tag tag, int recipeId) throws SQLException {
+        String sqlTagCheck = "SELECT TagID FROM Tag WHERE Name = ?";
+        String sqlTagInsert = "INSERT INTO Tag (Name) VALUES (?)";
+        String sqlRecipeTag = "INSERT INTO RecipeTag (RecipeID, TagID) VALUES (?, ?)";
+        int tagId = 0;
+
+        try (PreparedStatement pstmtTagCheck = conn.prepareStatement(sqlTagCheck)) {
+            pstmtTagCheck.setString(1, tag.getName());
+            ResultSet rsTag = pstmtTagCheck.executeQuery();
+            if (rsTag.next()) {
+                tagId = rsTag.getInt(1);
+            } else {
+                try (PreparedStatement pstmtTagInsert = conn.prepareStatement(sqlTagInsert, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                    pstmtTagInsert.setString(1, tag.getName());
+                    pstmtTagInsert.executeUpdate();
+                    ResultSet rsTagId = pstmtTagInsert.getGeneratedKeys();
+                    if (rsTagId.next()) {
+                        tagId = rsTagId.getInt(1);
+                    }
+                }
+            }
+        }
+
+        try (PreparedStatement pstmtRecipeTag = conn.prepareStatement(sqlRecipeTag)) {
+            pstmtRecipeTag.setInt(1, recipeId);
+            pstmtRecipeTag.setInt(2, tagId);
+            pstmtRecipeTag.executeUpdate();
+        }
+    }
+
+    private static void insertOrUpdateIngredient(Connection conn, Ingredient ingredient, int recipeId) throws SQLException {
+        String sqlIngredientCheck = "SELECT IngredientID FROM Ingredient WHERE Name = ?";
+        String sqlIngredientInsert = "INSERT INTO Ingredient (Name) VALUES (?)";
+        String sqlRecipeIngredient = "INSERT INTO RecipeIngredient (RecipeID, IngredientID) VALUES (?, ?)";
+        int ingredientId = 0;
+
+        try (PreparedStatement pstmtIngredientCheck = conn.prepareStatement(sqlIngredientCheck)) {
+            pstmtIngredientCheck.setString(1, ingredient.getName());
+            ResultSet rsIngredient = pstmtIngredientCheck.executeQuery();
+            if (rsIngredient.next()) {
+                ingredientId = rsIngredient.getInt(1);
+            } else {
+                try (PreparedStatement pstmtIngredientInsert = conn.prepareStatement(sqlIngredientInsert, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                    pstmtIngredientInsert.setString(1, ingredient.getName());
+                    pstmtIngredientInsert.executeUpdate();
+                    ResultSet rsIngredientId = pstmtIngredientInsert.getGeneratedKeys();
+                    if (rsIngredientId.next()) {
+                        ingredientId = rsIngredientId.getInt(1);
+                    }
+                }
+            }
+        }
+
+        try (PreparedStatement pstmtRecipeIngredient = conn.prepareStatement(sqlRecipeIngredient)) {
+            pstmtRecipeIngredient.setInt(1, recipeId);
+            pstmtRecipeIngredient.setInt(2, ingredientId);
+            pstmtRecipeIngredient.executeUpdate();
+        }
     }
 }

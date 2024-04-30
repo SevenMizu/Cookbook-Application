@@ -19,8 +19,8 @@ public class Recipe {
     private List<User> favorites;
 
     /**
-     * Constructor for Recipe class.
-     */
+     * Constructor for Recipe class.*/
+    
     public Recipe(int recipeId, String name, String shortDescription, String detailedDescription, int servings, int recipeCreatorId, String ingredientString, String tagString) {
         this.recipeId = recipeId;
         this.name = name;
