@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.MyRecipesController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="811.0" rotate="180.0">
+         <image>
+            <Image url="@../pictures/modern-background.jpg" />
+         </image>
+         <rotationAxis>
+            <Point3D y="1.0" />
+         </rotationAxis>
+      </ImageView>
+      <ListView fx:id="recipeListView" layoutX="14.0" layoutY="33.0" prefHeight="505.0" prefWidth="200.0" />
+      <AnchorPane fx:id="createAnchor" layoutX="230.0" layoutY="31.0" prefHeight="281.0" prefWidth="565.0">
+         <children>
+            <TextField fx:id="createShortDescription" alignment="TOP_LEFT" layoutX="7.0" layoutY="33.0" prefHeight="72.0" prefWidth="242.0" promptText="Short decription" />
+            <TextField fx:id="createDetailedField" alignment="TOP_LEFT" layoutX="265.0" layoutY="69.0" prefHeight="198.0" prefWidth="297.0" promptText="detailed escription" />
+            <TextField fx:id="createIngredientsField" layoutX="7.0" layoutY="111.0" prefHeight="47.0" prefWidth="242.0" promptText="ingredients (separate with commas)" />
+            <TextField fx:id="createTagsField" layoutX="7.0" layoutY="173.0" prefHeight="41.0" prefWidth="182.0" promptText="tags (separate with commas)" />
+            <Button fx:id="createDiscardButton" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#hideCreateAnchor" prefHeight="47.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Discard" />
+            <Button fx:id="createRecipeMain" layoutX="121.0" layoutY="223.0" mnemonicParsing="false" onAction="#createRecipe" prefHeight="47.0" prefWidth="134.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Create" />
+            <TextField fx:id="recipeNameField" layoutX="265.0" layoutY="32.0" prefHeight="32.0" prefWidth="297.0" promptText="Recipe Name" />
+            <TextField fx:id="numberOfServingsField" layoutX="192.0" layoutY="173.0" prefHeight="41.0" prefWidth="64.0" promptText="Servings" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="modifyAnchor" layoutX="231.0" layoutY="313.0" prefHeight="271.0" prefWidth="559.0">
+         <children>
+            <TextField fx:id="modifyShortDescription" layoutX="14.0" layoutY="31.0" prefHeight="66.0" prefWidth="242.0" />
+            <TextField fx:id="modifyDetailedDescription" layoutX="273.0" layoutY="31.0" prefHeight="235.0" prefWidth="283.0" />
+            <TextField fx:id="modifyIngredientsField" layoutX="18.0" layoutY="115.0" prefHeight="41.0" prefWidth="235.0" />
+            <TextField fx:id="modifyTagsField" layoutX="16.0" layoutY="176.0" prefHeight="32.0" prefWidth="235.0" />
+            <Button fx:id="modifyDiscardButton" layoutX="16.0" layoutY="222.0" mnemonicParsing="false" onAction="#hideModifyAnchor" prefHeight="41.0" prefWidth="110.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Discard" />
+            <Button fx:id="modifyRecipeMain" layoutX="143.0" layoutY="222.0" mnemonicParsing="false" onAction="#modifyRecipe" prefHeight="41.0" prefWidth="110.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Modify" />
+            <Label layoutX="93.0" layoutY="14.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="short decription" />
+            <Label layoutX="50.0" layoutY="97.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="ingredients (separate with commas)" />
+            <Label layoutX="64.0" layoutY="159.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="tags (separate with commas)" />
+            <Label layoutX="365.0" layoutY="14.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="detailed escription" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="deleteRecipeButton" layoutX="14.0" layoutY="545.0" mnemonicParsing="false" onAction="#deleteRecipe" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Delete" />
+      <Button fx:id="backButton" layoutX="123.0" layoutY="546.0" mnemonicParsing="false" onAction="#backToUserScreen" prefHeight="32.0" prefWidth="92.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Back" />
+      <Button fx:id="createToggle" layoutX="231.0" layoutY="31.0" mnemonicParsing="false" onAction="#showCreateAnchor" prefHeight="281.0" prefWidth="565.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Create Recipe" />
+      <Label layoutX="92.0" layoutY="14.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Recipes" />
+      <Button fx:id="modifyToggle" layoutX="230.0" layoutY="325.0" mnemonicParsing="false" onAction="#showModifyAnchor" prefHeight="256.0" prefWidth="559.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Modify Recipe" />
+   </children>
+</AnchorPane> 

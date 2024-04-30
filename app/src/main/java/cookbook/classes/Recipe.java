@@ -12,6 +12,7 @@ public class Recipe {
     private String shortDescription;
     private String detailedDescription;
     private int servings;
+    private int recipeCreatorId;
     private List<Comment> comments;
     private List<Ingredient> ingredients;
     private List<Tag> tags;
@@ -20,12 +21,13 @@ public class Recipe {
     /**
      * Constructor for Recipe class.
      */
-    public Recipe(int recipeId, String name, String shortDescription, String detailedDescription, int servings, String ingredientString, String tagString) {
+    public Recipe(int recipeId, String name, String shortDescription, String detailedDescription, int servings, int recipeCreatorId, String ingredientString, String tagString) {
         this.recipeId = recipeId;
         this.name = name;
         this.shortDescription = shortDescription;
         this.detailedDescription = detailedDescription;
         this.servings = servings;
+        this.recipeCreatorId = recipeCreatorId;
         this.comments = new ArrayList<>();
         ingredients = new ArrayList<>();
         tags = new ArrayList<>();
@@ -75,6 +77,9 @@ public class Recipe {
      * @return The list of Ingredient or Tag objects.
      */
     private void parseList(String listString, boolean isTags) {
+        if (listString == (null)) {
+            listString = "";
+        }
         String[] names = listString.split(", ");
         for (String name : names) {
             if (name.trim().length() > 0) {
@@ -89,6 +94,10 @@ public class Recipe {
 
     public int getRecipeId() {
         return recipeId;
+    }
+
+    public int getRecipeCreatorId() {
+        return recipeCreatorId;
     }
 
     public void setRecipeId(int recipeId) {

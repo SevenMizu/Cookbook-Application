@@ -30,6 +30,9 @@ public class UserScreenController {
     private Button manageMembersButton;
 
     @FXML
+    private Button myRecipesButton;
+
+    @FXML
     private TextArea recipe;
 
     @FXML
@@ -78,18 +81,14 @@ public class UserScreenController {
                     return true;
                 } else if (recipe.asString(recipe.getTags()).toLowerCase().contains(lowerCaseFilter)){
                      return true;
-                 } // else if (recipe.getDescription().toLowerCase().contains(lowerCaseFilter)) {
-                //     return true;
-                // }
-
+                 } 
                 // Can add more conditions to check other properties
 
                 return false;
             });
-            // After applying the filter, you might want to sort the list
             ObservableList<Recipe> sortedList = FXCollections.observableArrayList(filteredData);
             FXCollections.sort(sortedList, (recipe1, recipe2) -> 
-                recipe1.getName().compareToIgnoreCase(recipe2.getName())); // Sort by name, for example
+                recipe1.getName().compareToIgnoreCase(recipe2.getName())); 
             updateListView(sortedList);
         });
 
@@ -110,7 +109,7 @@ public class UserScreenController {
     // A method to load recipes using DBUtils' loadRecipes method
     public void loadRecipes() { // Changed method signature
         recipes = DBUtils.loadRecipes(); // Changed line
-        setMemberList();
+        setRecipeList();
         initialize();
     }
     public void setActiveUserLabel(String text) {
@@ -135,7 +134,7 @@ public class UserScreenController {
      * 
      * @param list The ObservableList to be set as the list for the memberList.
      */
-    public void setMemberList() {
+    public void setRecipeList() {
 
         // Concatenate ID and name for each recipe and add to the list
         ObservableList<String> displayList = FXCollections.observableArrayList();
@@ -161,5 +160,11 @@ public class UserScreenController {
                 longDescriptionField.setText("Number of Servings: " +  recipe.getServings() + "\n" + recipe.getDetailedDescription());
             }
         }
+    }
+
+    @FXML
+    void switchtoMyRecipes(ActionEvent event) {
+        DBUtils.changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
+
     }
 }

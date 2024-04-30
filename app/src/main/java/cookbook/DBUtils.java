@@ -1,5 +1,6 @@
 package cookbook;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import cookbook.classes.User;
 import cookbook.classes.UserSingleton;
 import cookbook.handlers.ManageMemberController;
+import cookbook.handlers.MyRecipesController;
 import cookbook.handlers.UserScreenController;
 import cookbook.classes.Admin;
 import cookbook.classes.Recipe;
@@ -115,6 +117,73 @@ public class DBUtils {
         return Querier.loadRecipes();
     }
 
+    /**
+     * Method to change scene to My Recipes screen, load user-specific recipes, and pass them to the controller.
+     * @param fxml The path to the FXML file.
+     * @param event The ActionEvent triggering the scene change.
+     */
+    public static void changeToMyRecipeScreen(String fxml, ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        try {
+            URL directory = DBUtils.class.getResource("/");
+            System.out.println("Looking for resources in directory: " + directory);
+
+            URL resourceUrl = DBUtils.class.getResource(fxml);
+            System.out.println("Looking for resource at: " + resourceUrl);
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxml));
+            Parent root = loader.load();
+            MyRecipesController myRecipesController = loader.getController();
+            ObservableList<Recipe> allRecipes = loadRecipes();
+            ObservableList<Recipe> userRecipes = FXCollections.observableArrayList();
+
+            // Select only the recipes created by the logged-in user
+            for (Recipe recipe : allRecipes) {
+                System.out.println(recipe.getName() + recipe.getRecipeCreatorId() + loggedInUser.getUser().getUserId());
+                if (recipe.getRecipeCreatorId() == loggedInUser.getUser().getUserId()) {
+                    System.out.println(recipe.getName());
+                    userRecipes.add(recipe);
+                }
+            }
+
+            myRecipesController.loadUserRecipes(userRecipes);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Method to create a new recipe and insert it into the database, with alerts based on the success of the operation.
+     * @param name The name of the recipe.
+     * @param shortDescription A short description of the recipe.
+     * @param detailedDescription A detailed description of the recipe.
+     * @param servings The number of servings the recipe makes.
+     * @param ingredientString Ingredients used in the recipe, comma-separated.
+     * @param tagString Tags associated with the recipe, comma-separated.
+     * @param event The ActionEvent from the UI interaction.
+     */
+    public static void createRecipe(String name, String shortDescription, String detailedDescription, int servings, String ingredientString, String tagString, ActionEvent event) {
+        // Creating the recipe instance
+        Recipe newRecipe = new Recipe(0, name, shortDescription, detailedDescription, servings, loggedInUser.getUser().getUserId(), ingredientString, tagString);
+
+        // Passing the new recipe to the database handler
+        boolean recipeCreated = Querier.createRecipeInDatabase(newRecipe);
+
+        // Constructing the alert message and type based on the success of the database operation
+        String alertMessage = recipeCreated ? "Successfully created the recipe: " + name : "Failed to create the recipe: " + name;
+        AlertType alertType = recipeCreated ? AlertType.INFORMATION : AlertType.ERROR;
+        
+        // Creating and showing the alert using a utility method for alert creation
+        Alert alert = AlertUtils.createAlert(alertType, "Recipe Creation", null, alertMessage);
+        alert.show();
+
+        // Optionally, refresh the recipe list or update the UI based on the operation's success
+        if (recipeCreated) {
+            changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
+        }
+    }
     // Method to change scene
     public static void changeToUserHomeScene(String fxml, ActionEvent event, User user) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -241,11 +310,6 @@ public class DBUtils {
 
                 loggedInUser = UserSingleton.getInstance(user);
                 changeToUserHomeScene("xmls/userHomeScreen.fxml", event, loggedInUser.getUser());
-                // Show success alert with a welcome message
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Success");
-                successAlert.setContentText("Welcome back, " + user.getUsername());
-                successAlert.show();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
