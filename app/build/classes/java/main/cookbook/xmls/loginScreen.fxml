@@ -7,44 +7,36 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFF00;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.LoginHandler">
+
+<AnchorPane prefHeight="498.0" prefWidth="947.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.LoginHandler">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FFFF00;">
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFF0;">
-               <children>
-                  <ImageView fitHeight="441.0" fitWidth="230.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../pictures/key.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="400.0" prefWidth="413.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <Button fx:id="loginButton" defaultButton="true" layoutX="151.0" layoutY="220.0" mnemonicParsing="false" onAction="#authenticate" text="Log in" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" />
-                  <Label fx:id="databaseStatus" alignment="CENTER" layoutY="56.0" prefHeight="76.0" prefWidth="350.0" text="Login with your credentials" textAlignment="RIGHT">
-                     <font>
-                        <Font name="Consolas" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="usernameField" layoutX="115.0" layoutY="147.0" prefHeight="26.0" prefWidth="150.0" promptText="username" AnchorPane.bottomAnchor="227.4" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="135.39999999999998" AnchorPane.topAnchor="147.0">
-                     <font>
-                        <Font name="Consolas" size="12.0" />
-                     </font>
-                  </TextField>
-                  <PasswordField fx:id="passwordField" layoutX="115.0" layoutY="181.0" prefHeight="26.0" prefWidth="119.0" promptText="password" AnchorPane.bottomAnchor="194.0" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="181.0">
-                     <font>
-                        <Font name="Consolas" size="12.0" />
-                     </font>
-                  </PasswordField>
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
+      <Button fx:id="loginButton" defaultButton="true" layoutX="392.0" layoutY="330.0" mnemonicParsing="false" onAction="#authenticate" prefHeight="63.0" prefWidth="198.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Log in" />
+      <Label fx:id="databaseStatus" alignment="CENTER" layoutX="298.0" layoutY="116.0" prefHeight="76.0" prefWidth="350.0" text="Login with your credentials" textAlignment="RIGHT">
+         <font>
+            <Font name="Consolas" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameField" layoutX="339.0" layoutY="233.0" prefHeight="40.0" prefWidth="300.0" promptText="username" AnchorPane.bottomAnchor="338.2" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="291.4000000000001" AnchorPane.topAnchor="233.0">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="passwordField" layoutX="339.0" layoutY="287.0" prefHeight="40.0" prefWidth="300.0" promptText="password" AnchorPane.bottomAnchor="277.79999999999995" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="291.4000000000001" AnchorPane.topAnchor="287.0">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </PasswordField>
+      <ImageView fitHeight="47.0" fitWidth="68.0" layoutX="277.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/profilelogo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="47.0" fitWidth="60.0" layoutX="281.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/keylogo.jpg" />
+         </image>
+      </ImageView>
    </children>
-</StackPane>
+</AnchorPane>
