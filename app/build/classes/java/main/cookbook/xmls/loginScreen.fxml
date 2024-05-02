@@ -10,20 +10,25 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="498.0" prefWidth="947.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.LoginHandler">
+<AnchorPane prefHeight="519.0" prefWidth="909.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.LoginHandler">
    <children>
+      <ImageView fitHeight="622.0" fitWidth="1089.0" layoutX="-71.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/another%20orange%202.jpg" />
+         </image>
+      </ImageView>
       <Button fx:id="loginButton" defaultButton="true" layoutX="392.0" layoutY="330.0" mnemonicParsing="false" onAction="#authenticate" prefHeight="63.0" prefWidth="198.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Log in" />
-      <Label fx:id="databaseStatus" alignment="CENTER" layoutX="298.0" layoutY="116.0" prefHeight="76.0" prefWidth="350.0" text="Login with your credentials" textAlignment="RIGHT">
+      <Label fx:id="databaseStatus" alignment="CENTER" layoutX="370.0" layoutY="119.0" prefHeight="76.0" prefWidth="350.0" text="Login with your credentials" textAlignment="RIGHT">
          <font>
             <Font name="Consolas" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameField" layoutX="339.0" layoutY="233.0" prefHeight="40.0" prefWidth="300.0" promptText="username" AnchorPane.bottomAnchor="338.2" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="291.4000000000001" AnchorPane.topAnchor="233.0">
+      <TextField fx:id="usernameField" layoutX="339.0" layoutY="220.0" prefHeight="47.0" prefWidth="413.0" promptText="username" AnchorPane.bottomAnchor="326.4" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="266.6" AnchorPane.topAnchor="220.0">
          <font>
             <Font name="Consolas" size="12.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="passwordField" layoutX="339.0" layoutY="287.0" prefHeight="40.0" prefWidth="300.0" promptText="password" AnchorPane.bottomAnchor="277.79999999999995" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="291.4000000000001" AnchorPane.topAnchor="287.0">
+      <PasswordField fx:id="passwordField" layoutX="339.0" layoutY="273.0" prefHeight="47.0" prefWidth="413.0" promptText="password" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="339.0" AnchorPane.rightAnchor="266.0" AnchorPane.topAnchor="273.0">
          <font>
             <Font name="Consolas" size="12.0" />
          </font>
