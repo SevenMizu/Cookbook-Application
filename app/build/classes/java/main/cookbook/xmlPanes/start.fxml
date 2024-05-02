@@ -7,26 +7,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="485.0" prefWidth="880.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.StartController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.StartController">
    <children>
-      <ImageView fitHeight="501.0" fitWidth="880.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="969.0" fitWidth="1466.0" layoutX="-9.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/NewStartBackground.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="dbConnect" layoutX="352.0" layoutY="362.0" onAction="#connectToDb" prefHeight="46.0" prefWidth="176.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Start Application" textAlignment="CENTER">
+      <Button fx:id="dbConnect" layoutX="608.0" layoutY="529.0" onAction="#connectToDb" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Start Application" textAlignment="CENTER">
             </Button>
-      <ImageView fitHeight="84.0" fitWidth="100.0" layoutX="398.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="193.0" fitWidth="257.0" layoutX="628.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/logo.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="340.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="612.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/welcome.gif" />
          </image>
       </ImageView>
-      <Label layoutX="314.0" layoutY="217.0" text="Rossum's Universal Robots">
+      <Label layoutX="589.0" layoutY="408.0" prefWidth="250.0" text="Rossum's Universal Robots">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
