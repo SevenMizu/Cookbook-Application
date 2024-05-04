@@ -1,20 +1,44 @@
 package cookbook.handlers;
 
+import java.util.stream.Collectors;
+
+import cookbook.AlertUtils;
 import cookbook.DBUtils;
+import cookbook.classes.Ingredient;
 import cookbook.classes.Recipe;
+import cookbook.classes.Tag;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
+
 
 public class MyRecipesController {
+
+    @FXML
+    private CheckBox servingsCheck;
+
+    @FXML
+    private CheckBox shortDEscCheck;
+
+    @FXML
+    private CheckBox tagsCheck;
+
+    @FXML
+    private CheckBox detailedDescCheck;
+
+    @FXML
+    private CheckBox ingredientsCheck;
 
     @FXML
     private Button backButton;
@@ -50,6 +74,12 @@ public class MyRecipesController {
     private Button deleteRecipeButton;
 
     @FXML
+    private TextField modifyRecipeName;
+
+    @FXML
+    private CheckBox modifyRecipeNameCheck;
+
+    @FXML
     private TextField modifyDetailedDescription;
 
     @FXML
@@ -66,6 +96,9 @@ public class MyRecipesController {
 
     @FXML
     private TextField modifyTagsField;
+
+    @FXML
+    private TextField modifyNumberOfServings;
 
     @FXML
     private Button modifyToggle;
@@ -116,10 +149,70 @@ public class MyRecipesController {
     void deleteRecipe(ActionEvent event) {
 
     }
-
     @FXML
     void modifyRecipe(ActionEvent event) {
+        String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
+        int activeCheckBoxes = countSelectedCheckboxes();
 
+        if (activeCheckBoxes < 1) {
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No changes made");
+            alert.show();
+        } else {
+            try {
+                // Extract the id from the recipeListView (format is "id: recipe name")
+                String idString = selectedItem.split(":")[0].trim();
+                int recipeId = Integer.parseInt(idString);
+    
+                // Get the recipe with that id from the recipes attribute
+                Recipe recipeToUpdate = recipes.stream()
+                                               .filter(r -> r.getRecipeId() == recipeId)
+                                               .findFirst()
+                                               .orElse(null);
+    
+                if (recipeToUpdate != null) {
+                    // The recipe attributes present in the setString using the recipe's setMethods
+                    applyUpdatesToRecipe(recipeToUpdate);
+    
+                    // DBUtils.modifyRecipe(the updated recipe instance);
+                    DBUtils.modifyRecipe(recipeToUpdate, event);
+
+                    clearAndHideAnchorPane(modifyAnchor, modifyDiscardButton);
+                } else {
+                    Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe", "Recipe not found");
+                    alert.show();
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Parsing Error", "Invalid recipe ID");
+                alert.show();
+            } catch (Exception e) {
+                Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Update Error", e.getMessage());
+                alert.show();
+            }
+        }
+    }
+
+
+    private void applyUpdatesToRecipe(Recipe recipe) {
+        // You would parse the updateString here and apply changes to the recipe object
+        // This example assumes you have setters for each field that might be modified
+        if (modifyRecipeNameCheck.isSelected()) {
+            recipe.setName(modifyRecipeName.getText());
+        }
+        if (detailedDescCheck.isSelected()) {
+            recipe.setDetailedDescription(modifyDetailedDescription.getText());
+        }
+        if (ingredientsCheck.isSelected()) {
+            recipe.setIngredients(modifyIngredientsField.getText());
+        }
+        if (shortDEscCheck.isSelected()) {
+            recipe.setShortDescription(modifyShortDescription.getText());
+        }
+        if (servingsCheck.isSelected()) {
+            recipe.setServings(Integer.parseInt(modifyNumberOfServings.getText()));
+        }
+        if (tagsCheck.isSelected()) {
+            recipe.setTags(modifyTagsField.getText());
+        }
     }
 
     @FXML
@@ -204,4 +297,71 @@ public class MyRecipesController {
         recipeListView.setItems(displayList);
     }
 
+    /**
+     * Method to count how many checkboxes are selected for modifying recipe attributes.
+     * @return The count of selected checkboxes.
+     */
+    private int countSelectedCheckboxes() {
+        int count = 0;
+        if (modifyRecipeNameCheck.isSelected()) count++;
+        if (detailedDescCheck.isSelected()) count++;
+        if (ingredientsCheck.isSelected()) count++;
+        if (shortDEscCheck.isSelected()) count++;
+        if (servingsCheck.isSelected()) count++;
+        if (tagsCheck.isSelected()) count++;
+        return count;
+    }
+
+        /**
+     * Method that enables or disables text fields based on the state of associated checkboxes.
+     * For each checkbox, if it is checked, the associated text field will be enabled;
+     * otherwise, the text field will be disabled.
+     */
+    @FXML
+    void handleCheckbox(ActionEvent event) {
+        // Modify Recipe Name Field
+        modifyRecipeName.setDisable(!modifyRecipeNameCheck.isSelected());
+
+        // Modify Detailed Description Field
+        modifyDetailedDescription.setDisable(!detailedDescCheck.isSelected());
+
+        // Modify Ingredients Field
+        modifyIngredientsField.setDisable(!ingredientsCheck.isSelected());
+
+        // Modify Short Description Field
+        modifyShortDescription.setDisable(!shortDEscCheck.isSelected());
+
+        // Modify Tags Field
+        modifyTagsField.setDisable(!tagsCheck.isSelected());
+
+        // Number of Servings Field
+        modifyNumberOfServings.setDisable(!servingsCheck.isSelected());
+    }
+
+    @FXML
+    void setModifyFields(MouseEvent event) {
+    String selectedRecipe = recipeListView.getSelectionModel().getSelectedItem();
+    if (selectedRecipe != null) {
+        int id = Integer.parseInt(selectedRecipe.split(":")[0].trim()); // Extracting the recipe ID from the selected item format "id: recipe name"
+        Recipe recipe = recipes.stream()
+                               .filter(r -> r.getRecipeId() == id)
+                               .findFirst()
+                               .orElse(null);
+        if (recipe != null) {
+            // Setting the text fields with the recipe details
+            modifyRecipeName.setText(recipe.getName());
+            modifyShortDescription.setText(recipe.getShortDescription());
+            modifyDetailedDescription.setText(recipe.getDetailedDescription());
+            modifyIngredientsField.setText(recipe.getIngredients().stream()
+                                                 .map(Ingredient::getName)
+                                                 .collect(Collectors.joining(", ")));
+            modifyTagsField.setText(recipe.getTags().stream()
+                                          .map(Tag::getName)
+                                          .collect(Collectors.joining(", ")));
+            modifyNumberOfServings.setText(Integer.toString(recipe.getServings()));
+        }
+    }
 }
+
+}
+
