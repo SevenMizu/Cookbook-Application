@@ -148,16 +148,18 @@ public class Recipe {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredients(String ingredients) {
+        this.ingredients.clear(); // Clear existing ingredients
+        parseList(ingredients, false); // Parse and add new ingredients
     }
 
     public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setTags(String tags) {
+        this.tags.clear(); // Clear existing tags
+        parseList(tags, true); // Parse and add new tags
     }
 
     public List<User> getFavorites() {
