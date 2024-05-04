@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import cookbook.classes.Recipe; // Import Recipe class
+import cookbook.classes.User; 
+import cookbook.classes.Comment; 
 import javafx.collections.FXCollections;
 import javafx.scene.input.MouseEvent;
 
@@ -19,6 +21,14 @@ import javafx.scene.input.MouseEvent;
 
 
 public class UserScreenController {
+    @FXML
+    private Button addCommentButton;
+
+    @FXML
+    private TextField addCommentField;
+
+    @FXML
+    private TextArea commentTextArea;
 
     @FXML
     private Label activeUserLabel;
@@ -58,6 +68,8 @@ public class UserScreenController {
 
     private ObservableList<Recipe> recipes; // Added line
     private FilteredList<Recipe> filteredData;
+    private ObservableList<User> users; // Added line
+
 
         public void initialize() {
         // Assuming initialize method is where you set up the bindings
@@ -108,7 +120,8 @@ public class UserScreenController {
 
     // A method to load recipes using DBUtils' loadRecipes method
     public void loadRecipes() { // Changed method signature
-        recipes = DBUtils.loadRecipes(); // Changed line
+        recipes = DBUtils.loadRecipes();
+        users = DBUtils.loadUsers(); 
         setRecipeList();
         initialize();
     }
@@ -158,7 +171,24 @@ public class UserScreenController {
             if (recipe != null) {
                 shortDescriptionField.setText(recipe.getShortDescription());
                 longDescriptionField.setText("Number of Servings: " +  recipe.getServings() + "\n" + recipe.getDetailedDescription());
-            }
+
+                StringBuilder commentsDisplay = new StringBuilder();
+
+                for (Comment comment : recipe.getComments()) {
+                    User commentUser = users.stream()
+                                            .filter(u -> u.getUserId() == comment.getAuthorID())
+                                            .findFirst()
+                                            .orElse(null);
+                    if (commentUser != null) {
+                        commentsDisplay.append("- @")
+                                       .append(commentUser.getUsername())
+                                       .append(": ")
+                                       .append(comment.getText())
+                                       .append("\n\n");
+                    }
+                }
+                commentTextArea.setText(commentsDisplay.toString());
+                        }
         }
     }
 

@@ -116,6 +116,8 @@ public class MyRecipesController {
 
     @FXML
     void backToUserScreen(ActionEvent event) {
+        DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
+
 
     }
     @FXML
@@ -147,8 +149,36 @@ public class MyRecipesController {
 
     @FXML
     void deleteRecipe(ActionEvent event) {
+        String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
+        if (selectedItem == null || selectedItem.isEmpty()) {
+            // Show an alert if no recipe is selected
+            Alert alert = AlertUtils.createAlert(AlertType.WARNING, "No Selection", "No Recipe Selected", "Please select a recipe to delete.");
+            alert.showAndWait();
+        } else {
+            // Extract the id from the recipeListView (format is "id: recipe name")
+            try {
+                int id = Integer.parseInt(selectedItem.split(":")[0].trim());
+                // Get the recipe with that id from the recipes observable list
+                Recipe recipeToDelete = recipes.stream()
+                                               .filter(r -> r.getRecipeId() == id)
+                                               .findFirst()
+                                               .orElse(null);
+                if (recipeToDelete != null) {
+                    // Call DBUtils.deleteRecipe method
+                    DBUtils.deleteRecipe(recipeToDelete, event);
+                } else {
+                    // Show an error alert if the recipe is not found
+                    Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Recipe Not Found", "The selected recipe could not be found.");
+                    alert.showAndWait();
+                }
+            } catch (NumberFormatException e) {
+                // Handle the case where the id is not properly formatted
+                Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe ID", "Could not parse the recipe ID from the selection.");
+                alert.showAndWait();
+            }
+        }    }
 
-    }
+
     @FXML
     void modifyRecipe(ActionEvent event) {
         String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
@@ -190,6 +220,8 @@ public class MyRecipesController {
             }
         }
     }
+
+    
 
     private void applyUpdatesToRecipe(Recipe recipe) {
         // You would parse the updateString here and apply changes to the recipe object

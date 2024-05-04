@@ -1,0 +1,18 @@
+# Sprint 4: Recipe Customization and Organization
+
+## User Story 16: Adjust servings for a recipe
+- Enable adjustment of servings in a recipe.
+- Reflect changes in ingredient quantities based on servings.
+- Save changes to serving sizes.
+
+## User Story 17: Add tags to a recipe
+- Allow addition of predefined and custom tags to recipes.
+- Use tags for recipe filtering and searching.
+
+## User Story 18: Select from predefined tags
+- Provide access to a list of predefined tags.
+- Enable easy selection of relevant tags during recipe creation or editing.
+
+## User Story 19: Add custom tags to a recipe
+- Allow input of custom tags to classify recipes.
+- Save and make custom tags available for future use.

@@ -1,0 +1,17 @@
+# Sprint 6: Shopping List and Sharing
+
+## User Story 24: Generate a shopping list
+- Generate shopping lists based on weekly dinner plans.
+- Group items in the shopping list by category.
+
+## User Story 25: Modify the shopping list
+- Edit the shopping list to remove or add items.
+- Reflect changes in real-time.
+
+## User Story 26: Send a recipe to another user
+- Share recipes with messaging functionality.
+- Notify sender of successful recipe sharing.
+
+## User Story 27: Add a message to a shared recipe
+- Include personalized messages in shared recipes.
+- Confirm to the sender when messages are attached successfully.

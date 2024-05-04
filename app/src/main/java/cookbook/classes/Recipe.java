@@ -21,7 +21,7 @@ public class Recipe {
     /**
      * Constructor for Recipe class.*/
     
-    public Recipe(int recipeId, String name, String shortDescription, String detailedDescription, int servings, int recipeCreatorId, String ingredientString, String tagString) {
+    public Recipe(int recipeId, String name, String shortDescription, String detailedDescription, int servings, int recipeCreatorId, String ingredientString, String tagString, String commentString) {
         this.recipeId = recipeId;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -33,6 +33,7 @@ public class Recipe {
         tags = new ArrayList<>();
         parseList(ingredientString, false);
         parseList(tagString, true);
+        parseComments(commentString);
         this.favorites = new ArrayList<>();
     }
 
@@ -60,6 +61,30 @@ public class Recipe {
      */
     public void addTag(Tag tag) {
         tags.add(tag);
+    }
+
+    /**
+     * Parses a string containing comments and creates a list of Comment objects.
+     * @param commentString The string containing comments, formatted as "commentID:commentText:UserID".
+     */
+    private void parseComments(String commentString) {
+        if (commentString == null || commentString.isEmpty()) return;
+
+        String[] commentParts = commentString.split(", ");
+        for (String part : commentParts) {
+            String[] details = part.split(":");
+            if (details.length == 3) {
+                try {
+                    int commentId = Integer.parseInt(details[0].trim());
+                    String text = details[1].trim();
+                    int userId = Integer.parseInt(details[2].trim());
+                    Comment comment = new Comment(commentId, text, userId);
+                    comments.add(comment);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing comment details: " + e.getMessage());
+                }
+            }
+        }
     }
 
     /**

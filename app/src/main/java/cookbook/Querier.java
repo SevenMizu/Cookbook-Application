@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cookbook.classes.Tag;
+import cookbook.classes.User;
+import cookbook.classes.Admin;
 import cookbook.classes.Ingredient;
 import cookbook.classes.Recipe;
 
@@ -256,31 +258,67 @@ public class Querier {
         return false; // Failed to delete row
     }
 
+    /**
+     * Loads all users from the database and returns them as an ObservableList of User objects.
+     * Each User object contains userId, username, password, and isAdmin status.
+     * 
+     * @return ObservableList<User> containing all users.
+     */
+    public static ObservableList<User> loadUsers() {
+        ObservableList<User> users = FXCollections.observableArrayList();
+        String sql = "SELECT user_id, username, password, is_admin FROM User";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                int isAdmin = rs.getInt("is_admin"); // Assuming isAdmin is stored as an integer (0 or 1)
+
+                User user;
+                if (isAdmin == 1) {
+                    user = new Admin(userId, username, password); // Assuming Admin extends User or is otherwise suitable
+                } else {
+                    user = new User(userId, username, password);
+                }
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
 
     public static ObservableList<Recipe> loadRecipes() {
         ObservableList<Recipe> recipes = FXCollections.observableArrayList();
         String sql_query = """
             SELECT
-                 r.RecipeID AS id,
-                 r.Name AS name,
-                 r.ShortDescription AS short_description,
-                 r.DetailedDescription AS detailed_description,
-                 r.Servings AS servings,
-                 r.UserID as userid,
-                 GROUP_CONCAT(DISTINCT t.Name ORDER BY t.Name SEPARATOR ', ') AS tags,
-                 GROUP_CONCAT(DISTINCT i.Name ORDER BY i.Name SEPARATOR ', ') AS ingredients
-             FROM
-                 Recipe r
-             LEFT JOIN
-                 RecipeTag rt ON r.RecipeID = rt.RecipeID
-             LEFT JOIN
-                 Tag t ON rt.TagID = t.TagID
-             LEFT JOIN
-                 RecipeIngredient ri ON r.RecipeID = ri.RecipeID
-             LEFT JOIN
-                 Ingredient i ON ri.IngredientID = i.IngredientID
-             GROUP BY
-                 r.RecipeID;
+            r.RecipeID AS id,
+            r.Name AS name,
+            r.ShortDescription AS short_description,
+            r.DetailedDescription AS detailed_description,
+            r.Servings AS servings,
+            r.UserID AS userid,
+            GROUP_CONCAT(DISTINCT t.Name ORDER BY t.Name SEPARATOR ', ') AS tags,
+            GROUP_CONCAT(DISTINCT i.Name ORDER BY i.Name SEPARATOR ', ') AS ingredients,
+            GROUP_CONCAT(CONCAT(c.CommentID, ':', c.Text, ':', c.UserID) ORDER BY c.CommentID SEPARATOR ', ') AS comments
+        FROM
+            Recipe r
+        LEFT JOIN
+            RecipeTag rt ON r.RecipeID = rt.RecipeID
+        LEFT JOIN
+            Tag t ON rt.TagID = t.TagID
+        LEFT JOIN
+            RecipeIngredient ri ON r.RecipeID = ri.RecipeID
+        LEFT JOIN
+            Ingredient i ON ri.IngredientID = i.IngredientID
+        LEFT JOIN
+            Comment c ON r.RecipeID = c.RecipeID
+        GROUP BY
+            r.RecipeID;
             """;
         try (PreparedStatement stmt = conn.prepareStatement(sql_query)) {
             ResultSet rs = stmt.executeQuery();
@@ -293,10 +331,15 @@ public class Querier {
                 int userId = rs.getInt("userid");
                 String tags = (rs.getString("tags") != null) ? rs.getString("tags") : "";
                 String ingredients = (rs.getString("ingredients") != null) ? rs.getString("ingredients") : "";
+                String comments = (rs.getString("comments") != null) ? rs.getString("comments") : "";
+
+                System.out.println(name);
+                System.out.println(comments);
+
                 
                 
                 // Create a Recipe instance and add to the recipes list
-                Recipe recipe = new Recipe(id, name, shortDescription, detailedDescription, servings, userId, ingredients, tags);
+                Recipe recipe = new Recipe(id, name, shortDescription, detailedDescription, servings, userId, ingredients, tags, comments);
                 recipes.add(recipe);
             }
         } catch (SQLException e) {
@@ -507,5 +550,56 @@ public class Querier {
             insertOrUpdateIngredient(conn, ingredient, recipe.getRecipeId());
         }
     }
+
+    /**
+ * Deletes a recipe and its associated ingredients and tags from the database.
+ * 
+ * @param recipe The recipe to be deleted.
+ * @return true if the deletion is successful, false otherwise.
+ */
+public static boolean deleteRecipe(Recipe recipe) {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+
+    try {
+        conn = Querier.conn;  // Assuming conn is a static member managed elsewhere
+        conn.setAutoCommit(false); // Start transaction
+
+        // Combine deletion of Recipe, RecipeIngredient, and RecipeTag into a single method
+        String[] deleteSQL = {
+            "DELETE FROM RecipeIngredient WHERE RecipeID = ?",
+            "DELETE FROM RecipeTag WHERE RecipeID = ?",
+            "DELETE FROM Recipe WHERE RecipeID = ?"
+        };
+
+        for (String sql : deleteSQL) {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, recipe.getRecipeId());
+            pstmt.executeUpdate();
+            pstmt.close(); // Close the statement to reuse the variable
+        }
+
+        conn.commit(); // Commit transaction if all deletions were successful
+        return true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        if (conn != null) {
+            try {
+                conn.rollback(); // Rollback transaction
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    } finally {
+        try {
+            if (pstmt != null) pstmt.close();
+            // Do not close the conn here as it is managed elsewhere
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
     
 }

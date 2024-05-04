@@ -1,0 +1,26 @@
+☐ # Sprint 3: Recipe Management and Customization
+
+✔ ## User Story 11: Create a new recipe @done (04/05/2024, 23:31:24)
+ - Access form or interface for creating new recipes.
+- Input recipe's name, short description, ingredients, and detailed description.
+- Ensure form submission adds recipe to the system.
+- Implement validation for required fields and formatting.
+- Confirm successful recipe creation to the user.
+
+✔ ## User Story 12: Add details to a recipe @done (04/05/2024, 23:31:35)
+- Access form or interface for editing recipe details.
+- Save changes to recipe details upon form submission.
+- Validate required fields and appropriate formatting.
+- Confirm successful update of recipe details to the user.
+
+## User Story 14: Add comments to a recipe
+- Provide functionality to add comments to recipes.
+- Ensure comments are visible to all users.
+- Support basic formatting in comments (e.g., bold, italic).
+- Confirm successful addition of comments.
+
+## User Story 15: Edit and remove comments
+- Allow users to edit their own comments.
+- Allow users to delete their own comments.
+- Reflect changes immediately in the interface.
+- Confirm successful modification or removal of comments.

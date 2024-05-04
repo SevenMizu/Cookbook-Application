@@ -15,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL; // Import URL from java.net package
+import java.net.URL; 
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -117,6 +117,10 @@ public class DBUtils {
         return Querier.loadRecipes();
     }
 
+    public static ObservableList<User> loadUsers() {
+        return Querier.loadUsers();
+    }
+
     /**
      * Method to change scene to My Recipes screen, load user-specific recipes, and pass them to the controller.
      * @param fxml The path to the FXML file.
@@ -167,7 +171,7 @@ public class DBUtils {
      */
     public static void createRecipe(String name, String shortDescription, String detailedDescription, int servings, String ingredientString, String tagString, ActionEvent event) {
         // Creating the recipe instance
-        Recipe newRecipe = new Recipe(0, name, shortDescription, detailedDescription, servings, loggedInUser.getUser().getUserId(), ingredientString, tagString);
+        Recipe newRecipe = new Recipe(0, name, shortDescription, detailedDescription, servings, loggedInUser.getUser().getUserId(), ingredientString, tagString, "");
 
         boolean recipeCreated = Querier.createRecipeInDatabase(newRecipe);
         String alertMessage = recipeCreated ? "Successfully created the recipe: " + name : "Failed to create the recipe: " + name;
@@ -192,6 +196,25 @@ public class DBUtils {
         Alert alert = AlertUtils.createAlert(alertType, "Recipe Update", null, alertMessage);
         alert.show();
         if (recipeUpdated) {
+            changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
+        }
+    }
+
+        /**
+     * Method to delete a recipe from the database and handle the response with an alert.
+     * @param recipe The recipe object to be deleted.
+     * @param event The ActionEvent triggering this method call.
+     */
+    public static void deleteRecipe(Recipe recipe, ActionEvent event) {
+        boolean recipeDeleted = Querier.deleteRecipe(recipe);
+        String alertMessage = recipeDeleted ? "Successfully deleted the recipe: " + recipe.getName()
+                                            : "Failed to delete the recipe: " + recipe.getName();
+        AlertType alertType = recipeDeleted ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "Recipe Deletion", null, alertMessage);
+        alert.show();
+
+        if (recipeDeleted) {
+            // Optionally, refresh the current screen or navigate away
             changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
         }
     }
