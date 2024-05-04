@@ -153,7 +153,8 @@ public class DBUtils {
             e.printStackTrace();
         }
     }
-    
+
+
     /**
      * Method to create a new recipe and insert it into the database, with alerts based on the success of the operation.
      * @param name The name of the recipe.
@@ -168,19 +169,29 @@ public class DBUtils {
         // Creating the recipe instance
         Recipe newRecipe = new Recipe(0, name, shortDescription, detailedDescription, servings, loggedInUser.getUser().getUserId(), ingredientString, tagString);
 
-        // Passing the new recipe to the database handler
         boolean recipeCreated = Querier.createRecipeInDatabase(newRecipe);
-
-        // Constructing the alert message and type based on the success of the database operation
         String alertMessage = recipeCreated ? "Successfully created the recipe: " + name : "Failed to create the recipe: " + name;
         AlertType alertType = recipeCreated ? AlertType.INFORMATION : AlertType.ERROR;
-        
-        // Creating and showing the alert using a utility method for alert creation
         Alert alert = AlertUtils.createAlert(alertType, "Recipe Creation", null, alertMessage);
         alert.show();
-
-        // Optionally, refresh the recipe list or update the UI based on the operation's success
         if (recipeCreated) {
+            changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
+        }
+    }
+
+    /**
+     * Method to modify a recipe in the database and handle the response with an alert.
+     * @param recipe The recipe object to be updated.
+     * @param event The ActionEvent triggering this method call.
+     */
+    public static void modifyRecipe(Recipe recipe, ActionEvent event) {
+        boolean recipeUpdated = Querier.updateRecipeInDatabase(recipe);
+        String alertMessage = recipeUpdated ? "Successfully updated the recipe: " + recipe.getName()
+                                            : "Failed to update the recipe: " + recipe.getName();
+        AlertType alertType = recipeUpdated ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "Recipe Update", null, alertMessage);
+        alert.show();
+        if (recipeUpdated) {
             changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
         }
     }

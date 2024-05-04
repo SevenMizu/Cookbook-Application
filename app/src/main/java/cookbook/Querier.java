@@ -256,6 +256,7 @@ public class Querier {
         return false; // Failed to delete row
     }
 
+
     public static ObservableList<Recipe> loadRecipes() {
         ObservableList<Recipe> recipes = FXCollections.observableArrayList();
         String sql_query = """
@@ -429,4 +430,82 @@ public class Querier {
             pstmtRecipeIngredient.executeUpdate();
         }
     }
+
+    public static boolean updateRecipeInDatabase(Recipe recipe) {
+        Connection updateConn = null;
+        PreparedStatement pstmt = null;
+        try {
+            updateConn = conn; // Assuming mainConn is your static connection instance managed elsewhere
+            updateConn.setAutoCommit(false); // Start transaction
+    
+            // Update the recipe
+            String sqlUpdateRecipe = "UPDATE Recipe SET Name = ?, ShortDescription = ?, DetailedDescription = ?, Servings = ?, UserID = ? WHERE RecipeID = ?";
+            pstmt = updateConn.prepareStatement(sqlUpdateRecipe);
+            pstmt.setString(1, recipe.getName());
+            pstmt.setString(2, recipe.getShortDescription());
+            pstmt.setString(3, recipe.getDetailedDescription());
+            pstmt.setInt(4, recipe.getServings());
+            pstmt.setInt(5, recipe.getRecipeCreatorId());
+            pstmt.setInt(6, recipe.getRecipeId());
+            pstmt.executeUpdate();
+    
+            // Update tags
+            updateRecipeTags(updateConn, recipe);
+    
+            // Update ingredients
+            updateRecipeIngredients(updateConn, recipe);
+    
+            updateConn.commit(); // Commit transaction
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (updateConn != null) {
+                try {
+                    updateConn.rollback(); // Rollback transaction
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            // Clean up resources but do not close the connection
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            // Do not close the conn here as it is managed elsewhere
+        }
+    }
+    
+    private static void updateRecipeTags(Connection conn, Recipe recipe) throws SQLException {
+        // First, clear existing tags for the recipe
+        String sqlDeleteTags = "DELETE FROM RecipeTag WHERE RecipeID = ?";
+        try (PreparedStatement pstmtDelete = conn.prepareStatement(sqlDeleteTags)) {
+            pstmtDelete.setInt(1, recipe.getRecipeId());
+            pstmtDelete.executeUpdate();
+        }
+    
+        // Re-insert/update tags
+        for (Tag tag : recipe.getTags()) {
+            insertOrUpdateTag(conn, tag, recipe.getRecipeId());
+        }
+    }
+    
+    private static void updateRecipeIngredients(Connection conn, Recipe recipe) throws SQLException {
+        // First, clear existing ingredients for the recipe
+        String sqlDeleteIngredients = "DELETE FROM RecipeIngredient WHERE RecipeID = ?";
+        try (PreparedStatement pstmtDelete = conn.prepareStatement(sqlDeleteIngredients)) {
+            pstmtDelete.setInt(1, recipe.getRecipeId());
+            pstmtDelete.executeUpdate();
+        }
+    
+        // Re-insert/update ingredients
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            insertOrUpdateIngredient(conn, ingredient, recipe.getRecipeId());
+        }
+    }
+    
 }
