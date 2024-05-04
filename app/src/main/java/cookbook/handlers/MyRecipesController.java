@@ -191,7 +191,6 @@ public class MyRecipesController {
         }
     }
 
-
     private void applyUpdatesToRecipe(Recipe recipe) {
         // You would parse the updateString here and apply changes to the recipe object
         // This example assumes you have setters for each field that might be modified
