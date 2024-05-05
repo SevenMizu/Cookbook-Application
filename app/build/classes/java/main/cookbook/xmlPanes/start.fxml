@@ -14,19 +14,19 @@
             <Image url="@../pictures/NewStartBackground.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="dbConnect" layoutX="608.0" layoutY="529.0" onAction="#connectToDb" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Start Application" textAlignment="CENTER">
+      <Button fx:id="dbConnect" layoutX="624.0" layoutY="536.0" onAction="#connectToDb" prefHeight="45.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Start Application" textAlignment="CENTER">
             </Button>
-      <ImageView fitHeight="193.0" fitWidth="257.0" layoutX="628.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="193.0" fitWidth="257.0" layoutX="633.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/logo.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="612.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="630.0" layoutY="449.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/welcome.gif" />
          </image>
       </ImageView>
-      <Label layoutX="589.0" layoutY="408.0" prefWidth="250.0" text="Rossum's Universal Robots">
+      <Label layoutX="585.0" layoutY="412.0" prefHeight="30.0" prefWidth="288.0" text="Rossum's Universal Robots">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
