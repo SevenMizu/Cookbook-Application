@@ -5,11 +5,18 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.UserScreenController">
    <children>
+      <ImageView fitHeight="653.0" fitWidth="1082.0" layoutX="-134.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/another%20orange.jpg" />
+         </image>
+      </ImageView>
       <TextArea fx:id="commentTextArea" layoutX="208.0" layoutY="381.0" prefHeight="78.0" prefWidth="443.0" />
       <Button fx:id="logoutButton" layoutX="714.0" layoutY="10.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="88.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Log out" />
       <Label fx:id="activeUserLabel" layoutX="648.0" layoutY="11.0" prefHeight="33.0" prefWidth="65.0" text="username">
