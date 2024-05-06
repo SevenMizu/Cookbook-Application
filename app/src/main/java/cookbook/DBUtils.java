@@ -29,6 +29,7 @@ import cookbook.handlers.ManageMemberController;
 import cookbook.handlers.MyRecipesController;
 import cookbook.handlers.UserScreenController;
 import cookbook.classes.Admin;
+import cookbook.classes.Comment;
 import cookbook.classes.Recipe;
 
 public class DBUtils {
@@ -218,6 +219,20 @@ public class DBUtils {
             changeToMyRecipeScreen("xmls/myRecipesScreen.fxml", event);
         }
     }
+
+    public static void addComment(int recipeId, String comment, ActionEvent event) {
+        Comment newComment = new Comment(recipeId, comment, loggedInUser.getUser().getUserId());
+        boolean commentAdded = Querier.addComment(recipeId, newComment);
+        String alertMessage = commentAdded ? "Comment added successfully" : "Failed to add comment";
+        AlertType alertType = commentAdded ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "Add Comment", null, alertMessage);
+        alert.show();
+        // Optionally, perform additional actions based on whether the comment was added successfully.
+        if (commentAdded) {
+            // Optionally, refresh the current screen or navigate away
+            changeToUserHomeScene("xmls/userHomeScreen.fxml", event, loggedInUser.getUser());
+        }  
+      }
     // Method to change scene
     public static void changeToUserHomeScene(String fxml, ActionEvent event, User user) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();

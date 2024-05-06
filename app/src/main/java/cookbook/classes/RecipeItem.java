@@ -30,4 +30,13 @@ public class RecipeItem {
     public void setName(String name) {
         this.name = name;
     }
+
+        /**
+     * Overrides the toString method to return the name of the item.
+     * @return The name of the item.
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
 }

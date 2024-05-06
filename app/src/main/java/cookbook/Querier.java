@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cookbook.classes.Tag;
+import cookbook.classes.Comment;
 import cookbook.classes.User;
 import cookbook.classes.Admin;
 import cookbook.classes.Ingredient;
@@ -51,6 +52,22 @@ public class Querier {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean addComment(int recipeID,  Comment commentToBeAdded) {
+        String sqlQuery = "INSERT INTO Comment (RecipeID, Text, UserID) VALUES (?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sqlQuery)) {
+            stmt.setInt(1, recipeID);
+            stmt.setString(2, commentToBeAdded.getText());
+            stmt.setInt(3, commentToBeAdded.getAuthorID());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; // Return true if comment added successfully
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static String checkForUser(String username) {
@@ -304,7 +321,10 @@ public class Querier {
             r.UserID AS userid,
             GROUP_CONCAT(DISTINCT t.Name ORDER BY t.Name SEPARATOR ', ') AS tags,
             GROUP_CONCAT(DISTINCT i.Name ORDER BY i.Name SEPARATOR ', ') AS ingredients,
-            GROUP_CONCAT(CONCAT(c.CommentID, ':', c.Text, ':', c.UserID) ORDER BY c.CommentID SEPARATOR ', ') AS comments
+            (SELECT GROUP_CONCAT(CONCAT(c.CommentID, ':', c.Text, ':', c.UserID) ORDER BY c.CommentID SEPARATOR ', ')
+             FROM Comment c
+             WHERE c.RecipeID = r.RecipeID
+             ) AS comments
         FROM
             Recipe r
         LEFT JOIN
@@ -315,8 +335,6 @@ public class Querier {
             RecipeIngredient ri ON r.RecipeID = ri.RecipeID
         LEFT JOIN
             Ingredient i ON ri.IngredientID = i.IngredientID
-        LEFT JOIN
-            Comment c ON r.RecipeID = c.RecipeID
         GROUP BY
             r.RecipeID;
             """;
