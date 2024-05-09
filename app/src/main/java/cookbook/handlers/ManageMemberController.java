@@ -63,22 +63,21 @@ public class ManageMemberController {
     void initialize() {
         rootAnchor.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             Node clickedNode = event.getPickResult().getIntersectedNode();
-            boolean clickedListCell = false;
-
-            // Check if the clicked node is a non-empty cell of memberList
+            boolean clickedEmptyListCell = false;
+    
+            // Check if the clicked node is an empty cell of the memberList
             while (clickedNode != null) {
-                if (clickedNode instanceof ListCell && ((ListCell<?>) clickedNode).getItem() != null) {
-                    clickedListCell = true;
+                if (clickedNode instanceof ListCell && ((ListCell<?>) clickedNode).getItem() == null) {
+                    clickedEmptyListCell = true;
                     break;
                 }
                 clickedNode = clickedNode.getParent();
             }
-
-            // Clear selection if the click is not on a non-empty list cell
-            if (!clickedListCell) {
+    
+            // Clear selection if the click is on an empty list cell
+            if (clickedEmptyListCell) {
                 memberList.getSelectionModel().clearSelection();
                 usernameCreate.clear(); // Clear the usernameCreate field
-
             }
         });
     }
@@ -173,22 +172,27 @@ public class ManageMemberController {
      */
     @FXML
     void createUser(ActionEvent event) {
-        if (validateFields()) {
+        // Check if there is a selection in the member list view
+        if (memberList.getSelectionModel().getSelectedItem() != null) {
+            // If an item is already selected, display an alert
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Clear the selection before creating a new user.");
+            alert.show();
+        } else if (validateFields()) {
+            // Proceed with the user creation logic if validation passes
             String username = usernameCreate.getText();
             String password = passwordCreate.getText();
             String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
             String rowInfo = username + ":" + password + ":" + isAdmin;
-
+    
             String tableNameText = tableName.getText();
             DBUtils.addRow(tableNameText, rowInfo);
-            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh
+            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // Refresh the screen
         } else {
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!"); // Display
-                                                                                                                   // error
-                                                                                                                   // alert
+            // Display an alert if form validation fails
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!");
             alert.show();
-
         }
+    
 
     }
 
