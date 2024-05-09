@@ -159,6 +159,19 @@ public class DBUtils {
         }
     }
 
+    public static void createUser(String username, String password, boolean isAdmin, ActionEvent event) {
+        // Creating the user instance
+        User newUser = isAdmin ? new Admin(0, username, password) : new User(0, username, password);
+    
+        boolean userCreated = Querier.createUserInDatabase(newUser);
+        String alertMessage = userCreated ? "Successfully created the user: " + username : "Failed to create the user: " + username;
+        AlertType alertType = userCreated ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "User Creation", null, alertMessage);
+        alert.show();
+        if (userCreated) {
+            changeToManageMemberScreen("xmls/manageMembers.fxml", event);
+        }
+    }
 
     /**
      * Method to create a new recipe and insert it into the database, with alerts based on the success of the operation.
@@ -368,4 +381,4 @@ public class DBUtils {
         }
     }
 
-} 
+}
