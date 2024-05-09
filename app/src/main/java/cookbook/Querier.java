@@ -227,7 +227,7 @@ public class Querier {
         }
         return false; // Failed to add row
     }
-
+    
         /**
      * A method that modifies a row in the specified table based on the provided set of values and row selector.
      * @param table The name of the table where the row will be modified.
@@ -366,17 +366,28 @@ public class Querier {
         return recipes;
     }
 
-    public static boolean createRecipeInDatabase(Recipe recipe) {
-        Connection Recipeconn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rsKeys = null;
-        try {
-            Recipeconn = conn; // Assuming mainConn is your static connection instance managed elsewhere
-            Recipeconn.setAutoCommit(false); // Start transaction
+    public static boolean createUserInDatabase(User user) {
+        String sqlUser = "INSERT INTO User (username, password, is_admin) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlUser, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setInt(3, (user instanceof Admin) ? 1 : 0); // If user is an instance of Admin, set is_admin to 1, otherwise 0
+            pstmt.executeUpdate();
     
-            // Insert the recipe
-            String sqlRecipe = "INSERT INTO Recipe (Name, ShortDescription, DetailedDescription, Servings, UserID) VALUES (?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sqlRecipe, PreparedStatement.RETURN_GENERATED_KEYS);
+            ResultSet rsKeys = pstmt.getGeneratedKeys();
+            if (rsKeys.next()) {
+                int userId = rsKeys.getInt(1);
+                user.setUserId(userId); // Set the generated ID back to the user
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean createRecipeInDatabase(Recipe recipe) {
+        String sqlRecipe = "INSERT INTO Recipe (Name, ShortDescription, DetailedDescription, Servings, UserID) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlRecipe, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, recipe.getName());
             pstmt.setString(2, recipe.getShortDescription());
             pstmt.setString(3, recipe.getDetailedDescription());
@@ -384,7 +395,7 @@ public class Querier {
             pstmt.setInt(5, recipe.getRecipeCreatorId());
             pstmt.executeUpdate();
     
-            rsKeys = pstmt.getGeneratedKeys();
+            ResultSet rsKeys = pstmt.getGeneratedKeys();
             if (rsKeys.next()) {
                 int recipeId = rsKeys.getInt(1);
                 recipe.setRecipeId(recipeId); // Set the generated ID back to the recipe
@@ -392,43 +403,18 @@ public class Querier {
     
             // Handle tags
             for (Tag tag : recipe.getTags()) {
-                insertOrUpdateTag(Recipeconn, tag, recipe.getRecipeId());
+                insertOrUpdateTag(conn, tag, recipe.getRecipeId());
             }
     
             // Similarly, handle ingredients
             for (Ingredient ingredient : recipe.getIngredients()) {
-                insertOrUpdateIngredient(Recipeconn, ingredient, recipe.getRecipeId());
+                insertOrUpdateIngredient(conn, ingredient, recipe.getRecipeId());
             }
     
-            Recipeconn.commit(); // Commit transaction
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            if (Recipeconn != null) {
-                try {
-                    Recipeconn.rollback(); // Rollback transaction
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
             return false;
-        } finally {
-            // Clean up resources but do not close the connection
-            if (rsKeys != null) {
-                try {
-                    rsKeys.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            // Do not close the conn here as it is managed elsewhere
         }
     }
 
