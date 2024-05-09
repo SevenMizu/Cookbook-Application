@@ -17,6 +17,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 
 public class ManageMemberController {
 
@@ -29,8 +30,6 @@ public class ManageMemberController {
     @FXML
     private Button createButton;
 
-    @FXML
-    private Button databaseCreate;
 
     @FXML
     private Button deleteButton;
@@ -45,34 +44,7 @@ public class ManageMemberController {
     private Button discardButton;
 
     @FXML
-    private CheckBox modifyAdminCheck;
-
-    @FXML
-    private RadioButton modifyAdminRadio;
-
-    @FXML
-    private AnchorPane modifyAnchor;
-
-    @FXML
-    private Button modifyButton;
-
-    @FXML
-    private Button modifyDatabase;
-
-    @FXML
-    private Button modifyDiscard;
-
-    @FXML
-    private CheckBox modifyPasswordCheck;
-
-    @FXML
-    private TextField modifyPasswordField;
-
-    @FXML
-    private CheckBox modifyUsernameCheck;
-
-    @FXML
-    private TextField modifyUsernameField;
+    private Button modifyButton; 
 
     @FXML
     private TextField passwordCreate;
@@ -82,6 +54,34 @@ public class ManageMemberController {
 
     @FXML
     private Label tableName;
+
+    @FXML
+    private AnchorPane rootAnchor; // Assuming this is the root AnchorPane
+
+
+        @FXML
+    void initialize() {
+        rootAnchor.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            Node clickedNode = event.getPickResult().getIntersectedNode();
+            boolean clickedListCell = false;
+
+            // Check if the clicked node is a non-empty cell of memberList
+            while (clickedNode != null) {
+                if (clickedNode instanceof ListCell && ((ListCell<?>) clickedNode).getItem() != null) {
+                    clickedListCell = true;
+                    break;
+                }
+                clickedNode = clickedNode.getParent();
+            }
+
+            // Clear selection if the click is not on a non-empty list cell
+            if (!clickedListCell) {
+                memberList.getSelectionModel().clearSelection();
+                usernameCreate.clear(); // Clear the usernameCreate field
+
+            }
+        });
+    }
 
     /**
      * A method that takes an ObservableList and sets it as the list for the
@@ -93,80 +93,7 @@ public class ManageMemberController {
         memberList.setItems(list);
     }
 
-    /**
-     * A method that enables or disables associated fields based on the state of
-     * checkboxes.
-     * For each checkbox, if it is checked, the associated field will be enabled;
-     * otherwise, it will be disabled.
-     */
-    @FXML
-    void handleCheckbox(ActionEvent event) {
-        // Modify Username Checkbox
-        if (modifyUsernameCheck.isSelected()) {
-            modifyUsernameField.setDisable(false); // Enable the associated text field
-        } else {
-            modifyUsernameField.setDisable(true); // Disable the associated text field
-        }
 
-        // Modify Password Checkbox
-        if (modifyPasswordCheck.isSelected()) {
-            modifyPasswordField.setDisable(false); // Enable the associated text field
-        } else {
-            modifyPasswordField.setDisable(true); // Disable the associated text field
-        }
-
-        // Modify Admin Checkbox
-        if (modifyAdminCheck.isSelected()) {
-            modifyAdminRadio.setDisable(false); // Enable the associated radio button
-        } else {
-            modifyAdminRadio.setDisable(true); // Disable the associated radio button
-        }
-    }
-
-    /**
-     * Method to show the createAnchor when createButton is clicked.
-     * This method sets the visibility of the createButton to false and that of the
-     * createAnchor to true.
-     * 
-     * @param event The ActionEvent triggering the method.
-     */
-
-    // gpt: make a showAnchor method with params the anchor to show(e.g AnchorPane
-    // modifyAnchor and the button to hide e.g Button modifyButton) and sets the
-    // visibily of the anchor to true and that of the button to false
-    @FXML
-    void showCreateAnchor(ActionEvent event) {
-        showAnchor(createAnchor, createButton);
-    }
-
-    /**
-     * Method to show the specified anchor pane and hide the specified button.
-     * 
-     * @param anchorPane The anchor pane to be shown.
-     * @param button     The button to be hidden.
-     */
-    private void showAnchor(AnchorPane anchorPane, Button button) {
-        anchorPane.setVisible(true);
-        button.setVisible(false);
-    }
-
-    @FXML
-    void showModifyAnchor(ActionEvent event) {
-        showAnchor(modifyAnchor, modifyButton);
-    }
-
-    /**
-     * Method to hide the createAnchor and show the createButton.
-     * This method sets the visibility of the createAnchor to false and that of the
-     * createButton to true.
-     * 
-     * @param event The ActionEvent triggering the method.
-     */
-    @FXML
-    void hideCreateAnchor(ActionEvent event) {
-        clearAndHideAnchorPane(createAnchor, createButton); // Clear fields and hide the modifyAnchor
-
-    }
 
     /**
      * A method that sets the selected item in the memberList ListView as the text
@@ -176,26 +103,16 @@ public class ManageMemberController {
     void setModifyUsernameFromList(MouseEvent event) {
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-            modifyUsernameField.setText(selectedItem.toLowerCase());
+            usernameCreate.setText(selectedItem.toLowerCase());
         }
     }
 
-    /**
-     * A method to hide the modifyAnchor, clear its fields, and show the
-     * modifyButton.
-     * 
-     * @param event The ActionEvent triggering the method.
-     */
-    @FXML
-    void hideModifyAnchor(ActionEvent event) {
-        clearAndHideAnchorPane(modifyAnchor, modifyButton); // Clear fields and hide the modifyAnchor
-    }
 
     @FXML
     void modifyUserRow(ActionEvent event) {
         String tableNameText = tableName.getText();
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
-        String setString = generateUpdateString();
+        String setString = "generateUpdateString()";
 
         if (setString.isEmpty()) {
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No changes made");
@@ -273,7 +190,6 @@ public class ManageMemberController {
 
         }
 
-        hideCreateAnchor(event);
     }
 
     /**
@@ -327,36 +243,6 @@ public class ManageMemberController {
         button.setVisible(true); // Show the button
     }
 
-    /**
-     * Method to dynamically generate SQL update string based on enabled fields.
-     * 
-     * @return The SQL update string.
-     */
-    private String generateUpdateString() {
-        StringBuilder updateString = new StringBuilder();
-
-        // Modify Username
-        if (modifyUsernameCheck.isSelected() && !modifyUsernameField.getText().isEmpty()) {
-            updateString.append("username = '").append(modifyUsernameField.getText()).append("', ");
-        }
-
-        // Modify Password
-        if (modifyPasswordCheck.isSelected() && !modifyPasswordField.getText().isEmpty()) {
-            updateString.append("password = '").append(modifyPasswordField.getText()).append("', ");
-        }
-
-        // Modify Admin
-        if (modifyAdminCheck.isSelected()) {
-            updateString.append("is_admin = ").append(modifyAdminRadio.isSelected() ? "1" : "0").append(", ");
-        }
-
-        // Remove trailing comma and space if any
-        if (updateString.length() > 0) {
-            updateString.setLength(updateString.length() - 2);
-        }
-
-        return updateString.toString();
-    }
 
 
 
