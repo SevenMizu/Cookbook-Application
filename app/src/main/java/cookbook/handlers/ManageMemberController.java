@@ -123,9 +123,7 @@ public class ManageMemberController {
         }
     }
 
-    // gpt: adjust the validateFields to validateTextFields and it should take a
-    // TextField[] of text fields to validate and loop through and perform the
-    // vlaidation, returing the success of failure boolean
+
     /**
      * A method to validate the content of the username and password fields.
      * Checks that none of the fields' content is only spaces, tabs, or completely
@@ -181,12 +179,8 @@ public class ManageMemberController {
             // Proceed with the user creation logic if validation passes
             String username = usernameCreate.getText();
             String password = passwordCreate.getText();
-            String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
-            String rowInfo = username + ":" + password + ":" + isAdmin;
-    
-            String tableNameText = tableName.getText();
-            DBUtils.addRow(tableNameText, rowInfo);
-            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // Refresh the screen
+            boolean isAdmin = isAdminRadioCreate.isSelected();
+            DBUtils.createUser(username, password, isAdmin, event);
         } else {
             // Display an alert if form validation fails
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!");
