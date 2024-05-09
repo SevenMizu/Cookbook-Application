@@ -2,6 +2,9 @@ package cookbook.handlers;
 
 import cookbook.AlertUtils;
 import cookbook.DBUtils;
+import cookbook.classes.Admin;
+import cookbook.classes.Recipe;
+import cookbook.classes.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -47,7 +51,13 @@ public class ManageMemberController {
     private Button modifyButton; 
 
     @FXML
-    private TextField passwordCreate;
+    private PasswordField passwordCreate;
+
+    @FXML
+    private TextField pass_text;
+
+    @FXML
+    private CheckBox pass_toggle;
 
     @FXML
     private TextField usernameCreate;
@@ -57,6 +67,9 @@ public class ManageMemberController {
 
     @FXML
     private AnchorPane rootAnchor; // Assuming this is the root AnchorPane
+
+    private ObservableList<User> users; // Added line
+
 
 
         @FXML
@@ -78,8 +91,13 @@ public class ManageMemberController {
             if (clickedEmptyListCell) {
                 memberList.getSelectionModel().clearSelection();
                 usernameCreate.clear(); // Clear the usernameCreate field
+                isAdminRadioCreate.setSelected(false); 
+
             }
         });
+
+        users = DBUtils.loadUsers();
+
     }
 
     /**
@@ -101,10 +119,28 @@ public class ManageMemberController {
     @FXML
     void setModifyUsernameFromList(MouseEvent event) {
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
+        User selectedUser = users.stream().filter(user -> user.getUsername().equalsIgnoreCase(selectedItem)).findFirst().orElse(null);
+        if (selectedUser != null) {
             usernameCreate.setText(selectedItem.toLowerCase());
+            isAdminRadioCreate.setSelected(selectedUser instanceof Admin);
+            // gpt: get the selectedUser password and set in the passwordCreate field 
+            passwordCreate.setText(selectedUser.getPassword());
         }
     }
+
+    @FXML
+    void togglePasswordVisibility(ActionEvent event) {
+        if (pass_toggle.isSelected()) {
+            pass_text.setText(passwordCreate.getText());
+            pass_text.setVisible(true);
+            passwordCreate.setVisible(false);
+        } else {
+            passwordCreate.setText(pass_text.getText());
+            passwordCreate.setVisible(true);
+            pass_text.setVisible(false);
+        }
+    }
+
 
 
     @FXML

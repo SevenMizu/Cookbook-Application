@@ -312,14 +312,7 @@ public class DBUtils {
         }
     }
 
-        // Method to add a row to the specified table
-    public static void addRow(String table, String rowInfo) {
-        boolean rowAdded = Querier.addRow(table, rowInfo);
-        String alertMessage = rowAdded ? "Successfully added a " + table : "Something went wrong adding a " + table;
-        AlertType alertType = rowAdded ? AlertType.INFORMATION : AlertType.ERROR;
-        Alert alert = AlertUtils.createAlert(alertType, "User Addition", null, alertMessage);
-        alert.show();
-    }
+
 
     // Method to add a row to the specified table
     public static void modifyRow(String table, String setString, String rowSelector, String tobeModified) {
