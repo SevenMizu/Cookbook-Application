@@ -73,6 +73,8 @@ public class UserScreenController {
     @FXML
     private Button showTags;
 
+    
+
     private ObservableList<Recipe> recipes; // Added line
     private FilteredList<Recipe> filteredData;
     private ObservableList<User> users; // Added line

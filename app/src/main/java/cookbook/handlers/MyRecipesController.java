@@ -157,9 +157,13 @@ public class MyRecipesController {
     }
     @FXML
     void createRecipe(ActionEvent event) {
-        // gpt: check and alert if something is selected in the recipeListView, else proceed
+        if (recipeListView.getSelectionModel().getSelectedItem() != null) {
+            AlertUtils.createAlert(AlertType.WARNING, "", "", "Clear the selection before creating a new user.").showAndWait();
+            return;
+        }
         try {
             // Extracting values from text fields and trimming any excess whitespace
+            validateFields(); // Method to validate the input fields
             String name = recipeNameField.getText().trim();
             String shortDescription = createShortDescription.getText().trim();
             String detailedDescription = createDetailedField.getText().trim();
@@ -171,15 +175,12 @@ public class MyRecipesController {
             DBUtils.createRecipe(name, shortDescription, detailedDescription, servings, ingredientString, tagString, event);
             
             // Optionally clear fields and refresh the recipe list after creation
-            clearAndHideAnchorPane(createAnchor, createToggle);
             loadUserRecipes(recipes); // Assuming 'recipes' gets updated elsewhere after DB operation
     
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing number of servings: " + e.getMessage());
-            // Handle error (e.g., show an alert to the user)
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "Number Format Error", "Error parsing number of servings: " + e.getMessage()).showAndWait();
         } catch (Exception e) {
-            System.out.println("Error creating recipe: " + e.getMessage());
-            // Handle any other exceptions
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "Creation Error", "Error creating recipe: " + e.getMessage()).showAndWait();
         }
     }
 
@@ -216,114 +217,67 @@ public class MyRecipesController {
 
     }
 
-    @FXML
-    void modifyRecipe(ActionEvent event) {
-        String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
-        int activeCheckBoxes = countSelectedCheckboxes();
-
-        if (activeCheckBoxes < 1) {
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No changes made");
-            alert.show();
-        } else {
-            try {
-                // Extract the id from the recipeListView (format is "id: recipe name")
-                String idString = selectedItem.split(":")[0].trim();
-                int recipeId = Integer.parseInt(idString);
-    
-                // Get the recipe with that id from the recipes attribute
-                Recipe recipeToUpdate = recipes.stream()
-                                               .filter(r -> r.getRecipeId() == recipeId)
-                                               .findFirst()
-                                               .orElse(null);
-    
-                if (recipeToUpdate != null) {
-                    // The recipe attributes present in the setString using the recipe's setMethods
-                    applyUpdatesToRecipe(recipeToUpdate);
-    
-                    // DBUtils.modifyRecipe(the updated recipe instance);
-                    DBUtils.modifyRecipe(recipeToUpdate, event);
-
-                    clearAndHideAnchorPane(modifyAnchor, modifyDiscardButton);
-                } else {
-                    Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe", "Recipe not found");
-                    alert.show();
-                }
-            } catch (NumberFormatException e) {
-                Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Parsing Error", "Invalid recipe ID");
-                alert.show();
-            } catch (Exception e) {
-                Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Update Error", e.getMessage());
-                alert.show();
-            }
+    /**
+ * Method to validate the input fields.
+ * Alert the user if any field is empty after trimming.
+ */
+private void validateFields() {
+    TextField[] fieldsToValidate = { recipeNameField, createShortDescription, createDetailedField, numberOfServingsField, createIngredientsField, createTagsField };
+    for (TextField field : fieldsToValidate) {
+        if (field.getText().trim().isEmpty()) {
+            AlertUtils.createAlert(AlertType.WARNING, "Validation Error", "", "Please fill in all the fields.").showAndWait();
+            throw new IllegalArgumentException("Empty field: " + field.getId());
         }
     }
+}
+@FXML
+void modifyRecipe(ActionEvent event) {
+    String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
+    if (selectedItem == null) {
+        AlertUtils.createAlert(AlertType.WARNING, "", "", "Please select a recipe to modify.").showAndWait();
+        return;
+    }
+    try {
+        // Extract the id from the recipeListView (format is "id: recipe name")
+        String idString = selectedItem.split(":")[0].trim();
+        int recipeId = Integer.parseInt(idString);
+
+        // Get the recipe with that id from the recipes attribute
+        Recipe recipeToUpdate = recipes.stream()
+                                       .filter(r -> r.getRecipeId() == recipeId)
+                                       .findFirst()
+                                       .orElse(null);
+
+        if (recipeToUpdate != null) {
+            // The recipe attributes present in the setString using the recipe's setMethods
+            applyUpdatesToRecipe(recipeToUpdate);
+
+            // DBUtils.modifyRecipe(the updated recipe instance);
+            DBUtils.modifyRecipe(recipeToUpdate, event);
+
+        } else {
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe", "Recipe not found").showAndWait();
+        }
+    } catch (NumberFormatException e) {
+        AlertUtils.createAlert(AlertType.ERROR, "Error", "Parsing Error", "Invalid recipe ID").showAndWait();
+    } catch (Exception e) {
+        AlertUtils.createAlert(AlertType.ERROR, "Error", "Update Error", e.getMessage()).showAndWait();
+    }
+}
 
     
 
     private void applyUpdatesToRecipe(Recipe recipe) {
-        // You would parse the updateString here and apply changes to the recipe object
-        // This example assumes you have setters for each field that might be modified
-        if (modifyRecipeNameCheck.isSelected()) {
-            recipe.setName(modifyRecipeName.getText());
-        }
-        if (detailedDescCheck.isSelected()) {
-            recipe.setDetailedDescription(modifyDetailedDescription.getText());
-        }
-        if (ingredientsCheck.isSelected()) {
-            recipe.setIngredients(modifyIngredientsField.getText());
-        }
-        if (shortDEscCheck.isSelected()) {
-            recipe.setShortDescription(modifyShortDescription.getText());
-        }
-        if (servingsCheck.isSelected()) {
-            recipe.setServings(Integer.parseInt(modifyNumberOfServings.getText()));
-        }
-        if (tagsCheck.isSelected()) {
-            recipe.setTags(modifyTagsField.getText());
-        }
+
+            recipe.setName(recipeNameField.getText());
+            recipe.setDetailedDescription(createDetailedField.getText());
+            recipe.setIngredients(createIngredientsField.getText());
+            recipe.setShortDescription(createShortDescription.getText());
+            recipe.setServings(Integer.parseInt(numberOfServingsField.getText()));
+            recipe.setTags(createTagsField.getText());
+        
     }
 
-    @FXML
-    void toggleCreateAnchor(ActionEvent event) {
-
-    }
-
-    @FXML
-    void toggleModifyAnchor(ActionEvent event) {
-
-    }
-
-    @FXML
-    void hideCreateAnchor(ActionEvent event) {
-        clearAndHideAnchorPane(createAnchor, createToggle); // Clear fields and hide the modifyAnchor
-
-    }
-
-    @FXML
-    void hideModifyAnchor(ActionEvent event) {
-        clearAndHideAnchorPane(modifyAnchor, modifyToggle); // Clear fields and hide the modifyAnchor
-    }
-
-    @FXML
-    void showCreateAnchor(ActionEvent event) {
-        showAnchor(createAnchor, createToggle);
-    }
-
-    /**
-     * Method to show the specified anchor pane and hide the specified button.
-     * 
-     * @param anchorPane The anchor pane to be shown.
-     * @param button     The button to be hidden.
-     */
-    private void showAnchor(AnchorPane anchorPane, Button button) {
-        anchorPane.setVisible(true);
-        button.setVisible(false);
-    }
-
-    @FXML
-    void showModifyAnchor(ActionEvent event) {
-        showAnchor(modifyAnchor, modifyToggle);
-    }
 
     // A method to load recipes using DBUtils' loadRecipes method
     public void loadUserRecipes(ObservableList<Recipe> loggedInUserRecipes) { // Changed method signature
@@ -331,21 +285,6 @@ public class MyRecipesController {
         setRecipeList();
     }
 
-    private void clearAndHideAnchorPane(AnchorPane anchorPane, Button button) {
-        for (Node node : anchorPane.getChildren()) {
-            if (node instanceof TextField) {
-                ((TextField) node).clear(); // Clear text fields
-            } else if (node instanceof CheckBox) {
-                ((CheckBox) node).setSelected(false); // Uncheck checkboxes
-            } else if (node instanceof RadioButton) {
-                ((RadioButton) node).setSelected(false); // Uncheck RadioButtons
-                // Add more conditions for other types of fields if needed
-            }
-        }
-
-        anchorPane.setVisible(false); // Hide the anchor pane after clearing its fields
-        button.setVisible(true); // Show the button
-    }
 
     /**
      * A method that takes an ObservableList and sets it as the list for the
@@ -365,47 +304,6 @@ public class MyRecipesController {
         recipeListView.setItems(displayList);
     }
 
-    /**
-     * Method to count how many checkboxes are selected for modifying recipe attributes.
-     * @return The count of selected checkboxes.
-     */
-    private int countSelectedCheckboxes() {
-        int count = 0;
-        if (modifyRecipeNameCheck.isSelected()) count++;
-        if (detailedDescCheck.isSelected()) count++;
-        if (ingredientsCheck.isSelected()) count++;
-        if (shortDEscCheck.isSelected()) count++;
-        if (servingsCheck.isSelected()) count++;
-        if (tagsCheck.isSelected()) count++;
-        return count;
-    }
-
-        /**
-     * Method that enables or disables text fields based on the state of associated checkboxes.
-     * For each checkbox, if it is checked, the associated text field will be enabled;
-     * otherwise, the text field will be disabled.
-     */
-    @FXML
-    void handleCheckbox(ActionEvent event) {
-        // Modify Recipe Name Field
-        modifyRecipeName.setDisable(!modifyRecipeNameCheck.isSelected());
-
-        // Modify Detailed Description Field
-        modifyDetailedDescription.setDisable(!detailedDescCheck.isSelected());
-
-        // Modify Ingredients Field
-        modifyIngredientsField.setDisable(!ingredientsCheck.isSelected());
-
-        // Modify Short Description Field
-        modifyShortDescription.setDisable(!shortDEscCheck.isSelected());
-
-        // Modify Tags Field
-        modifyTagsField.setDisable(!tagsCheck.isSelected());
-
-        // Number of Servings Field
-        modifyNumberOfServings.setDisable(!servingsCheck.isSelected());
-    }
-
     @FXML
     void setModifyFields(MouseEvent event) {
     String selectedRecipe = recipeListView.getSelectionModel().getSelectedItem();
@@ -417,16 +315,16 @@ public class MyRecipesController {
                                .orElse(null);
         if (recipe != null) {
             // Setting the text fields with the recipe details
-            modifyRecipeName.setText(recipe.getName());
-            modifyShortDescription.setText(recipe.getShortDescription());
-            modifyDetailedDescription.setText(recipe.getDetailedDescription());
-            modifyIngredientsField.setText(recipe.getIngredients().stream()
+            recipeNameField.setText(recipe.getName());
+            createShortDescription.setText(recipe.getShortDescription());
+            createDetailedField.setText(recipe.getDetailedDescription());
+            createIngredientsField.setText(recipe.getIngredients().stream()
                                                  .map(Ingredient::getName)
                                                  .collect(Collectors.joining(", ")));
-            modifyTagsField.setText(recipe.getTags().stream()
+            createTagsField.setText(recipe.getTags().stream()
                                           .map(Tag::getName)
                                           .collect(Collectors.joining(", ")));
-            modifyNumberOfServings.setText(Integer.toString(recipe.getServings()));
+            numberOfServingsField.setText(Integer.toString(recipe.getServings()));
         }
     }
 }
