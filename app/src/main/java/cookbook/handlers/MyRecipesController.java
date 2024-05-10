@@ -21,6 +21,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.ListCell;
+
 
 
 public class MyRecipesController {
@@ -110,9 +112,42 @@ public class MyRecipesController {
     private ListView<String> recipeListView;
 
     @FXML
+    private AnchorPane rootAnchor;
+
+    @FXML
     private TextField recipeNameField;
 
     private ObservableList<Recipe> recipes; // Added line
+
+
+    @FXML
+    void initialize() {
+        rootAnchor.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            Node clickedNode = event.getPickResult().getIntersectedNode();
+            boolean clickedEmptyListCell = false;
+    
+            // Check if the clicked node is an empty cell of the memberList
+            while (clickedNode != null) {
+                if (clickedNode instanceof ListCell && ((ListCell<?>) clickedNode).getItem() == null) {
+                    clickedEmptyListCell = true;
+                    break;
+                }
+                clickedNode = clickedNode.getParent();
+            }
+    
+            // Clear selection if the click is on an empty list cell
+            if (clickedEmptyListCell) {
+                recipeListView.getSelectionModel().clearSelection();
+                createDetailedField.clear(); // Clear the usernameCreate field
+                createIngredientsField.clear();
+                createTagsField.clear();                
+                recipeNameField.clear();
+                createShortDescription.clear();
+                numberOfServingsField.clear();
+            }
+        });
+
+        }
 
     @FXML
     void backToUserScreen(ActionEvent event) {
@@ -122,6 +157,7 @@ public class MyRecipesController {
     }
     @FXML
     void createRecipe(ActionEvent event) {
+        // gpt: check and alert if something is selected in the recipeListView, else proceed
         try {
             // Extracting values from text fields and trimming any excess whitespace
             String name = recipeNameField.getText().trim();
@@ -176,8 +212,9 @@ public class MyRecipesController {
                 Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe ID", "Could not parse the recipe ID from the selection.");
                 alert.showAndWait();
             }
-        }    }
+        }   
 
+    }
 
     @FXML
     void modifyRecipe(ActionEvent event) {
@@ -396,3 +433,13 @@ public class MyRecipesController {
 
 }
 
+
+
+
+
+
+
+
+
+    
+    
