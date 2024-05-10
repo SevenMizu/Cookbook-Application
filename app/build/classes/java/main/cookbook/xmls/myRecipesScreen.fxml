@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="600.0" fitWidth="811.0" rotate="180.0">
          <image>
-            <Image url="@../pictures/modern-background.jpg" />
+            <Image url="@../pictures/another%20orange.jpg" />
          </image>
          <rotationAxis>
             <Point3D y="1.0" />
