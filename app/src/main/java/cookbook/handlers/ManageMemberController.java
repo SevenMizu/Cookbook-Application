@@ -58,7 +58,6 @@ public class ManageMemberController {
 
     @FXML
     private CheckBox pass_toggle;
-
     @FXML
     private TextField usernameCreate;
 
@@ -91,6 +90,7 @@ public class ManageMemberController {
             if (clickedEmptyListCell) {
                 memberList.getSelectionModel().clearSelection();
                 usernameCreate.clear(); // Clear the usernameCreate field
+                passwordCreate.clear();
                 isAdminRadioCreate.setSelected(false); 
 
             }
@@ -144,18 +144,42 @@ public class ManageMemberController {
 
 
     @FXML
-    void modifyUserRow(ActionEvent event) {
-        String tableNameText = tableName.getText();
+    void modifyUser(ActionEvent event) {
+        if (memberList.getSelectionModel().isEmpty() || memberList.getSelectionModel().getSelectedItem().isEmpty()) {
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for modification").show();
+            return;
+        }
+    
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
-        String setString = "generateUpdateString()";
-
-        if (setString.isEmpty()) {
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No changes made");
-            alert.show();
+        User selectedUser = users.stream()
+                .filter(user -> user.getUsername().equalsIgnoreCase(selectedItem))
+                .findFirst().orElse(null);
+    
+        if (selectedUser == null) return;
+    
+        String newUsername = usernameCreate.getText().trim();
+        String newPassword = passwordCreate.getText().trim();
+        boolean newIsAdmin = isAdminRadioCreate.isSelected();
+        int selectedID = selectedUser.getUserId()
+    ;
+        if (validateTextFields(usernameCreate, passwordCreate) && isAdminRadioCreate != null) {
+            selectedUser.setUsername(newUsername);
+            System.out.println(newPassword);
+            selectedUser.setPassword(newPassword);
+    
+            if (newIsAdmin && !(selectedUser instanceof Admin)) {
+                users.remove(selectedUser);
+                selectedUser = new Admin(selectedID, newUsername, newPassword);
+                users.add(selectedUser);
+            } else if (!newIsAdmin && selectedUser instanceof Admin) {
+                users.remove(selectedUser);
+                selectedUser = new User(selectedID, newUsername, newPassword);
+                users.add(selectedUser);
+            }
+    
+            DBUtils.modifyUser(selectedUser, event);
         } else {
-            String rowSelector = "username = '" + selectedItem.toLowerCase() + "'";
-            DBUtils.modifyRow(tableNameText, setString, rowSelector, selectedItem.toLowerCase());
-            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!").show();
         }
     }
 
@@ -235,13 +259,15 @@ public class ManageMemberController {
      */
     @FXML
     void deleteUser(ActionEvent event) {
-        String tableNameText = tableName.getText();
         String value = memberList.getSelectionModel().getSelectedItem().toLowerCase(); // lowercase for admin names
+        User selectedUser = users.stream()
+        .filter(user -> user.getUsername().equalsIgnoreCase(value))
+        .findFirst().orElse(null);
         if (value.isEmpty()) {
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for deletion");
             alert.show();
         } else {
-            DBUtils.deleteRow(tableNameText, "username", value);
+            DBUtils.deleteRow(selectedUser);
             DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh }
         }
     }

@@ -214,6 +214,22 @@ public class DBUtils {
         }
     }
 
+    /**
+     * Method to modify a user in the database and handle the response with an alert.
+     * @param user The user object to be updated.
+     * @param event The ActionEvent triggering this method call.
+     */
+    public static void modifyUser(User user, ActionEvent event) {
+        boolean userUpdated = Querier.modifyUser(user);
+        String alertMessage = userUpdated ? "Successfully updated the user: " + user.getUsername()
+                                            : "Failed to update the user: " + user.getUsername();
+        AlertType alertType = userUpdated ? AlertType.INFORMATION : AlertType.ERROR;
+        Alert alert = AlertUtils.createAlert(alertType, "User Update", null, alertMessage);
+        alert.show();
+        if (userUpdated) {
+            changeToManageMemberScreen("xmls/manageMembers.fxml", event);
+        }
+    }
         /**
      * Method to delete a recipe from the database and handle the response with an alert.
      * @param recipe The recipe object to be deleted.
@@ -324,13 +340,13 @@ public class DBUtils {
         }
 
     // Method to add a row to the specified table
-    public static void deleteRow(String table, String column, String value) {
+    public static void deleteRow(User userToBeDeleted) {
         Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirmation", "Delete",
-        "Are you sure you want to delete " + value + "?");
+        "Are you sure you want to delete " + userToBeDeleted.getUsername() + "?");
         Optional<ButtonType> result = confirmationAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            boolean rowmodified = Querier.deleteRow(table, column, value);
-            String alertMessage = rowmodified ? "Successfully deleted  " + value : "Something went wrong modifying " + value;
+            boolean rowmodified = Querier.deleteUser(userToBeDeleted);
+            String alertMessage = rowmodified ? "Successfully deleted  " + userToBeDeleted.getUsername() : "Something went wrong modifying " + userToBeDeleted.getUsername();
             AlertType alertType = rowmodified ? AlertType.INFORMATION : AlertType.ERROR;
             Alert alert = AlertUtils.createAlert(alertType, "User Deleting", null, alertMessage);
             alert.show();
