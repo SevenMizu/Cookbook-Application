@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
@@ -18,36 +19,40 @@
             <Image url="@../pictures/another%20orange.jpg" />
          </image>
       </ImageView>
-      <TextArea fx:id="commentTextArea" layoutX="208.0" layoutY="381.0" prefHeight="78.0" prefWidth="443.0" />
-      <Button fx:id="logoutButton" layoutX="714.0" layoutY="10.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="88.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Log out" />
+      <TextArea fx:id="commentTextArea" layoutX="195.0" layoutY="381.0" prefHeight="78.0" prefWidth="443.0" />
+      <Button fx:id="logoutButton" layoutX="714.0" layoutY="7.0" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="88.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Log out">
+         <font>
+            <Font size="12.0" />
+         </font></Button>
       <Label fx:id="activeUserLabel" layoutX="648.0" layoutY="11.0" prefHeight="33.0" prefWidth="65.0" text="username">
          <font>
             <Font size="15.0" />
          </font></Label>
-      <ListView layoutX="664.0" layoutY="187.0" prefHeight="363.0" prefWidth="134.0" />
+      <ListView layoutX="665.0" layoutY="85.0" prefHeight="373.0" prefWidth="134.0" />
       <TextField fx:id="recipeSearchBar" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="625.0" />
       <Button fx:id="myRecipesButton" layoutX="195.0" layoutY="564.0" mnemonicParsing="false" onAction="#switchtoMyRecipes" prefHeight="33.0" prefWidth="443.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="My Recipes" />
-      <Button layoutX="650.0" layoutY="502.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="+ weekly dinner" />
+      <Button layoutX="665.0" layoutY="461.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="134.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="+ weekly dinner" />
       <Button fx:id="showIngredients" layoutX="194.0" layoutY="515.0" mnemonicParsing="false" onContextMenuRequested="#contextShowIngredients" prefHeight="44.0" prefWidth="223.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="ingredients" />
       <Button fx:id="showTags" layoutX="423.0" layoutY="515.0" mnemonicParsing="false" onContextMenuRequested="#contextShowTags" prefHeight="44.0" prefWidth="213.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="tags" />
-      <Label layoutX="340.0" layoutY="68.0" text="&lt;&lt;  short description  &gt;&gt;" />
-      <Label layoutX="681.0" layoutY="54.0" text="week recipes" />
+      <Label layoutX="340.0" layoutY="63.0" text="&lt;&lt;  short description  &gt;&gt;" />
+      <Label layoutX="696.0" layoutY="60.0" text="week recipes" />
       <TextArea fx:id="longDescriptionField" layoutX="194.0" layoutY="180.0" prefHeight="194.0" prefWidth="443.0" wrapText="true">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextArea>
       <Label layoutX="76.0" layoutY="54.0" text="Recipes" />
-      <ListView fx:id="recipesListView" layoutX="14.0" layoutY="76.0" onMouseClicked="#setRecipeDetails" prefHeight="466.0" prefWidth="174.0" />
-      <Button layoutX="652.0" layoutY="50.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&lt;" />
-      <Button layoutX="758.0" layoutY="49.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&gt;" />
+      <ListView fx:id="recipesListView" layoutX="14.0" layoutY="84.0" onMouseClicked="#setRecipeDetails" prefHeight="458.0" prefWidth="174.0" />
+      <Button layoutX="668.0" layoutY="55.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&lt;" />
+      <Button layoutX="772.0" layoutY="55.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&gt;" />
       <TextArea fx:id="shortDescriptionField" layoutX="193.0" layoutY="85.0" prefHeight="78.0" prefWidth="443.0">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextArea>
       <Button fx:id="manageMembersButton" layoutX="655.0" layoutY="542.0" mnemonicParsing="false" onAction="#changeToMemberManagerScreen" prefHeight="44.0" prefWidth="123.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="manage members" visible="false" />
       <Label layoutX="342.0" layoutY="163.0" text="&lt;&lt;  detailed description  &gt;&gt;" />
-      <TextField fx:id="addCommentField" layoutX="208.0" layoutY="461.0" prefHeight="44.0" prefWidth="323.0" />
-      <Button fx:id="addCommentButton" layoutX="536.0" layoutY="461.0" mnemonicParsing="false" onAction="#addCommentToDatabase" prefHeight="44.0" prefWidth="88.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="comment" />
+      <TextField fx:id="addCommentField" layoutX="195.0" layoutY="461.0" prefHeight="44.0" prefWidth="338.0" />
+      <Button fx:id="addCommentButton" layoutX="536.0" layoutY="461.0" mnemonicParsing="false" onAction="#addCommentToDatabase" prefHeight="44.0" prefWidth="103.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="comment" />
       <Button fx:id="showComments" layoutX="194.0" layoutY="381.0" mnemonicParsing="false" prefHeight="131.0" prefWidth="443.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="comments" visible="false" />
+      <CheckBox fx:id="favouriteCheck" layoutX="532.0" layoutY="59.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" text="Favourite" />
    </children>
 </AnchorPane>
