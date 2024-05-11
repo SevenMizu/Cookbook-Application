@@ -261,7 +261,6 @@ public class Querier {
 
     public static boolean deleteUser(User user) {
 
-        // gpt: adjust this method to first delete the comments like it does, and then loop through
         String[] deleteQueries = {
             "DELETE FROM Comment WHERE UserID = ?",
             "DELETE FROM Recipe WHERE UserID = ?",
@@ -292,6 +291,8 @@ public class Querier {
         ObservableList<User> users = FXCollections.observableArrayList();
         String sql = "SELECT user_id, username, password, is_admin FROM User";
 
+        // gpt: get the all the recipe ids that are tied to each user from the UserRecipeStar table and return in the form( "2, 5, 56, 4")). store in a variable and use in the constructor when creating the users to add in the users list
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
 
@@ -300,13 +301,13 @@ public class Querier {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 int isAdmin = rs.getInt("is_admin"); // Assuming isAdmin is stored as an integer (0 or 1)
+                String favouriteRecipeIds = getFavouriteRecipeIdsForUser(userId); // Fetch favorite recipe IDs as a comma-separated string
 
                 User user;
                 if (isAdmin == 1) {
-                    user = new Admin(userId, username, password); // Assuming Admin extends User or is otherwise
-                                                                  // suitable
+                    user = new Admin(userId, username, password, favouriteRecipeIds);
                 } else {
-                    user = new User(userId, username, password);
+                    user = new User(userId, username, password, favouriteRecipeIds);
                 }
                 users.add(user);
             }
@@ -315,6 +316,29 @@ public class Querier {
         }
 
         return users;
+    }
+
+    public static String getFavouriteRecipeIdsForUser(int userId) {
+        String sql = "SELECT RecipeID FROM UserRecipeStar WHERE UserID = ?";
+        List<Integer> recipeIds = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                recipeIds.add(rs.getInt("RecipeID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        StringBuilder idsStringBuilder = new StringBuilder();
+        for (int i = 0; i < recipeIds.size(); i++) {
+            idsStringBuilder.append(recipeIds.get(i));
+            if (i < recipeIds.size() - 1) {  // This check prevents adding a comma after the last ID
+                idsStringBuilder.append(", ");
+            }
+        }
+        return idsStringBuilder.toString();
     }
 
     public static ObservableList<Recipe> loadRecipes() {
