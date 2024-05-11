@@ -161,7 +161,7 @@ public class DBUtils {
 
     public static void createUser(String username, String password, boolean isAdmin, ActionEvent event) {
         // Creating the user instance
-        User newUser = isAdmin ? new Admin(0, username, password) : new User(0, username, password);
+        User newUser = isAdmin ? new Admin(0, username, password, "") : new User(0, username, password, "");
     
         boolean userCreated = Querier.createUserInDatabase(newUser);
         String alertMessage = userCreated ? "Successfully created the user: " + username : "Failed to create the user: " + username;
@@ -368,13 +368,15 @@ public class DBUtils {
             String storedUsername = userData[1];
             String storedPassword = userData[2];
             int isAdmin = Integer.parseInt(userData[3]);
+            String favouriteRecipeIds = Querier.getFavouriteRecipeIdsForUser(userId); // Fetch favorite recipe IDs as a comma-separated string
+
 
             User user = null; // Declare user variable outside if-else block
             if (isAdmin == 1) {
-                user = new Admin(userId, storedUsername, storedPassword);
+                user = new Admin(userId, storedUsername, storedPassword, favouriteRecipeIds);
                 System.out.println(user.getUsername() + "Admin user created");
             } else {
-                user = new User(userId, storedUsername, storedPassword);
+                user = new User(userId, storedUsername, storedPassword, favouriteRecipeIds);
                 System.out.println(user.getUsername() + "Regular user created");
             }
             if (user.checkPassword(inputPassword)) {
