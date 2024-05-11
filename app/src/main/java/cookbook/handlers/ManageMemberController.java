@@ -23,6 +23,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 
+
+
 public class ManageMemberController {
 
     @FXML
@@ -166,14 +168,17 @@ public class ManageMemberController {
             selectedUser.setUsername(newUsername);
             System.out.println(newPassword);
             selectedUser.setPassword(newPassword);
+            
+            String favouriteRecipeIds = selectedUser.getFavouriteRecipeIdsAsString();
+
     
             if (newIsAdmin && !(selectedUser instanceof Admin)) {
                 users.remove(selectedUser);
-                selectedUser = new Admin(selectedID, newUsername, newPassword);
+                selectedUser = new Admin(selectedID, newUsername, newPassword, favouriteRecipeIds);
                 users.add(selectedUser);
             } else if (!newIsAdmin && selectedUser instanceof Admin) {
                 users.remove(selectedUser);
-                selectedUser = new User(selectedID, newUsername, newPassword);
+                selectedUser = new User(selectedID, newUsername, newPassword, favouriteRecipeIds);
                 users.add(selectedUser);
             }
     
