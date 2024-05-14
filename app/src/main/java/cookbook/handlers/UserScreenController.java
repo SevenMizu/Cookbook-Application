@@ -203,7 +203,9 @@ public class UserScreenController {
                 commentTextArea.setText(commentsDisplay.toString());
 
                 User loggedInUser = DBUtils.getloggedInuser();
-                favouriteCheck.setSelected(loggedInUser != null && loggedInUser.getFavouriteRecipeIds().contains(recipe.getRecipeId()));            }
+                User selectedUser = users.stream().filter(user -> user.getUsername().equalsIgnoreCase(loggedInUser.getUsername())).findFirst().orElse(null);
+                // gpt : get the user with the id of the logged in user and use in the logic for setting select for favouriteCheck
+                favouriteCheck.setSelected(loggedInUser != null && selectedUser.getFavouriteRecipeIds().contains(recipe.getRecipeId()));            }
         }
     }
 
@@ -283,6 +285,7 @@ public class UserScreenController {
         }
     }
 
+
     @FXML
     void handleFavouriteCheck(ActionEvent event) {
         String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
@@ -295,20 +298,12 @@ public class UserScreenController {
         }
     
         int recipeId = Integer.parseInt(selectedRecipe.substring(0, selectedRecipe.indexOf(':')));
-        User loggedInUser = DBUtils.getloggedInUser();
+        User loggedInUser = DBUtils.getloggedInuser();
         boolean isFavourite = loggedInUser != null && loggedInUser.getFavouriteRecipeIds().contains(recipeId);
     
         // Call DBUtils to handle the favorite status toggle
-        boolean success = isFavourite ? DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.REMOVE) : DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.ADD);
+        boolean success = isFavourite ? DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.REMOVE, event) : DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.ADD, event);
     
-        if (success) {
-            favouriteCheck.setSelected(!isFavourite);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Failed to update favorite status.");
-            alert.show();
-        }
     }
     @FXML
     void contextShowIngredients(ContextMenuEvent event) {

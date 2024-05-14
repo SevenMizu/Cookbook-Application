@@ -37,6 +37,11 @@ public class DBUtils {
     private static Connection mainConn;
     private static UserSingleton loggedInUser; // Static attribute to hold the logged-in user instance
 
+    public enum FavouriteAction {
+        ADD,
+        REMOVE
+    }
+
     // Method to connect to the database
     public static void connectToDatabase(Stage stage) {
         // Add your database connection code here
@@ -157,6 +162,36 @@ public class DBUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static boolean handleFavourite(int recipeId, FavouriteAction action, ActionEvent event) {
+        User currentloggedInUser = getloggedInuser();
+        if (currentloggedInUser == null) {
+            AlertUtils.createAlert(Alert.AlertType.ERROR, "Error", null, "No user is currently logged in.").show();;
+        }
+    
+        boolean success = false;
+        switch (action) {
+            case ADD:
+                success = Querier.addFavourite(recipeId, currentloggedInUser.getUserId());
+                break;
+            case REMOVE:
+                success = Querier.removeFavourite(recipeId, currentloggedInUser.getUserId());
+                break;
+            default:
+            AlertUtils.createAlert(Alert.AlertType.ERROR, "Error", null, "Invalid favourite action specified.").show();;
+                return false;
+        }
+    
+        if (success) {
+            changeToUserHomeScene("xmls/userHomeScreen.fxml", event, loggedInUser.getUser());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Failed to update the favourite status.");
+            alert.show();
+        }
+
+        return success;
     }
 
     public static void createUser(String username, String password, boolean isAdmin, ActionEvent event) {
@@ -352,6 +387,8 @@ public class DBUtils {
             alert.show();
         }
         }
+
+    // gpt : give me a method like this DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.REMOVE) : DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.ADD) that depending on the enum, calls the appropriate querier method(querier.handlefavourite(recipe id, userid, remove or add enum))
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
         Querier que = new Querier(mainConn);
@@ -368,15 +405,13 @@ public class DBUtils {
             String storedUsername = userData[1];
             String storedPassword = userData[2];
             int isAdmin = Integer.parseInt(userData[3]);
-            String favouriteRecipeIds = Querier.getFavouriteRecipeIdsForUser(userId); // Fetch favorite recipe IDs as a comma-separated string
-
 
             User user = null; // Declare user variable outside if-else block
             if (isAdmin == 1) {
-                user = new Admin(userId, storedUsername, storedPassword, favouriteRecipeIds);
+                user = new Admin(userId, storedUsername, storedPassword, "");
                 System.out.println(user.getUsername() + "Admin user created");
             } else {
-                user = new User(userId, storedUsername, storedPassword, favouriteRecipeIds);
+                user = new User(userId, storedUsername, storedPassword, "");
                 System.out.println(user.getUsername() + "Regular user created");
             }
             if (user.checkPassword(inputPassword)) {
