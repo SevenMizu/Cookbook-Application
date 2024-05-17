@@ -6,17 +6,17 @@ package cookbook.classes;
 public class Comment {
     private int commentId;
     private String text; // The text content of the comment
-    private User author; // The author of the comment
+    private int authorID; // The author of the comment
 
     /**
      * Constructs a new Comment object.
      * @param text The text content of the comment.
      * @param author The author of the comment.
      */
-    public Comment(int commentId, String text, User author) {
+    public Comment(int commentId, String text, int authorID) {
         this.commentId = commentId;
         this.text = text;
-        this.author = author;
+        this.authorID = authorID;
     }
 
     /**
@@ -39,15 +39,15 @@ public class Comment {
      * Retrieves the author of the comment.
      * @return The author of the comment.
      */
-    public User getAuthor() {
-        return author;
+    public int getAuthorID() {
+        return authorID;
     }
 
     /**
      * Sets the author of the comment.
      * @param author The author to set.
      */
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthorID(int authorID) {
+        this.authorID = authorID;
     }
 }

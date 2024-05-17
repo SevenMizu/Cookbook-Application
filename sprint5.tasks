@@ -1,0 +1,17 @@
+# Sprint 5: User Favorites and Weekly Planning
+
+## User Story 20: Star a recipe as a favorite
+- Allow users to mark recipes as favorites.
+- Display a visual indicator for favorited recipes.
+
+## User Story 21: Unstar a recipe
+- Allow users to remove recipes from their favorites.
+- Confirm successful removal of recipes from favorites.
+
+## User Story 22: Create weekly dinner lists
+- Manage weekly dinner lists for specific weeks.
+- Provide functionality to view, edit, and delete lists.
+
+## User Story 23: Add dishes to weekly dinner lists
+- Add recipes to dinner lists, organized by day and mealtime.
+- Save changes to dinner lists automatically.

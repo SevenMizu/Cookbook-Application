@@ -2,6 +2,9 @@ package cookbook.handlers;
 
 import cookbook.AlertUtils;
 import cookbook.DBUtils;
+import cookbook.classes.Admin;
+import cookbook.classes.Recipe;
+import cookbook.classes.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
@@ -11,12 +14,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 
 public class ManageMemberController {
 
@@ -28,9 +34,6 @@ public class ManageMemberController {
 
     @FXML
     private Button createButton;
-
-    @FXML
-    private Button databaseCreate;
 
     @FXML
     private Button deleteButton;
@@ -45,43 +48,61 @@ public class ManageMemberController {
     private Button discardButton;
 
     @FXML
-    private CheckBox modifyAdminCheck;
-
-    @FXML
-    private RadioButton modifyAdminRadio;
-
-    @FXML
-    private AnchorPane modifyAnchor;
-
-    @FXML
     private Button modifyButton;
 
     @FXML
-    private Button modifyDatabase;
+    private PasswordField passwordCreate;
 
     @FXML
-    private Button modifyDiscard;
+    private TextField pass_text;
 
     @FXML
-    private CheckBox modifyPasswordCheck;
-
-    @FXML
-    private TextField modifyPasswordField;
-
-    @FXML
-    private CheckBox modifyUsernameCheck;
-
-    @FXML
-    private TextField modifyUsernameField;
-
-    @FXML
-    private TextField passwordCreate;
-
+    private CheckBox pass_toggle;
     @FXML
     private TextField usernameCreate;
 
     @FXML
     private Label tableName;
+
+    @FXML
+    private AnchorPane rootAnchor; // Assuming this is the root AnchorPane
+
+    private ObservableList<User> users; // Added line
+
+    @FXML
+    void initialize() {
+        rootAnchor.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            Node clickedNode = event.getPickResult().getIntersectedNode();
+            boolean clickedEmptyListCell = false;
+
+            // Check if the clicked node is an empty cell of the memberList
+            while (clickedNode != null) {
+                if (clickedNode instanceof ListCell && ((ListCell<?>) clickedNode).getItem() == null) {
+                    clickedEmptyListCell = true;
+                    break;
+                }
+                clickedNode = clickedNode.getParent();
+            }
+
+            // Clear selection if the click is on an empty list cell
+            if (clickedEmptyListCell) {
+                Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirm Clear",
+                        "You are about to clear the fields", "Do you want to proceed?");
+                confirmationAlert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        memberList.getSelectionModel().clearSelection();
+                        usernameCreate.clear(); // Clear the usernameCreate field
+                        passwordCreate.clear();
+                        isAdminRadioCreate.setSelected(false);
+                    }
+                });
+
+            }
+        });
+
+        users = DBUtils.loadUsers();
+
+    }
 
     /**
      * A method that takes an ObservableList and sets it as the list for the
@@ -94,122 +115,77 @@ public class ManageMemberController {
     }
 
     /**
-     * A method that enables or disables associated fields based on the state of
-     * checkboxes.
-     * For each checkbox, if it is checked, the associated field will be enabled;
-     * otherwise, it will be disabled.
-     */
-    @FXML
-    void handleCheckbox(ActionEvent event) {
-        // Modify Username Checkbox
-        if (modifyUsernameCheck.isSelected()) {
-            modifyUsernameField.setDisable(false); // Enable the associated text field
-        } else {
-            modifyUsernameField.setDisable(true); // Disable the associated text field
-        }
-
-        // Modify Password Checkbox
-        if (modifyPasswordCheck.isSelected()) {
-            modifyPasswordField.setDisable(false); // Enable the associated text field
-        } else {
-            modifyPasswordField.setDisable(true); // Disable the associated text field
-        }
-
-        // Modify Admin Checkbox
-        if (modifyAdminCheck.isSelected()) {
-            modifyAdminRadio.setDisable(false); // Enable the associated radio button
-        } else {
-            modifyAdminRadio.setDisable(true); // Disable the associated radio button
-        }
-    }
-
-    /**
-     * Method to show the createAnchor when createButton is clicked.
-     * This method sets the visibility of the createButton to false and that of the
-     * createAnchor to true.
-     * 
-     * @param event The ActionEvent triggering the method.
-     */
-
-    // gpt: make a showAnchor method with params the anchor to show(e.g AnchorPane
-    // modifyAnchor and the button to hide e.g Button modifyButton) and sets the
-    // visibily of the anchor to true and that of the button to false
-    @FXML
-    void showCreateAnchor(ActionEvent event) {
-        showAnchor(createAnchor, createButton);
-    }
-
-    /**
-     * Method to show the specified anchor pane and hide the specified button.
-     * 
-     * @param anchorPane The anchor pane to be shown.
-     * @param button     The button to be hidden.
-     */
-    private void showAnchor(AnchorPane anchorPane, Button button) {
-        anchorPane.setVisible(true);
-        button.setVisible(false);
-    }
-
-    @FXML
-    void showModifyAnchor(ActionEvent event) {
-        showAnchor(modifyAnchor, modifyButton);
-    }
-
-    /**
-     * Method to hide the createAnchor and show the createButton.
-     * This method sets the visibility of the createAnchor to false and that of the
-     * createButton to true.
-     * 
-     * @param event The ActionEvent triggering the method.
-     */
-    @FXML
-    void hideCreateAnchor(ActionEvent event) {
-        clearAndHideAnchorPane(createAnchor, createButton); // Clear fields and hide the modifyAnchor
-
-    }
-
-    /**
      * A method that sets the selected item in the memberList ListView as the text
      * in the TextField modifyUsernameField.
      */
     @FXML
     void setModifyUsernameFromList(MouseEvent event) {
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            modifyUsernameField.setText(selectedItem.toLowerCase());
+        User selectedUser = users.stream().filter(user -> user.getUsername().equalsIgnoreCase(selectedItem)).findFirst()
+                .orElse(null);
+        if (selectedUser != null) {
+            usernameCreate.setText(selectedItem.toLowerCase());
+            isAdminRadioCreate.setSelected(selectedUser instanceof Admin);
+            // gpt: get the selectedUser password and set in the passwordCreate field
+            passwordCreate.setText(selectedUser.getPassword());
         }
     }
 
-    /**
-     * A method to hide the modifyAnchor, clear its fields, and show the
-     * modifyButton.
-     * 
-     * @param event The ActionEvent triggering the method.
-     */
     @FXML
-    void hideModifyAnchor(ActionEvent event) {
-        clearAndHideAnchorPane(modifyAnchor, modifyButton); // Clear fields and hide the modifyAnchor
-    }
-
-    @FXML
-    void modifyUserRow(ActionEvent event) {
-        String tableNameText = tableName.getText();
-        String selectedItem = memberList.getSelectionModel().getSelectedItem();
-        String setString = generateUpdateString();
-
-        if (setString.isEmpty()) {
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No changes made");
-            alert.show();
+    void togglePasswordVisibility(ActionEvent event) {
+        if (pass_toggle.isSelected()) {
+            pass_text.setText(passwordCreate.getText());
+            pass_text.setVisible(true);
+            passwordCreate.setVisible(false);
         } else {
-            String rowSelector = "username = '" + selectedItem.toLowerCase() + "'";
-            DBUtils.modifyRow(tableNameText, setString, rowSelector, selectedItem.toLowerCase());
-            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh
+            passwordCreate.setText(pass_text.getText());
+            passwordCreate.setVisible(true);
+            pass_text.setVisible(false);
         }
     }
 
-    // gpt: adjust the validateFields to validateTextFields and it should take a
-    // TextField[] of text fields to validate and loop through and perform the
-    // vlaidation, returing the success of failure boolean
+    @FXML
+    void modifyUser(ActionEvent event) {
+        if (memberList.getSelectionModel().isEmpty() || memberList.getSelectionModel().getSelectedItem().isEmpty()) {
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for modification").show();
+            return;
+        }
+
+        String selectedItem = memberList.getSelectionModel().getSelectedItem();
+        User selectedUser = users.stream()
+                .filter(user -> user.getUsername().equalsIgnoreCase(selectedItem))
+                .findFirst().orElse(null);
+
+        if (selectedUser == null)
+            return;
+
+        String newUsername = usernameCreate.getText().trim();
+        String newPassword = passwordCreate.getText().trim();
+        boolean newIsAdmin = isAdminRadioCreate.isSelected();
+        int selectedID = selectedUser.getUserId();
+        if (validateTextFields(usernameCreate, passwordCreate) && isAdminRadioCreate != null) {
+            selectedUser.setUsername(newUsername);
+            System.out.println(newPassword);
+            selectedUser.setPassword(newPassword);
+
+            String favouriteRecipeIds = selectedUser.getFavouriteRecipeIdsAsString();
+
+            if (newIsAdmin && !(selectedUser instanceof Admin)) {
+                users.remove(selectedUser);
+                selectedUser = new Admin(selectedID, newUsername, newPassword, favouriteRecipeIds);
+                users.add(selectedUser);
+            } else if (!newIsAdmin && selectedUser instanceof Admin) {
+                users.remove(selectedUser);
+                selectedUser = new User(selectedID, newUsername, newPassword, favouriteRecipeIds);
+                users.add(selectedUser);
+            }
+
+            DBUtils.modifyUser(selectedUser, event);
+        } else {
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!").show();
+        }
+    }
+
     /**
      * A method to validate the content of the username and password fields.
      * Checks that none of the fields' content is only spaces, tabs, or completely
@@ -256,24 +232,24 @@ public class ManageMemberController {
      */
     @FXML
     void createUser(ActionEvent event) {
-        if (validateFields()) {
+        // Check if there is a selection in the member list view
+        if (memberList.getSelectionModel().getSelectedItem() != null) {
+            // If an item is already selected, display an alert
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "",
+                    "Clear the selection before creating a new user.");
+            alert.show();
+        } else if (validateFields()) {
+            // Proceed with the user creation logic if validation passes
             String username = usernameCreate.getText();
             String password = passwordCreate.getText();
-            String isAdmin = isAdminRadioCreate.isSelected() ? "1" : "0";
-            String rowInfo = username + ":" + password + ":" + isAdmin;
-
-            String tableNameText = tableName.getText();
-            DBUtils.addRow(tableNameText, rowInfo);
-            DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh
+            boolean isAdmin = isAdminRadioCreate.isSelected();
+            DBUtils.createUser(username, password, isAdmin, event);
         } else {
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!"); // Display
-                                                                                                                   // error
-                                                                                                                   // alert
+            // Display an alert if form validation fails
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!");
             alert.show();
-
         }
 
-        hideCreateAnchor(event);
     }
 
     /**
@@ -285,13 +261,15 @@ public class ManageMemberController {
      */
     @FXML
     void deleteUser(ActionEvent event) {
-        String tableNameText = tableName.getText();
         String value = memberList.getSelectionModel().getSelectedItem().toLowerCase(); // lowercase for admin names
+        User selectedUser = users.stream()
+                .filter(user -> user.getUsername().equalsIgnoreCase(value))
+                .findFirst().orElse(null);
         if (value.isEmpty()) {
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for deletion");
             alert.show();
         } else {
-            DBUtils.deleteRow(tableNameText, "username", value);
+            DBUtils.deleteRow(selectedUser);
             DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event); // refresh }
         }
     }
@@ -300,64 +278,6 @@ public class ManageMemberController {
     void backToUserScreen(ActionEvent event) {
         DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
 
-
     }
-
-    /**
-     * A method to clear all fields within the specified anchor pane, set its
-     * visibility to false, and then set the visibility of a button to true.
-     * 
-     * @param anchorPane The anchor pane whose children's fields need to be cleared.
-     * @param button     The button whose visibility needs to be set to true after
-     *                   hiding the anchor pane.
-     */
-    private void clearAndHideAnchorPane(AnchorPane anchorPane, Button button) {
-        for (Node node : anchorPane.getChildren()) {
-            if (node instanceof TextField) {
-                ((TextField) node).clear(); // Clear text fields
-            } else if (node instanceof CheckBox) {
-                ((CheckBox) node).setSelected(false); // Uncheck checkboxes
-            } else if (node instanceof RadioButton) {
-                ((RadioButton) node).setSelected(false); // Uncheck RadioButtons
-                // Add more conditions for other types of fields if needed
-            }
-        }
-
-        anchorPane.setVisible(false); // Hide the anchor pane after clearing its fields
-        button.setVisible(true); // Show the button
-    }
-
-    /**
-     * Method to dynamically generate SQL update string based on enabled fields.
-     * 
-     * @return The SQL update string.
-     */
-    private String generateUpdateString() {
-        StringBuilder updateString = new StringBuilder();
-
-        // Modify Username
-        if (modifyUsernameCheck.isSelected() && !modifyUsernameField.getText().isEmpty()) {
-            updateString.append("username = '").append(modifyUsernameField.getText()).append("', ");
-        }
-
-        // Modify Password
-        if (modifyPasswordCheck.isSelected() && !modifyPasswordField.getText().isEmpty()) {
-            updateString.append("password = '").append(modifyPasswordField.getText()).append("', ");
-        }
-
-        // Modify Admin
-        if (modifyAdminCheck.isSelected()) {
-            updateString.append("is_admin = ").append(modifyAdminRadio.isSelected() ? "1" : "0").append(", ");
-        }
-
-        // Remove trailing comma and space if any
-        if (updateString.length() > 0) {
-            updateString.setLength(updateString.length() - 2);
-        }
-
-        return updateString.toString();
-    }
-
-
 
 }

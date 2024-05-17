@@ -10,8 +10,6 @@ import javafx.scene.control.TextField;
 
 public class LoginHandler {
 
-    @FXML
-    private Label databaseStatus;
 
     @FXML
     private Button loginButton;

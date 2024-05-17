@@ -4,16 +4,14 @@ package cookbook.classes;
  * Represents a common entity for Ingredients and Tags in a Recipe.
  */
 public class RecipeItem {
-    private int recipeItemId;
     private String name; // The name of the item
 
     /**
      * Constructs a new RecipeItem object.
      * @param name The name of the item.
      */
-    public RecipeItem(int recipeItemId, String name) {
+    public RecipeItem(String name) {
         this.name = name;
-        this.recipeItemId = recipeItemId;
 
     }
 
@@ -31,5 +29,14 @@ public class RecipeItem {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+        /**
+     * Overrides the toString method to return the name of the item.
+     * @return The name of the item.
+     */
+    @Override
+    public String toString() {
+        return name;
     }
 }
