@@ -15,6 +15,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -134,18 +137,26 @@ public class MyRecipesController {
                 }
                 clickedNode = clickedNode.getParent();
             }
-    
+
+
             // Clear selection if the click is on an empty list cell
             if (clickedEmptyListCell) {
-                recipeListView.getSelectionModel().clearSelection();
-                createDetailedField.clear(); // Clear the usernameCreate field
-                createIngredientsField.clear();
-                createTagsField.clear();                
-                recipeNameField.clear();
-                createShortDescription.clear();
-                numberOfServingsField.clear();
+                Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirm Clear",
+                        "You are about to clear the fields", "Do you want to proceed?");
+                confirmationAlert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        createDetailedField.clear(); // Clear the usernameCreate field
+                        createIngredientsField.clear();
+                        createTagsField.clear();                
+                        recipeNameField.clear();
+                        createShortDescription.clear();
+                        numberOfServingsField.clear();
+                    }
+                });
+
             }
         });
+
 
         }
 
@@ -238,6 +249,7 @@ void modifyRecipe(ActionEvent event) {
         return;
     }
     try {
+        
         // Extract the id from the recipeListView (format is "id: recipe name")
         String idString = selectedItem.split(":")[0].trim();
         int recipeId = Integer.parseInt(idString);

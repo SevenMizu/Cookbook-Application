@@ -264,7 +264,7 @@ public class Querier {
 
         // gpt: adjust this method to first delete the comments like it does, and then loop through
         String[] deleteQueries = {
-            "DELETE FROM Comment WHERE UserID = ?",
+            "DELETE FROM Comment WHERE UserID = ?", // fix comment deleting 
             "DELETE FROM Recipe WHERE UserID = ?",
             "DELETE FROM User WHERE user_id = ?"
         };

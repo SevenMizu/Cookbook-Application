@@ -28,8 +28,8 @@
             <TextField fx:id="createShortDescription" alignment="TOP_LEFT" layoutX="14.0" layoutY="152.0" prefHeight="72.0" prefWidth="477.0" promptText="Short decription" />
             <TextField fx:id="createTagsField" layoutX="14.0" layoutY="100.0" prefHeight="41.0" prefWidth="477.0" promptText="tags (separate with commas)" />
             <TextField fx:id="createDetailedField" alignment="TOP_LEFT" layoutX="14.0" layoutY="234.0" prefHeight="198.0" prefWidth="477.0" promptText="detailed escription" />
-            <Button fx:id="createRecipeMain" layoutX="119.0" layoutY="457.0" mnemonicParsing="false" onAction="#createRecipe" prefHeight="47.0" prefWidth="134.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Create" />
-            <Button fx:id="modifyRecipeMain" layoutX="280.0" layoutY="460.0" mnemonicParsing="false" onAction="#modifyRecipe" prefHeight="41.0" prefWidth="110.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Modify" />
+            <Button fx:id="createRecipeMain" layoutX="119.0" layoutY="463.0" mnemonicParsing="false" onAction="#createRecipe" prefHeight="41.0" prefWidth="103.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Create" />
+            <Button fx:id="modifyRecipeMain" layoutX="288.0" layoutY="464.0" mnemonicParsing="false" onAction="#modifyRecipe" prefHeight="41.0" prefWidth="103.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Modify" />
          </children>
       </AnchorPane>
       <Button fx:id="deleteRecipeButton" layoutX="14.0" layoutY="545.0" mnemonicParsing="false" onAction="#deleteRecipe" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Delete" />

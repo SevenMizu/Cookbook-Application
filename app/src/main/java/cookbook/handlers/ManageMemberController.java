@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -22,8 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-
-
 
 public class ManageMemberController {
 
@@ -35,7 +34,6 @@ public class ManageMemberController {
 
     @FXML
     private Button createButton;
-
 
     @FXML
     private Button deleteButton;
@@ -50,7 +48,7 @@ public class ManageMemberController {
     private Button discardButton;
 
     @FXML
-    private Button modifyButton; 
+    private Button modifyButton;
 
     @FXML
     private PasswordField passwordCreate;
@@ -71,14 +69,12 @@ public class ManageMemberController {
 
     private ObservableList<User> users; // Added line
 
-
-
-        @FXML
+    @FXML
     void initialize() {
         rootAnchor.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             Node clickedNode = event.getPickResult().getIntersectedNode();
             boolean clickedEmptyListCell = false;
-    
+
             // Check if the clicked node is an empty cell of the memberList
             while (clickedNode != null) {
                 if (clickedNode instanceof ListCell && ((ListCell<?>) clickedNode).getItem() == null) {
@@ -87,13 +83,19 @@ public class ManageMemberController {
                 }
                 clickedNode = clickedNode.getParent();
             }
-    
+
             // Clear selection if the click is on an empty list cell
             if (clickedEmptyListCell) {
-                memberList.getSelectionModel().clearSelection();
-                usernameCreate.clear(); // Clear the usernameCreate field
-                passwordCreate.clear();
-                isAdminRadioCreate.setSelected(false); 
+                Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirm Clear",
+                        "You are about to clear the fields", "Do you want to proceed?");
+                confirmationAlert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        memberList.getSelectionModel().clearSelection();
+                        usernameCreate.clear(); // Clear the usernameCreate field
+                        passwordCreate.clear();
+                        isAdminRadioCreate.setSelected(false);
+                    }
+                });
 
             }
         });
@@ -112,8 +114,6 @@ public class ManageMemberController {
         memberList.setItems(list);
     }
 
-
-
     /**
      * A method that sets the selected item in the memberList ListView as the text
      * in the TextField modifyUsernameField.
@@ -121,11 +121,12 @@ public class ManageMemberController {
     @FXML
     void setModifyUsernameFromList(MouseEvent event) {
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
-        User selectedUser = users.stream().filter(user -> user.getUsername().equalsIgnoreCase(selectedItem)).findFirst().orElse(null);
+        User selectedUser = users.stream().filter(user -> user.getUsername().equalsIgnoreCase(selectedItem)).findFirst()
+                .orElse(null);
         if (selectedUser != null) {
             usernameCreate.setText(selectedItem.toLowerCase());
             isAdminRadioCreate.setSelected(selectedUser instanceof Admin);
-            // gpt: get the selectedUser password and set in the passwordCreate field 
+            // gpt: get the selectedUser password and set in the passwordCreate field
             passwordCreate.setText(selectedUser.getPassword());
         }
     }
@@ -143,35 +144,32 @@ public class ManageMemberController {
         }
     }
 
-
-
     @FXML
     void modifyUser(ActionEvent event) {
         if (memberList.getSelectionModel().isEmpty() || memberList.getSelectionModel().getSelectedItem().isEmpty()) {
             AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for modification").show();
             return;
         }
-    
+
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
         User selectedUser = users.stream()
                 .filter(user -> user.getUsername().equalsIgnoreCase(selectedItem))
                 .findFirst().orElse(null);
-    
-        if (selectedUser == null) return;
-    
+
+        if (selectedUser == null)
+            return;
+
         String newUsername = usernameCreate.getText().trim();
         String newPassword = passwordCreate.getText().trim();
         boolean newIsAdmin = isAdminRadioCreate.isSelected();
-        int selectedID = selectedUser.getUserId()
-    ;
+        int selectedID = selectedUser.getUserId();
         if (validateTextFields(usernameCreate, passwordCreate) && isAdminRadioCreate != null) {
             selectedUser.setUsername(newUsername);
             System.out.println(newPassword);
             selectedUser.setPassword(newPassword);
-            
+
             String favouriteRecipeIds = selectedUser.getFavouriteRecipeIdsAsString();
 
-    
             if (newIsAdmin && !(selectedUser instanceof Admin)) {
                 users.remove(selectedUser);
                 selectedUser = new Admin(selectedID, newUsername, newPassword, favouriteRecipeIds);
@@ -181,13 +179,12 @@ public class ManageMemberController {
                 selectedUser = new User(selectedID, newUsername, newPassword, favouriteRecipeIds);
                 users.add(selectedUser);
             }
-    
+
             DBUtils.modifyUser(selectedUser, event);
         } else {
             AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!").show();
         }
     }
-
 
     /**
      * A method to validate the content of the username and password fields.
@@ -238,7 +235,8 @@ public class ManageMemberController {
         // Check if there is a selection in the member list view
         if (memberList.getSelectionModel().getSelectedItem() != null) {
             // If an item is already selected, display an alert
-            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Clear the selection before creating a new user.");
+            Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "",
+                    "Clear the selection before creating a new user.");
             alert.show();
         } else if (validateFields()) {
             // Proceed with the user creation logic if validation passes
@@ -251,7 +249,6 @@ public class ManageMemberController {
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "Check the content of the forms!");
             alert.show();
         }
-    
 
     }
 
@@ -266,8 +263,8 @@ public class ManageMemberController {
     void deleteUser(ActionEvent event) {
         String value = memberList.getSelectionModel().getSelectedItem().toLowerCase(); // lowercase for admin names
         User selectedUser = users.stream()
-        .filter(user -> user.getUsername().equalsIgnoreCase(value))
-        .findFirst().orElse(null);
+                .filter(user -> user.getUsername().equalsIgnoreCase(value))
+                .findFirst().orElse(null);
         if (value.isEmpty()) {
             Alert alert = AlertUtils.createAlert(AlertType.ERROR, "Error", "", "No user selected for deletion");
             alert.show();
@@ -281,34 +278,6 @@ public class ManageMemberController {
     void backToUserScreen(ActionEvent event) {
         DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
 
-
     }
-
-    /**
-     * A method to clear all fields within the specified anchor pane, set its
-     * visibility to false, and then set the visibility of a button to true.
-     * 
-     * @param anchorPane The anchor pane whose children's fields need to be cleared.
-     * @param button     The button whose visibility needs to be set to true after
-     *                   hiding the anchor pane.
-     */
-    private void clearAndHideAnchorPane(AnchorPane anchorPane, Button button) {
-        for (Node node : anchorPane.getChildren()) {
-            if (node instanceof TextField) {
-                ((TextField) node).clear(); // Clear text fields
-            } else if (node instanceof CheckBox) {
-                ((CheckBox) node).setSelected(false); // Uncheck checkboxes
-            } else if (node instanceof RadioButton) {
-                ((RadioButton) node).setSelected(false); // Uncheck RadioButtons
-                // Add more conditions for other types of fields if needed
-            }
-        }
-
-        anchorPane.setVisible(false); // Hide the anchor pane after clearing its fields
-        button.setVisible(true); // Show the button
-    }
-
-
-
 
 }
