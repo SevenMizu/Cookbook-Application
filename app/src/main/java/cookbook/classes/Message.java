@@ -9,15 +9,17 @@ public class Message {
     private int recipeId;
     private String messageText;
     private LocalDateTime sentTime;
+    private boolean isRead;
 
     // Constructor
-    public Message(int messageId, int senderId, int recipientId, int recipeId, String messageText, LocalDateTime sentTime) {
+    public Message(int messageId, int senderId, int recipientId, int recipeId, String messageText, LocalDateTime sentTime, boolean isRead) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.recipeId = recipeId;
         this.messageText = messageText;
         this.sentTime = sentTime;
+        this.isRead = isRead;
     }
 
     // Getters and setters
@@ -69,6 +71,14 @@ public class Message {
         this.sentTime = sentTime;
     }
 
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean isRead) {
+        this.isRead = isRead;
+    }
+
     // Additional methods can be added as needed
 
     @Override
@@ -80,6 +90,7 @@ public class Message {
                 ", recipeId=" + recipeId +
                 ", messageText='" + messageText + '\'' +
                 ", sentTime=" + sentTime +
+                ", isRead=" + isRead +
                 '}';
     }
 }
