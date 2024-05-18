@@ -3,8 +3,10 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -41,7 +43,18 @@
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextArea>
       <Label layoutX="76.0" layoutY="54.0" text="Recipes" />
-      <ListView fx:id="recipesListView" layoutX="14.0" layoutY="84.0" onMouseClicked="#setRecipeDetails" prefHeight="458.0" prefWidth="174.0" />
+      <ListView fx:id="recipesListView" layoutX="14.0" layoutY="84.0" onMouseClicked="#setRecipeDetails" prefHeight="458.0" prefWidth="174.0">
+         <contextMenu>
+            <ContextMenu fx:id="sendContextMenu">
+              <items>
+                <MenuItem fx:id="sendMenuButton" mnemonicParsing="false" text="Send Recipe">
+                     <graphic>
+                        <TextField fx:id="sendUsernameField" promptText="Send To..." />
+                     </graphic>
+                  </MenuItem>
+              </items>
+            </ContextMenu>
+         </contextMenu></ListView>
       <Button layoutX="668.0" layoutY="55.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&lt;" />
       <Button layoutX="772.0" layoutY="55.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&gt;" />
       <TextArea fx:id="shortDescriptionField" layoutX="193.0" layoutY="85.0" prefHeight="78.0" prefWidth="443.0">

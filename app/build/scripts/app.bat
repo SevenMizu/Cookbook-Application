@@ -34,7 +34,7 @@ set APP_HOME=%DIRNAME%..
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and APP_OPTS to pass JVM options to this script.
-set DEFAULT_JVM_OPTS=
+set DEFAULT_JVM_OPTS="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls" "--add-exports=javafx.graphics/com.sun.javafx.stage=org.controlsfx.controls" "--add-exports=javafx.controls/com.sun.javafx.scene.control=org.controlsfx.controls"
 
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
@@ -68,7 +68,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\app.jar;%APP_HOME%\lib\guava-32.1.1-jre.jar;%APP_HOME%\lib\mysql-connector-j-8.3.0.jar;%APP_HOME%\lib\javafx-fxml-21.0.2-mac.jar;%APP_HOME%\lib\javafx-controls-21.0.2-mac.jar;%APP_HOME%\lib\failureaccess-1.0.1.jar;%APP_HOME%\lib\jsr305-3.0.2.jar;%APP_HOME%\lib\checker-qual-3.33.0.jar;%APP_HOME%\lib\error_prone_annotations-2.18.0.jar;%APP_HOME%\lib\protobuf-java-3.25.1.jar;%APP_HOME%\lib\javafx-graphics-21.0.2-mac.jar;%APP_HOME%\lib\javafx-base-21.0.2-mac.jar
+set CLASSPATH=%APP_HOME%\lib\app.jar;%APP_HOME%\lib\controlsfx-11.1.2.jar;%APP_HOME%\lib\guava-32.1.1-jre.jar;%APP_HOME%\lib\mysql-connector-j-8.3.0.jar;%APP_HOME%\lib\javafx-fxml-21.0.2-mac.jar;%APP_HOME%\lib\javafx-controls-21.0.2-mac.jar;%APP_HOME%\lib\failureaccess-1.0.1.jar;%APP_HOME%\lib\jsr305-3.0.2.jar;%APP_HOME%\lib\checker-qual-3.33.0.jar;%APP_HOME%\lib\error_prone_annotations-2.18.0.jar;%APP_HOME%\lib\protobuf-java-3.25.1.jar;%APP_HOME%\lib\javafx-graphics-21.0.2-mac.jar;%APP_HOME%\lib\javafx-base-21.0.2-mac.jar
 
 
 @rem Execute app

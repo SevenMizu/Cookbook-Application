@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
+import org.controlsfx.control.textfield.TextFields;
 
 public class UserScreenController {
     @FXML
@@ -77,13 +78,30 @@ public class UserScreenController {
     @FXML
     private Button showTags;
 
-    
+    @FXML
+    private ContextMenu sendContextMenu;
+
+    @FXML
+    private MenuItem sendMenuButton;
+
+    @FXML
+    private TextField sendUsernameField;
 
     private ObservableList<Recipe> recipes; // Added line
     private FilteredList<Recipe> filteredData;
     private ObservableList<User> users; // Added line
 
     public void initialize() {
+
+        users = DBUtils.loadUsers();
+
+        // Bind the sendUsernameField to autocomplete with usernames
+        ObservableList<String> usernames = FXCollections.observableArrayList();
+        for (User user : users) {
+            usernames.add(user.getUsername());
+        }
+        TextFields.bindAutoCompletion(sendUsernameField, usernames);
+
         // Assuming initialize method is where you set up the bindings
         if (recipes == null) {
             recipes = FXCollections.observableArrayList();
@@ -132,7 +150,6 @@ public class UserScreenController {
     // A method to load recipes using DBUtils' loadRecipes method
     public void loadRecipes() { // Changed method signature
         recipes = DBUtils.loadRecipes();
-        users = DBUtils.loadUsers();
         setRecipeList();
         initialize();
     }
@@ -203,9 +220,14 @@ public class UserScreenController {
                 commentTextArea.setText(commentsDisplay.toString());
 
                 User loggedInUser = DBUtils.getloggedInuser();
-                User selectedUser = users.stream().filter(user -> user.getUsername().equalsIgnoreCase(loggedInUser.getUsername())).findFirst().orElse(null);
-                // gpt : get the user with the id of the logged in user and use in the logic for setting select for favouriteCheck
-                favouriteCheck.setSelected(loggedInUser != null && selectedUser.getFavouriteRecipeIds().contains(recipe.getRecipeId()));            }
+                User selectedUser = users.stream()
+                        .filter(user -> user.getUsername().equalsIgnoreCase(loggedInUser.getUsername())).findFirst()
+                        .orElse(null);
+                // gpt : get the user with the id of the logged in user and use in the logic for
+                // setting select for favouriteCheck
+                favouriteCheck.setSelected(
+                        loggedInUser != null && selectedUser.getFavouriteRecipeIds().contains(recipe.getRecipeId()));
+            }
         }
     }
 
@@ -242,13 +264,14 @@ public class UserScreenController {
         }
     }
 
-     /**
+    /**
      * Method to create and show a context menu with either ingredients or tags
      * based on the specified parameter.
      * 
-     * @param event          The ContextMenuEvent triggering this method.
-     * @param isIngredients  A boolean indicating whether to populate the context menu
-     *                       with ingredients (true) or tags (false).
+     * @param event         The ContextMenuEvent triggering this method.
+     * @param isIngredients A boolean indicating whether to populate the context
+     *                      menu
+     *                      with ingredients (true) or tags (false).
      */
     private void createContextualMenu(ContextMenuEvent event, boolean isIngredients) {
         String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
@@ -285,7 +308,6 @@ public class UserScreenController {
         }
     }
 
-
     @FXML
     void handleFavouriteCheck(ActionEvent event) {
         String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
@@ -296,15 +318,17 @@ public class UserScreenController {
             alert.show();
             return;
         }
-    
+
         int recipeId = Integer.parseInt(selectedRecipe.substring(0, selectedRecipe.indexOf(':')));
         User loggedInUser = DBUtils.getloggedInuser();
         boolean isFavourite = loggedInUser != null && loggedInUser.getFavouriteRecipeIds().contains(recipeId);
-    
+
         // Call DBUtils to handle the favorite status toggle
-        boolean success = isFavourite ? DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.REMOVE, event) : DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.ADD, event);
-    
+        boolean success = isFavourite ? DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.REMOVE, event)
+                : DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.ADD, event);
+
     }
+
     @FXML
     void contextShowIngredients(ContextMenuEvent event) {
         createContextualMenu(event, true);
