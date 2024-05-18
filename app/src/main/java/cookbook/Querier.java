@@ -17,9 +17,13 @@ import cookbook.classes.User;
 import cookbook.classes.Admin;
 import cookbook.classes.Ingredient;
 import cookbook.classes.Recipe;
+import cookbook.classes.Message;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.time.LocalDateTime;
+
 
 public class Querier {
     private static Connection conn;
@@ -282,6 +286,38 @@ public class Querier {
         }
     }
 
+    /**
+     * Loads all messages where the specified user is the recipient.
+     * 
+     * @param userWithMessages The user whose messages are to be loaded.
+     * @return ObservableList<Message> containing all messages for the specified user.
+     */
+    public static ObservableList<Message> loadMessages(User userWithMessages) {
+        ObservableList<Message> messages = FXCollections.observableArrayList();
+        String sql = "SELECT MessageID, SenderID, RecipientID, RecipeID, MessageText, SentTime, `Read` FROM Messages WHERE RecipientID = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userWithMessages.getUserId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int messageId = rs.getInt("MessageID");
+                int senderId = rs.getInt("SenderID");
+                int recipientId = rs.getInt("RecipientID");
+                int recipeId = rs.getInt("RecipeID");
+                String messageText = rs.getString("MessageText");
+                LocalDateTime sentTime = rs.getTimestamp("SentTime").toLocalDateTime();
+                boolean isRead = rs.getBoolean("Read");
+
+                Message message = new Message(messageId, senderId, recipientId, recipeId, messageText, sentTime, isRead);
+                messages.add(message);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return messages;
+    }
     /**
      * Loads all users from the database and returns them as an ObservableList of
      * User objects.

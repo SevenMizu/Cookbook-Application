@@ -30,6 +30,7 @@ import cookbook.handlers.MyRecipesController;
 import cookbook.handlers.UserScreenController;
 import cookbook.classes.Admin;
 import cookbook.classes.Comment;
+import cookbook.classes.Message;
 import cookbook.classes.Recipe;
 
 public class DBUtils {
@@ -125,6 +126,10 @@ public class DBUtils {
 
     public static ObservableList<User> loadUsers() {
         return Querier.loadUsers();
+    }
+
+    public static ObservableList<Message> loadMessages() {
+        return Querier.loadMessages(loggedInUser.getUser());
     }
 
     /**
