@@ -264,9 +264,24 @@ public class Querier {
         return false; // Failed to modify row
     }
 
+    public static boolean sendMessage(int recipeId, int senderId, int recipientId, String messageText) {
+        String sql = "INSERT INTO Messages (RecipeID, SenderID, RecipientID, MessageText, SentTime) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, recipeId);
+            stmt.setInt(2, senderId);
+            stmt.setInt(3, recipientId);
+            stmt.setString(4, messageText);
+            stmt.setTimestamp(5, java.sql.Timestamp.valueOf(LocalDateTime.now()));
+    
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; // Return true if message added successfully
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static boolean deleteUser(User user) {
 
-        // gpt: adjust this method to first delete the comments like it does, and then loop through
         String[] deleteQueries = {
             "DELETE FROM Comment WHERE UserID = ?", // fix comment deleting 
             "DELETE FROM Recipe WHERE UserID = ?",

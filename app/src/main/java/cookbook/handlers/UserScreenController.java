@@ -52,7 +52,6 @@ public class UserScreenController {
     private FilteredList<Recipe> filteredData;
     private ObservableList<User> users;
 
-    // gpt: a sendMessage method that creates another sub menu from the sendMenuButton, which will have a textfield(name:sendMessagefield prompt text: enter messsage) and label text(send message).. when this submenu is pressed, the follwoing variables should be collected, the selected recipe id from the recipesListView(to extract the id), the content of the sendUsernameField and the content of the sendMessagefield. this variables are to be passed into a dbutils.sendmessage method.. follow java fx best practices
 
     @FXML
     public void initialize() {
@@ -64,6 +63,14 @@ public class UserScreenController {
         setupSendMessageSubMenu();
     }
 
+    private void validateFields(TextField... fields) {
+        for (TextField field : fields) {
+            if (field.getText().trim().isEmpty()) {
+                showErrorMessage("Please fill in all the fields.");
+                throw new IllegalArgumentException("Empty field: " + field.getId());
+            }
+        }
+    }
     private void loadUsers() {
         users = DBUtils.loadUsers();
     }
@@ -322,11 +329,23 @@ private void showSendMessageDialog() {
         if (dialogButton == sendButtonType) {
             String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
             if (selectedRecipe != null) {
+                validateFields(sendUsernameField, sendMessageField);
                 int recipeId = Integer.parseInt(selectedRecipe.split(":")[0]);
                 String sendUsername = sendUsernameField.getText();
-                String sendMessage = sendMessageField.getText();
-                System.out.println(recipeId + sendUsername + sendMessage );
-                // DBUtils.sendMessage(recipeId, sendUsername, sendMessage);
+                String recipeMessage = sendMessageField.getText();
+
+                // Get recipientId associated with the username
+                User recipient = users.stream()
+                                      .filter(user -> user.getUsername().equals(sendUsername))
+                                      .findFirst()
+                                      .orElse(null);
+
+                if (recipient != null) {
+                    int recipientId = recipient.getUserId();
+                    DBUtils.sendMessage(recipeId, recipientId, recipeMessage);
+                } else {
+                    showErrorMessage("Recipient not found.");
+                }
             } else {
                 showErrorMessage("No recipe selected.");
             }

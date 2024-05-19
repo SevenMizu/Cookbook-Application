@@ -132,6 +132,16 @@ public class DBUtils {
         return Querier.loadMessages(loggedInUser.getUser());
     }
 
+    public static boolean sendMessage(int recipeId, int recipientId, String messageText) {
+        int senderId = loggedInUser.getUser().getUserId();
+        boolean messageSent = Querier.sendMessage(recipeId, senderId, recipientId, "Message from @" + loggedInUser.getUser().getUsername() + " : " + messageText);
+        if (messageSent) {
+            AlertUtils.createAlert(Alert.AlertType.INFORMATION, "Success", null, "Message sent successfully.").show();
+        } else {
+            AlertUtils.createAlert(Alert.AlertType.ERROR, "Error", null, "Failed to send message.").show();
+        }
+        return messageSent;
+    }
     /**
      * Method to change scene to My Recipes screen, load user-specific recipes, and pass them to the controller.
      * @param fxml The path to the FXML file.
@@ -393,7 +403,6 @@ public class DBUtils {
         }
         }
 
-    // gpt : give me a method like this DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.REMOVE) : DBUtils.handleFavourite(recipeId, DBUtils.FavouriteAction.ADD) that depending on the enum, calls the appropriate querier method(querier.handlefavourite(recipe id, userid, remove or add enum))
     // Method to authenticate user
     public static void authenticate(String inputUsername, String inputPassword, ActionEvent event) {
         Querier que = new Querier(mainConn);

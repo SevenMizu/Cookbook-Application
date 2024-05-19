@@ -2,7 +2,9 @@ package cookbook;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tooltip;
-import javafx.css.PseudoClass;
+
+import java.util.List;
+
 
 import cookbook.classes.Message;
 
@@ -19,9 +21,9 @@ public class MessageListCell extends ListCell<Message> {
         } else {
             // allow wrapping
             setWrapText(true);
-            
-            setText(message.getMessageText());
-            setTooltip(new Tooltip(message.getMessageText()));
+            List<String> splitMessage = splitMessage(message.getMessageText());
+            setText(splitMessage.get(0)); 
+            setTooltip(new Tooltip(splitMessage.get(1))); 
             if (message.isRead()) {
                 setStyle("-fx-background-color: lightgray;");
             } else {
@@ -29,4 +31,7 @@ public class MessageListCell extends ListCell<Message> {
             }
         }
     }
-}
+
+    private List<String> splitMessage(String messageText) {
+        return List.of(messageText.split(" : ", 2));
+    }}
