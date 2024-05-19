@@ -45,6 +45,7 @@ public class UserScreenController {
     @FXML private MenuItem sendMenuButton;
     @FXML private TextField sendUsernameField;
     @FXML private ListView<Message> inboxList;
+    @FXML private Button wheelButton;
 
     // Data Models
     private ObservableList<Message> messages;
@@ -173,6 +174,12 @@ public class UserScreenController {
                 .map(recipe -> recipe.getRecipeId() + ": " + recipe.getName())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         recipesListView.setItems(displayList);
+    }
+
+
+    @FXML
+    void showWheel(ActionEvent event) {
+
     }
 
     @FXML
