@@ -5,9 +5,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.MyRecipesController">
    <children>
@@ -19,7 +21,14 @@
             <Point3D y="1.0" />
          </rotationAxis>
       </ImageView>
-      <ListView fx:id="recipeListView" layoutX="14.0" layoutY="33.0" onMouseClicked="#setModifyFields" prefHeight="505.0" prefWidth="200.0" />
+      <ListView fx:id="recipeListView" layoutX="14.0" layoutY="33.0" onMouseClicked="#setModifyFields" prefHeight="505.0" prefWidth="200.0">
+         <tooltip>
+            <Tooltip text="Select recipe to modify/delete" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Tooltip>
+         </tooltip></ListView>
       <AnchorPane fx:id="createAnchor" layoutX="230.0" layoutY="31.0" prefHeight="531.0" prefWidth="520.0">
          <children>
             <TextField fx:id="createIngredientsField" layoutX="14.0" layoutY="39.0" prefHeight="47.0" prefWidth="477.0" promptText="ingredients (separate with commas)" />
