@@ -25,7 +25,7 @@ public class MessageListCell extends ListCell<Message> {
             setText(splitMessage.get(0)); 
             setTooltip(new Tooltip(splitMessage.get(1))); 
             if (message.isRead()) {
-                setStyle("-fx-background-color: lightgray;");
+                setStyle("-fx-background-color: gray;");
             } else {
                 setStyle("-fx-background-color: white;");
             }

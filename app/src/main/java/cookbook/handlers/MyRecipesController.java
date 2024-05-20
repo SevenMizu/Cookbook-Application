@@ -29,13 +29,16 @@ public class MyRecipesController {
     private CheckBox servingsCheck, shortDEscCheck, tagsCheck, detailedDescCheck, ingredientsCheck;
 
     @FXML
-    private Button backButton, createDiscardButton, createRecipeMain, createToggle, deleteRecipeButton, modifyDiscardButton, modifyRecipeMain, modifyToggle;
+    private Button backButton, createDiscardButton, createRecipeMain, createToggle, deleteRecipeButton,
+            modifyDiscardButton, modifyRecipeMain, modifyToggle;
 
     @FXML
     private AnchorPane createAnchor, modifyAnchor, rootAnchor;
 
     @FXML
-    private TextField createDetailedField, createIngredientsField, createShortDescription, createTagsField, modifyRecipeName, modifyDetailedDescription, modifyIngredientsField, modifyShortDescription, modifyTagsField, modifyNumberOfServings, numberOfServingsField, recipeNameField;
+    private TextField createDetailedField, createIngredientsField, createShortDescription, createTagsField,
+            modifyRecipeName, modifyDetailedDescription, modifyIngredientsField, modifyShortDescription,
+            modifyTagsField, modifyNumberOfServings, numberOfServingsField, recipeNameField;
 
     @FXML
     private ListView<String> recipeListView;
@@ -43,17 +46,17 @@ public class MyRecipesController {
     private ObservableList<Recipe> recipes;
 
     /**
-    * Initializes the controller.
-    * Sets up the event filter for clearing fields on empty cell clicks.
-    */
+     * Initializes the controller.
+     * Sets up the event filter for clearing fields on empty cell clicks.
+     */
     @FXML
     void initialize() {
         setupClearSelectionOnEmptyCell();
     }
 
     /**
-    * Sets up the event filter to clear selection on empty cell clicks.
-    */
+     * Sets up the event filter to clear selection on empty cell clicks.
+     */
     private void setupClearSelectionOnEmptyCell() {
         rootAnchor.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             Node clickedNode = event.getPickResult().getIntersectedNode();
@@ -74,20 +77,23 @@ public class MyRecipesController {
     }
 
     /**
-    * Shows a confirmation alert to clear fields and clears the fields if confirmed.
-    */
+     * Shows a confirmation alert to clear fields and clears the fields if
+     * confirmed.
+     */
     private void showClearFieldsConfirmation() {
-        Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirm Clear", "You are about to clear the fields", "Do you want to proceed?");
+        Alert confirmationAlert = AlertUtils.createConfirmationAlert("Confirm Clear",
+                "You are about to clear the fields", "Do you want to proceed?");
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
+                recipeListView.getSelectionModel().clearSelection();
                 clearCreateFields();
             }
         });
     }
 
     /**
-    * Clears all input fields in the create recipe form.
-    */
+     * Clears all input fields in the create recipe form.
+     */
     private void clearCreateFields() {
         createDetailedField.clear();
         createIngredientsField.clear();
@@ -98,29 +104,36 @@ public class MyRecipesController {
     }
 
     /**
-    * Navigates back to the user home screen.
-    * 
-    * @param event The action event triggering the method.
-    */
+     * Navigates back to the user home screen.
+     * 
+     * @param event The action event triggering the method.
+     */
     @FXML
     void backToUserScreen(ActionEvent event) {
         DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
     }
 
     /**
-    * Creates a new recipe with the provided input fields if validation passes.
-    * Shows appropriate error messages if validation fails or if an exception occurs.
-    * 
-    * @param event The action event triggering the method.
-    */
+     * Creates a new recipe with the provided input fields if validation passes.
+     * Shows appropriate error messages if validation fails or if an exception
+     * occurs.
+     * 
+     * @param event The action event triggering the method.
+     */
     @FXML
     void createRecipe(ActionEvent event) {
+
         if (recipeListView.getSelectionModel().getSelectedItem() != null) {
-            AlertUtils.createAlert(AlertType.WARNING, "", "", "Clear the selection before creating a new recipe.").showAndWait();
+            AlertUtils.createAlert(AlertType.WARNING, "", "", "Clear the selection before creating a new recipe.")
+                    .showAndWait();
             return;
         }
+
+        if (!validateFields()) {
+            return;
+        }
+
         try {
-            validateFields();
             String name = recipeNameField.getText().trim();
             String shortDescription = createShortDescription.getText().trim();
             String detailedDescription = createDetailedField.getText().trim();
@@ -128,27 +141,32 @@ public class MyRecipesController {
             String ingredientString = createIngredientsField.getText().trim();
             String tagString = createTagsField.getText().trim();
 
-            DBUtils.createRecipe(name, shortDescription, detailedDescription, servings, ingredientString, tagString, event);
+            DBUtils.createRecipe(name, shortDescription, detailedDescription, servings, ingredientString, tagString,
+                    event);
             loadUserRecipes(recipes);
 
         } catch (NumberFormatException e) {
-            AlertUtils.createAlert(AlertType.ERROR, "Error", "Number Format Error", "Error parsing number of servings: " + e.getMessage()).showAndWait();
+            AlertUtils.createAlert(AlertType.ERROR, "Error", "Number Format Error",
+                    "Error parsing number of servings: " + e.getMessage()).showAndWait();
         } catch (Exception e) {
-            AlertUtils.createAlert(AlertType.ERROR, "Error", "Creation Error", "Error creating recipe: " + e.getMessage()).showAndWait();
+            AlertUtils
+                    .createAlert(AlertType.ERROR, "Error", "Creation Error", "Error creating recipe: " + e.getMessage())
+                    .showAndWait();
         }
     }
 
     /**
-    * Deletes the selected recipe from the list and the database.
-    * Shows an error message if no recipe is selected or if an exception occurs.
-    * 
-    * @param event The action event triggering the method.
-    */
+     * Deletes the selected recipe from the list and the database.
+     * Shows an error message if no recipe is selected or if an exception occurs.
+     * 
+     * @param event The action event triggering the method.
+     */
     @FXML
     void deleteRecipe(ActionEvent event) {
         String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
         if (selectedItem == null || selectedItem.isEmpty()) {
-            AlertUtils.createAlert(AlertType.WARNING, "No Selection", "No Recipe Selected", "Please select a recipe to delete.").showAndWait();
+            AlertUtils.createAlert(AlertType.WARNING, "No Selection", "No Recipe Selected",
+                    "Please select a recipe to delete.").showAndWait();
         } else {
             try {
                 int id = Integer.parseInt(selectedItem.split(":")[0].trim());
@@ -156,34 +174,43 @@ public class MyRecipesController {
                 if (recipeToDelete != null) {
                     DBUtils.deleteRecipe(recipeToDelete, event);
                 } else {
-                    AlertUtils.createAlert(AlertType.ERROR, "Error", "Recipe Not Found", "The selected recipe could not be found.").showAndWait();
+                    AlertUtils.createAlert(AlertType.ERROR, "Error", "Recipe Not Found",
+                            "The selected recipe could not be found.").showAndWait();
                 }
             } catch (NumberFormatException e) {
-                AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe ID", "Could not parse the recipe ID from the selection.").showAndWait();
+                AlertUtils.createAlert(AlertType.ERROR, "Error", "Invalid Recipe ID",
+                        "Could not parse the recipe ID from the selection.").showAndWait();
             }
         }
     }
 
     /**
-    * Validates the input fields to ensure none are empty.
-    * Throws an IllegalArgumentException if any field is empty and shows a warning alert.
-    */
-    private void validateFields() {
-        TextField[] fieldsToValidate = { recipeNameField, createShortDescription, createDetailedField, numberOfServingsField, createIngredientsField, createTagsField };
+     * Validates the input fields to ensure none are empty.
+     * Shows a warning alert if any field is empty.
+     * 
+     * @return true if all fields are valid, false otherwise.
+     */
+    private boolean validateFields() {
+        TextField[] fieldsToValidate = { recipeNameField, createShortDescription, createDetailedField,
+                numberOfServingsField, createIngredientsField, createTagsField };
         for (TextField field : fieldsToValidate) {
             if (field.getText().trim().isEmpty()) {
-                AlertUtils.createAlert(AlertType.WARNING, "Validation Error", "", "Please fill in all the fields.").showAndWait();
-                throw new IllegalArgumentException("Empty field: " + field.getId());
+                AlertUtils.createAlert(AlertType.WARNING, "Validation Error", "", "Please fill in all the fields.")
+                        .showAndWait();
+                return false;
             }
         }
+        return true;
     }
 
     /**
-    * Modifies the selected recipe with the provided input fields if validation passes.
-    * Shows appropriate error messages if validation fails or if an exception occurs.
-    * 
-    * @param event The action event triggering the method.
-    */
+     * Modifies the selected recipe with the provided input fields if validation
+     * passes.
+     * Shows appropriate error messages if validation fails or if an exception
+     * occurs.
+     * 
+     * @param event The action event triggering the method.
+     */
     @FXML
     void modifyRecipe(ActionEvent event) {
         String selectedItem = recipeListView.getSelectionModel().getSelectedItem();
@@ -209,10 +236,10 @@ public class MyRecipesController {
     }
 
     /**
-    * Applies updates to the provided recipe with the input field values.
-    * 
-    * @param recipe The recipe to update.
-    */
+     * Applies updates to the provided recipe with the input field values.
+     * 
+     * @param recipe The recipe to update.
+     */
     private void applyUpdatesToRecipe(Recipe recipe) {
         recipe.setName(recipeNameField.getText());
         recipe.setDetailedDescription(createDetailedField.getText());
@@ -223,18 +250,20 @@ public class MyRecipesController {
     }
 
     /**
-    * Loads the user's recipes into the observable list and sets the recipe list view.
-    * 
-    * @param loggedInUserRecipes The observable list of the logged-in user's recipes.
-    */
+     * Loads the user's recipes into the observable list and sets the recipe list
+     * view.
+     * 
+     * @param loggedInUserRecipes The observable list of the logged-in user's
+     *                            recipes.
+     */
     public void loadUserRecipes(ObservableList<Recipe> loggedInUserRecipes) {
         recipes = loggedInUserRecipes;
         setRecipeList();
     }
 
     /**
-    * Sets the recipe list view with the loaded recipes.
-    */
+     * Sets the recipe list view with the loaded recipes.
+     */
     public void setRecipeList() {
         ObservableList<String> displayList = recipes.stream()
                 .map(recipe -> recipe.getRecipeId() + ": " + recipe.getName())
@@ -243,10 +272,10 @@ public class MyRecipesController {
     }
 
     /**
-    * Sets the modify fields with the selected recipe's details.
-    * 
-    * @param event The mouse event triggering the method.
-    */
+     * Sets the modify fields with the selected recipe's details.
+     * 
+     * @param event The mouse event triggering the method.
+     */
     @FXML
     void setModifyFields(MouseEvent event) {
         String selectedRecipe = recipeListView.getSelectionModel().getSelectedItem();
@@ -257,7 +286,8 @@ public class MyRecipesController {
                 recipeNameField.setText(recipe.getName());
                 createShortDescription.setText(recipe.getShortDescription());
                 createDetailedField.setText(recipe.getDetailedDescription());
-                createIngredientsField.setText(recipe.getIngredients().stream().map(Ingredient::getName).collect(Collectors.joining(", ")));
+                createIngredientsField.setText(
+                        recipe.getIngredients().stream().map(Ingredient::getName).collect(Collectors.joining(", ")));
                 createTagsField.setText(recipe.getTags().stream().map(Tag::getName).collect(Collectors.joining(", ")));
                 numberOfServingsField.setText(Integer.toString(recipe.getServings()));
             }
