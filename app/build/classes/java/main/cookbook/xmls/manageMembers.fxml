@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.ManageMemberController">
+<AnchorPane fx:id="rootAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.ManageMemberController">
    <children>
-      <ImageView fitHeight="616.0" fitWidth="1089.0" layoutX="-160.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="685.0" fitWidth="1209.0" layoutX="-230.0" layoutY="-18.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/another%20orange.jpg" />
          </image>
@@ -28,15 +28,15 @@
                </font>
             </Tooltip>
          </tooltip></ListView>
-      <Button fx:id="createButton" layoutX="368.0" layoutY="280.0" mnemonicParsing="false" onAction="#createUser" prefHeight="46.0" prefWidth="151.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Create Member" />
-      <Button fx:id="modifyButton" layoutX="528.0" layoutY="280.0" mnemonicParsing="false" onAction="#modifyUser" prefHeight="46.0" prefWidth="151.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Modify Member" />
-      <Button fx:id="deleteButton" layoutX="433.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="35.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Delete Member" />
-      <Button fx:id="backButton" layoutX="478.0" layoutY="403.0" mnemonicParsing="false" onAction="#backToUserScreen" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Back" />
+      <Button fx:id="createButton" layoutX="368.0" layoutY="280.0" mnemonicParsing="false" onAction="#createUser" prefHeight="46.0" prefWidth="178.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Create Member" />
+      <Button fx:id="modifyButton" layoutX="570.0" layoutY="280.0" mnemonicParsing="false" onAction="#modifyUser" prefHeight="46.0" prefWidth="177.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Modify Member" />
+      <Button fx:id="deleteButton" layoutX="464.0" layoutY="341.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="46.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Delete Member" />
+      <Button fx:id="backButton" layoutX="518.0" layoutY="406.0" mnemonicParsing="false" onAction="#backToUserScreen" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Back" />
       <Label alignment="CENTER" layoutX="116.0" layoutY="13.0" prefHeight="17.0" prefWidth="158.0" text="Members" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <AnchorPane fx:id="createAnchor" layoutX="375.0" layoutY="120.0" prefHeight="149.0" prefWidth="309.0">
+      <AnchorPane fx:id="createAnchor" layoutX="405.0" layoutY="116.0" prefHeight="149.0" prefWidth="309.0">
          <children>
             <TextField fx:id="usernameCreate" layoutX="45.0" layoutY="47.0" prefHeight="26.0" prefWidth="190.0" promptText="Username" />
             <RadioButton fx:id="isAdminRadioCreate" layoutX="109.0" layoutY="117.0" mnemonicParsing="false" text="Admin?" />
