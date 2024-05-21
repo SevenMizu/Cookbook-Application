@@ -19,5 +19,4 @@ public class HelpController {
     void backToUserScreen(ActionEvent event) {
         DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
     }
-
 }
