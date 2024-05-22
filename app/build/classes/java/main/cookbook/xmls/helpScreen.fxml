@@ -14,7 +14,7 @@
    <children>
       <ScrollPane prefHeight="616.0" prefWidth="828.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2048.0" prefWidth="859.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2500.0" prefWidth="859.0">
                <children>
                   <Label layoutX="25.0" layoutY="22.0" text="1. User Home Screen">
                      <font>
@@ -37,7 +37,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="80.0" layoutY="1300.0" prefHeight="274.0" prefWidth="346.0" text="1.&#10;2.&#10;3.&#10;4.&#10;5.&#10;6.&#10;7.&#10;8.&#10;9.&#10;10.&#10;11.&#10;12." />
+                  <Label layoutX="80.0" layoutY="1300.0" prefHeight="274.0" prefWidth="346.0" text="1. View recipes created only by you&#10;2. Click recipe that you want to edit&#10;3. Click recipe you want to delete then press delete button&#10;4. Return to home screen&#10;5. Create or modify recipe name&#10;6. Create or modify no. of servings&#10;7. Create or modify list of ingredients (seperated by comma)&#10;8.  Create or modify list of tags (seperated by comma)&#10;9.  Create or modify short description&#10;10.  Create or modify detailed description&#10;11. Enter recipe content and press create to make an new recipe&#10;12. Click on recipe and press modify to change it" />
                   <Label layoutX="25.0" layoutY="1550.0" text="3. Manage Members Screen">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -48,6 +48,7 @@
                         <Image url="@../pictures/Manage%20Members%20Screenshot.jpg" />
                      </image>
                   </ImageView>
+                  <Label layoutX="80.0" layoutY="2030.0" prefHeight="210.0" prefWidth="310.0" text="1.&#10;2.&#10;3.&#10;4.&#10;5.&#10;6.&#10;7.&#10;8.&#10;9." />
                </children>
             </AnchorPane>
         </content>
