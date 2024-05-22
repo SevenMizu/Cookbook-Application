@@ -43,6 +43,9 @@
       </AnchorPane>
       <Button fx:id="deleteRecipeButton" layoutX="14.0" layoutY="545.0" mnemonicParsing="false" onAction="#deleteRecipe" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Delete" />
       <Button fx:id="backButton" layoutX="123.0" layoutY="546.0" mnemonicParsing="false" onAction="#backToUserScreen" prefHeight="32.0" prefWidth="92.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Back" />
-      <Label layoutX="92.0" layoutY="14.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="Recipes" />
+      <Label layoutX="92.0" layoutY="14.0" text="Recipes">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
    </children>
 </AnchorPane>
