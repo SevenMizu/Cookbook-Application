@@ -64,8 +64,8 @@ public class UserScreenController {
     private TextField sendUsernameField;
     @FXML
     private ListView<Message> inboxList;
-    @FXML
-    private Button wheelButton;
+    
+    @FXML private Button helpButton;
 
     // Data Models
     private ObservableList<Message> messages;
@@ -298,6 +298,11 @@ public class UserScreenController {
                 contextMenu.show(isIngredients ? showIngredients : showTags, event.getScreenX(), event.getScreenY());
             }
         }
+    }
+
+    @FXML
+    void showHelpScreen(ActionEvent event) {
+        DBUtils.changeScene("xmls/helpScreen.fxml", event);
     }
 
     @FXML
