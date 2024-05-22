@@ -34,7 +34,7 @@
       <ListView layoutX="999.0" layoutY="104.0" prefHeight="233.0" prefWidth="269.0" />
       <TextField fx:id="recipeSearchBar" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="1020.0" />
       <Button fx:id="myRecipesButton" layoutX="351.0" layoutY="712.0" mnemonicParsing="false" onAction="#switchtoMyRecipes" prefHeight="59.0" prefWidth="544.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="My Recipes" />
-      <Button layoutX="1057.0" layoutY="628.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="202.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="+ weekly dinner" />
+      <Button layoutX="1033.0" layoutY="615.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="202.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="+ weekly dinner" />
       <Button fx:id="showIngredients" layoutX="348.0" layoutY="633.0" mnemonicParsing="false" onContextMenuRequested="#contextShowIngredients" prefHeight="65.0" prefWidth="345.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="ingredients">
          <tooltip>
             <Tooltip text="Select recipie &amp; right click to view ingredients" textAlignment="CENTER">
@@ -52,12 +52,12 @@
             </Tooltip>
          </tooltip></Button>
       <Label layoutX="641.0" layoutY="66.0" text="&lt;&lt;  short description  &gt;&gt;" />
-      <Label layoutX="1121.0" layoutY="78.0" text="week recipes" />
+      <Label layoutX="1088.0" layoutY="81.0" text="week recipes" />
       <TextArea fx:id="longDescriptionField" layoutX="338.0" layoutY="192.0" prefHeight="182.0" prefWidth="640.0" wrapText="true">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextArea>
-      <Label layoutX="76.0" layoutY="54.0" text="Recipes" />
+      <Label layoutX="140.0" layoutY="61.0" text="Recipes" />
       <ListView fx:id="recipesListView" layoutX="14.0" layoutY="84.0" onMouseClicked="#setRecipeDetails" prefHeight="682.0" prefWidth="313.0">
          <contextMenu>
             <ContextMenu fx:id="sendContextMenu">
@@ -77,8 +77,8 @@
                </font>
             </Tooltip>
          </tooltip></ListView>
-      <Button layoutX="1062.0" layoutY="74.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&lt;" />
-      <Button layoutX="1229.0" layoutY="75.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&gt;" />
+      <Button layoutX="1051.0" layoutY="75.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&lt;" />
+      <Button layoutX="1168.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&gt;" />
       <TextArea fx:id="shortDescriptionField" layoutX="340.0" layoutY="85.0" prefHeight="78.0" prefWidth="637.0">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
@@ -104,7 +104,7 @@
             </Tooltip>
          </tooltip></CheckBox>
       <ListView fx:id="inboxList" layoutX="999.0" layoutY="364.0" onMouseClicked="#handleInboxSelection" prefHeight="239.0" prefWidth="269.0" />
-      <Label layoutX="1136.0" layoutY="340.0" text="Inbox" />
+      <Label layoutX="1119.0" layoutY="347.0" text="Inbox" />
       <Label layoutX="666.0" layoutY="382.0" text="Comments" />
       <Button fx:id="helpButton" layoutX="904.0" layoutY="709.0" mnemonicParsing="false" onAction="#showHelpScreen" prefHeight="65.0" prefWidth="80.0" style="-fx-background-color: red; -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="HELP" />
    </children>
