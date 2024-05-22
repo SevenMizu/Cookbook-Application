@@ -106,6 +106,6 @@
       <ListView fx:id="inboxList" layoutX="999.0" layoutY="364.0" onMouseClicked="#handleInboxSelection" prefHeight="239.0" prefWidth="269.0" />
       <Label layoutX="1136.0" layoutY="340.0" text="Inbox" />
       <Label layoutX="666.0" layoutY="382.0" text="Comments" />
-      <Button fx:id="helpButton" layoutX="904.0" layoutY="709.0" mnemonicParsing="false" onAction="#showHelpScreen" prefHeight="65.0" prefWidth="80.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="HELP" />
+      <Button fx:id="helpButton" layoutX="904.0" layoutY="709.0" mnemonicParsing="false" onAction="#showHelpScreen" prefHeight="65.0" prefWidth="80.0" style="-fx-background-color: red; -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="HELP" />
    </children>
 </AnchorPane>
