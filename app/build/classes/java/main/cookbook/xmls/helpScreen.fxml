@@ -48,7 +48,7 @@
                         <Image url="@../pictures/Manage%20Members%20Screenshot.jpg" />
                      </image>
                   </ImageView>
-                  <Label layoutX="80.0" layoutY="2030.0" prefHeight="210.0" prefWidth="310.0" text="1.&#10;2.&#10;3.&#10;4.&#10;5.&#10;6.&#10;7.&#10;8.&#10;9." />
+                  <Label layoutX="80.0" layoutY="2030.0" prefHeight="210.0" prefWidth="310.0" text="1. View all members in the application&#10;2. Select members to modify/delete&#10;3. Create/modify username&#10;4. Create/modify password&#10;5. Show password&#10;6. Enter member details and create&#10;7. Click member anf modify&#10;8. Seclect member to delete&#10;9. Return to home screen" />
                </children>
             </AnchorPane>
         </content>
