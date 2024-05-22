@@ -23,7 +23,7 @@
                   </Label>
                   <ImageView fitHeight="435.0" fitWidth="700.0" layoutX="74.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../pictures/Home%20Screen%20Screenshot.png" />
+                        <Image url="@../pictures/User%20Home%20Screen%20Screenshot.jpg" />
                      </image>
                   </ImageView>
                   <Label layoutX="74.0" layoutY="517.0" prefHeight="80.0" prefWidth="340.0" text="1. Name of logged-in user (capital letter is admin)&#10;2. View your recipies&#10;3. Add comment ...&#10;....&#10;...." />
