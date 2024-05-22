@@ -21,38 +21,57 @@ import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 
-
 public class UserScreenController {
 
     // UI Components
-    @FXML private Button addCommentButton;
-    @FXML private TextField addCommentField;
-    @FXML private TextArea commentTextArea;
-    @FXML private Label activeUserLabel;
-    @FXML private Button logoutButton;
-    @FXML private CheckBox favouriteCheck;
-    @FXML private Button manageMembersButton;
-    @FXML private Button myRecipesButton;
-    @FXML private TextArea recipe;
-    @FXML private TextField recipeSearchBar;
-    @FXML private ListView<String> recipesListView;
-    @FXML private TextArea longDescriptionField;
-    @FXML private TextArea shortDescriptionField;
-    @FXML private Button showComments;
-    @FXML private Button showIngredients;
-    @FXML private Button showTags;
-    @FXML private ContextMenu sendContextMenu;
-    @FXML private MenuItem sendMenuButton;
-    @FXML private TextField sendUsernameField;
-    @FXML private ListView<Message> inboxList;
-    @FXML private Button helpButton;
+    @FXML
+    private Button addCommentButton;
+    @FXML
+    private TextField addCommentField;
+    @FXML
+    private TextArea commentTextArea;
+    @FXML
+    private Label activeUserLabel;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private CheckBox favouriteCheck;
+    @FXML
+    private Button manageMembersButton;
+    @FXML
+    private Button myRecipesButton;
+    @FXML
+    private TextArea recipe;
+    @FXML
+    private TextField recipeSearchBar;
+    @FXML
+    private ListView<String> recipesListView;
+    @FXML
+    private TextArea longDescriptionField;
+    @FXML
+    private TextArea shortDescriptionField;
+    @FXML
+    private Button showComments;
+    @FXML
+    private Button showIngredients;
+    @FXML
+    private Button showTags;
+    @FXML
+    private ContextMenu sendContextMenu;
+    @FXML
+    private MenuItem sendMenuButton;
+    @FXML
+    private TextField sendUsernameField;
+    @FXML
+    private ListView<Message> inboxList;
+    @FXML
+    private Button wheelButton;
 
     // Data Models
     private ObservableList<Message> messages;
     private ObservableList<Recipe> recipes;
     private FilteredList<Recipe> filteredData;
     private ObservableList<User> users;
-
 
     @FXML
     public void initialize() {
@@ -72,6 +91,7 @@ public class UserScreenController {
             }
         }
     }
+
     private void loadUsers() {
         users = DBUtils.loadUsers();
     }
@@ -176,7 +196,6 @@ public class UserScreenController {
         recipesListView.setItems(displayList);
     }
 
-
     @FXML
     void showWheel(ActionEvent event) {
 
@@ -218,7 +237,12 @@ public class UserScreenController {
         }
         commentTextArea.setText(commentsDisplay.toString());
 
-        User loggedInUser = DBUtils.getloggedInuser();
+        User loggedInUser = users.stream()
+                .filter(u -> u.getUserId() == DBUtils.getloggedInuser().getUserId())
+                .findFirst()
+                .orElse(null); 
+        System.out.println(loggedInUser.getFavouriteRecipeIds().contains(recipe.getRecipeId()) + "favo?"
+                + loggedInUser.getFavouriteRecipeIdsAsString());
         boolean isFavourite = loggedInUser != null &&
                 loggedInUser.getFavouriteRecipeIds().contains(recipe.getRecipeId());
         favouriteCheck.setSelected(isFavourite);
@@ -264,7 +288,8 @@ public class UserScreenController {
                     .orElse(null);
             if (selectedRecipeObj != null) {
                 ContextMenu contextMenu = new ContextMenu();
-                List<? extends Object> listToAdd = isIngredients ? selectedRecipeObj.getIngredients() : selectedRecipeObj.getTags();
+                List<? extends Object> listToAdd = isIngredients ? selectedRecipeObj.getIngredients()
+                        : selectedRecipeObj.getTags();
                 if (listToAdd.isEmpty()) {
                     contextMenu.getItems().add(new MenuItem("None"));
                 } else {
@@ -284,7 +309,11 @@ public class UserScreenController {
         }
 
         int recipeId = Integer.parseInt(selectedRecipe.split(":")[0]);
-        User loggedInUser = DBUtils.getloggedInuser();
+        User loggedInUser = users.stream()
+        .filter(u -> u.getUserId() == DBUtils.getloggedInuser().getUserId())
+        .findFirst()
+        .orElse(null);
+        
         boolean isFavourite = loggedInUser != null && loggedInUser.getFavouriteRecipeIds().contains(recipeId);
 
         DBUtils.FavouriteAction action = isFavourite ? DBUtils.FavouriteAction.REMOVE : DBUtils.FavouriteAction.ADD;
@@ -302,70 +331,65 @@ public class UserScreenController {
     }
 
     private void setupSendMessageSubMenu() {
-    sendMenuButton.setOnAction(event -> showSendMessageDialog());
-}
-
-@FXML
-    void showHelpScreen(ActionEvent event) {
-        DBUtils.changeScene("xmls/helpScreen.fxml", event);
+        sendMenuButton.setOnAction(event -> showSendMessageDialog());
     }
 
-private void showSendMessageDialog() {
-    Dialog<ButtonType> dialog = new Dialog<>();
-    dialog.setTitle("Send Message");
-    dialog.setHeaderText("Send Message");
+    private void showSendMessageDialog() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Send Message");
+        dialog.setHeaderText("Send Message");
 
-    // Set the button types.
-    ButtonType sendButtonType = new ButtonType("Send", ButtonBar.ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(sendButtonType, ButtonType.CANCEL);
+        // Set the button types.
+        ButtonType sendButtonType = new ButtonType("Send", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(sendButtonType, ButtonType.CANCEL);
 
-    // Create the content of the dialog.
-    GridPane grid = new GridPane();
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(20, 150, 10, 10));
+        // Create the content of the dialog.
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
 
-    TextField sendMessageField = new TextField();
-    sendMessageField.setPromptText("Enter message");
+        TextField sendMessageField = new TextField();
+        sendMessageField.setPromptText("Enter message");
 
-    grid.add(new Label("Send Message"), 0, 0);
-    grid.add(sendMessageField, 1, 0);
+        grid.add(new Label("Send Message"), 0, 0);
+        grid.add(sendMessageField, 1, 0);
 
-    dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().setContent(grid);
 
-    // Request focus on the sendMessageField by default.
-    Platform.runLater(() -> sendMessageField.requestFocus());
+        // Request focus on the sendMessageField by default.
+        Platform.runLater(() -> sendMessageField.requestFocus());
 
-    // Convert the result to a sendMessageButton click.
-    dialog.setResultConverter(dialogButton -> {
-        if (dialogButton == sendButtonType) {
-            String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
-            if (selectedRecipe != null) {
-                validateFields(sendUsernameField, sendMessageField);
-                int recipeId = Integer.parseInt(selectedRecipe.split(":")[0]);
-                String sendUsername = sendUsernameField.getText();
-                String recipeMessage = sendMessageField.getText();
+        // Convert the result to a sendMessageButton click.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == sendButtonType) {
+                String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
+                if (selectedRecipe != null) {
+                    validateFields(sendUsernameField, sendMessageField);
+                    int recipeId = Integer.parseInt(selectedRecipe.split(":")[0]);
+                    String sendUsername = sendUsernameField.getText();
+                    String recipeMessage = sendMessageField.getText();
 
-                // Get recipientId associated with the username
-                User recipient = users.stream()
-                                      .filter(user -> user.getUsername().equals(sendUsername))
-                                      .findFirst()
-                                      .orElse(null);
+                    // Get recipientId associated with the username
+                    User recipient = users.stream()
+                            .filter(user -> user.getUsername().equals(sendUsername))
+                            .findFirst()
+                            .orElse(null);
 
-                if (recipient != null) {
-                    int recipientId = recipient.getUserId();
-                    DBUtils.sendMessage(recipeId, recipientId, recipeMessage);
+                    if (recipient != null) {
+                        int recipientId = recipient.getUserId();
+                        DBUtils.sendMessage(recipeId, recipientId, recipeMessage);
+                    } else {
+                        showErrorMessage("Recipient not found.");
+                    }
                 } else {
-                    showErrorMessage("Recipient not found.");
+                    showErrorMessage("No recipe selected.");
                 }
-            } else {
-                showErrorMessage("No recipe selected.");
             }
-        }
-        return null;
-    });
+            return null;
+        });
 
-    dialog.showAndWait();
-}
+        dialog.showAndWait();
+    }
 
 }
