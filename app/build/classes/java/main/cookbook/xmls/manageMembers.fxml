@@ -34,12 +34,15 @@
       <Button fx:id="backButton" layoutX="518.0" layoutY="406.0" mnemonicParsing="false" onAction="#backToUserScreen" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white; -fx-font-family: 'Al Bayan'; -fx-font-size: 18;" text="Back" />
       <Label alignment="CENTER" layoutX="116.0" layoutY="13.0" prefHeight="17.0" prefWidth="158.0" text="Members" textAlignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font></Label>
       <AnchorPane fx:id="createAnchor" layoutX="405.0" layoutY="116.0" prefHeight="149.0" prefWidth="309.0">
          <children>
             <TextField fx:id="usernameCreate" layoutX="45.0" layoutY="47.0" prefHeight="26.0" prefWidth="190.0" promptText="Username" />
-            <RadioButton fx:id="isAdminRadioCreate" layoutX="109.0" layoutY="117.0" mnemonicParsing="false" text="Admin?" />
+            <RadioButton fx:id="isAdminRadioCreate" layoutX="109.0" layoutY="117.0" mnemonicParsing="false" text="Admin?">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></RadioButton>
             <PasswordField fx:id="passwordCreate" layoutX="45.0" layoutY="82.0" prefHeight="26.0" prefWidth="190.0" />
             <CheckBox fx:id="pass_toggle" layoutX="243.0" layoutY="86.0" mnemonicParsing="false" onAction="#togglePasswordVisibility" prefHeight="18.0" prefWidth="54.0" text="i">
                <tooltip>
