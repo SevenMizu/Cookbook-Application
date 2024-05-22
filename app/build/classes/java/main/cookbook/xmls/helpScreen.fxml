@@ -26,7 +26,7 @@
                         <Image url="@../pictures/User%20Home%20Screen%20Screenshot.jpg" />
                      </image>
                   </ImageView>
-                  <Label layoutX="74.0" layoutY="517.0" prefHeight="80.0" prefWidth="340.0" text="1. Name of logged-in user (capital letter is admin)&#10;2. View your recipies&#10;3. Add comment ...&#10;....&#10;...." />
+                  <Label layoutX="74.0" layoutY="517.0" prefHeight="80.0" prefWidth="340.0" text="1.. Search Field&#10;2. List of Recipees&#10;3. Favourite a Recipe&#10;4. Recipe List&#10;5.  Short Description of Recipe&#10;6. Detailed Description of Recipe&#10;7. Comments on Recipe&#10;8. Add Comment&#10;9. Name&#10;10. Log Out Button&#10;11. Week Recipees&#10;12. Message Inbox to recieve messages&#10;13. Add a Comment button&#10;14. Add ingredients&#10;15. Add tags &#10;16.Modify or change a recipe&#10;17. Your weekly dinner&#10;18. Manage member access&#10;&#10;" />
                </children>
             </AnchorPane>
         </content>
