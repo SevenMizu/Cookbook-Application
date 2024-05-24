@@ -44,6 +44,7 @@ public class UserScreenController {
     private TextArea recipe;
     @FXML
     private TextField recipeSearchBar;
+    //remove numbers before recipe name
     @FXML
     private ListView<String> recipesListView;
     @FXML
@@ -304,7 +305,8 @@ public class UserScreenController {
     void showHelpScreen(ActionEvent event) {
         DBUtils.changeScene("xmls/helpScreen.fxml", event);
     }
-
+    
+    //add star to recipe name upon starring
     @FXML
     private void handleFavouriteCheck(ActionEvent event) {
         String selectedRecipe = recipesListView.getSelectionModel().getSelectedItem();
