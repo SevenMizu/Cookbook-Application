@@ -43,9 +43,10 @@ public class ManageMemberController {
     private ObservableList<User> users;
 
     /**
-    * Initializes the controller.
-    * Sets up the event filter for clearing fields on empty cell clicks and loads the users from the database.
-    */
+     * Initializes the controller.
+     * Sets up the event filter for clearing fields on empty cell clicks and loads
+     * the users from the database.
+     */
     @FXML
     void initialize() {
         setupClearSelectionOnEmptyCell();
@@ -75,8 +76,7 @@ public class ManageMemberController {
         Alert confirmationAlert = AlertUtils.createConfirmationAlert(
                 "Confirm Clear",
                 "You are about to clear the fields",
-                "Do you want to proceed?"
-        );
+                "Do you want to proceed?");
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 clearFields();
@@ -92,19 +92,20 @@ public class ManageMemberController {
     }
 
     /**
-    * Sets the items of the member list.
-    * 
-    * @param list The ObservableList to be set as the items for the memberList.
-    */
+     * Sets the items of the member list.
+     * 
+     * @param list The ObservableList to be set as the items for the memberList.
+     */
     public void setMemberList(ObservableList<String> list) {
         memberList.setItems(list);
     }
 
     /**
-    * Populates the username and password fields with the selected user's information when a list item is clicked.
-    * 
-    * @param event The MouseEvent triggering the method.
-    */
+     * Populates the username and password fields with the selected user's
+     * information when a list item is clicked.
+     * 
+     * @param event The MouseEvent triggering the method.
+     */
     @FXML
     void setModifyUsernameFromList(MouseEvent event) {
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
@@ -124,10 +125,10 @@ public class ManageMemberController {
     }
 
     /**
-    * Toggles the visibility of the password between plain text and hidden.
-    * 
-    * @param event The ActionEvent triggering the method.
-    */
+     * Toggles the visibility of the password between plain text and hidden.
+     * 
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     void togglePasswordVisibility(ActionEvent event) {
         if (pass_toggle.isSelected()) {
@@ -142,10 +143,10 @@ public class ManageMemberController {
     }
 
     /**
-    * Modifies the selected user's information based on the input fields.
-    * 
-    * @param event The ActionEvent triggering the method.
-    */
+     * Modifies the selected user's information based on the input fields.
+     * 
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     void modifyUser(ActionEvent event) {
         if (isNoUserSelected()) {
@@ -191,30 +192,33 @@ public class ManageMemberController {
 
         if (newIsAdmin && !(selectedUser instanceof Admin)) {
             users.remove(selectedUser);
-            selectedUser = new Admin(selectedID, selectedUser.getUsername(), selectedUser.getPassword(), favouriteRecipeIds);
+            selectedUser = new Admin(selectedID, selectedUser.getUsername(), selectedUser.getPassword(),
+                    favouriteRecipeIds);
             users.add(selectedUser);
         } else if (!newIsAdmin && selectedUser instanceof Admin) {
             users.remove(selectedUser);
-            selectedUser = new User(selectedID, selectedUser.getUsername(), selectedUser.getPassword(), favouriteRecipeIds);
+            selectedUser = new User(selectedID, selectedUser.getUsername(), selectedUser.getPassword(),
+                    favouriteRecipeIds);
             users.add(selectedUser);
         }
     }
 
     /**
-    * Validates that the username and password fields are not empty or only whitespace.
-    * 
-    * @return true if the fields are valid, false otherwise.
-    */
+     * Validates that the username and password fields are not empty or only
+     * whitespace.
+     * 
+     * @return true if the fields are valid, false otherwise.
+     */
     private boolean validateFields() {
         return validateTextFields(usernameCreate, passwordCreate);
     }
 
     /**
      * Validates that the given text fields are not empty or only whitespace.
-    * 
-    * @param textFields The array of text fields to validate.
-    * @return true if all text fields are valid, false otherwise.
-    */
+     * 
+     * @param textFields The array of text fields to validate.
+     * @return true if all text fields are valid, false otherwise.
+     */
     private boolean validateTextFields(TextField... textFields) {
         for (TextField textField : textFields) {
             String text = textField.getText().trim();
@@ -226,28 +230,35 @@ public class ManageMemberController {
     }
 
     /**
-    * Creates a new user based on the input fields if validation passes.
-    * Displays an error alert if a user is selected or if validation fails.
-    * 
-    * @param event The ActionEvent triggering the method.
-    */
+     * Creates a new user based on the input fields if validation passes.
+     * Displays an error alert if a user is selected or if validation fails.
+     * 
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     void createUser(ActionEvent event) {
         if (memberList.getSelectionModel().getSelectedItem() != null) {
-            AlertUtils.createAlert(Alert.AlertType.ERROR, "Error", "", "Clear the selection before creating a new user.").show();
+            AlertUtils
+                    .createAlert(Alert.AlertType.ERROR, "Error", "", "Clear the selection before creating a new user.")
+                    .show();
         } else if (validateFields()) {
-            DBUtils.createUser(usernameCreate.getText(), passwordCreate.getText(), isAdminRadioCreate.isSelected(), event);
+            if (isAdminRadioCreate.isSelected() && users.stream().filter(user -> user instanceof Admin).count() > 0) {
+                AlertUtils.createAlert(Alert.AlertType.ERROR, "Error", "", "An admin user already exists.").show();
+            } else {
+                DBUtils.createUser(usernameCreate.getText(), passwordCreate.getText(), isAdminRadioCreate.isSelected(),
+                        event);
+            }
         } else {
             AlertUtils.createAlert(Alert.AlertType.ERROR, "Error", "", "Check the content of the forms!").show();
         }
     }
 
     /**
-    * Deletes the selected user from the list and the database.
-    * Displays an error alert if no user is selected for deletion.
-    * 
-    * @param event The ActionEvent triggering the method.
-    */
+     * Deletes the selected user from the list and the database.
+     * Displays an error alert if no user is selected for deletion.
+     * 
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     void deleteUser(ActionEvent event) {
         String selectedItem = memberList.getSelectionModel().getSelectedItem();
@@ -268,11 +279,12 @@ public class ManageMemberController {
             DBUtils.changeToManageMemberScreen("xmls/manageMembers.fxml", event);
         }
     }
+
     /**
-    * Navigates back to the user home screen.
-    * 
-    * @param event The ActionEvent triggering the method.
-    */
+     * Navigates back to the user home screen.
+     * 
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     void backToUserScreen(ActionEvent event) {
         DBUtils.changeToUserHomeScene("xmls/userHomeScreen.fxml", event, DBUtils.getloggedInuser());
