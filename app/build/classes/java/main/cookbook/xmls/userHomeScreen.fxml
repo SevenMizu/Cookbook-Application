@@ -50,10 +50,6 @@
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <Label layoutX="1082.0" layoutY="77.0" text="Week Recipes">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font></Label>
       <TextArea fx:id="longDescriptionField" layoutX="338.0" layoutY="192.0" prefHeight="182.0" prefWidth="640.0" wrapText="true">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
@@ -84,8 +80,6 @@
                </font>
             </Tooltip>
          </tooltip></ListView>
-      <Button layoutX="1033.0" layoutY="75.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&lt;" />
-      <Button layoutX="1199.0" layoutY="75.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="&gt;" />
       <TextArea fx:id="shortDescriptionField" layoutX="340.0" layoutY="85.0" prefHeight="78.0" prefWidth="637.0" wrapText="true">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />

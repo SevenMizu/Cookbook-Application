@@ -1,54 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Label?>
+
 
 <VBox prefHeight="645.0" prefWidth="874.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cookbook.handlers.HelpController">
    <children>
-      <ScrollPane prefHeight="616.0" prefWidth="828.0">
+      <HBox alignment="CENTER" spacing="10.0">
+         <children>
+            <Label text="Search:" />
+            <TextField fx:id="searchField" promptText="Type to search..." />
+         </children>
+      </HBox>
+      <ScrollPane fx:id="scrollPane" prefHeight="616.0" prefWidth="828.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2500.0" prefWidth="859.0">
+          <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="2500.0" prefWidth="859.0">
                <children>
-                  <Label layoutX="25.0" layoutY="22.0" text="1. User Home Screen">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
+                  <TextFlow fx:id="textFlow1" layoutX="25.0" layoutY="22.0">
+                     <children>
+                        <Text text="1. User Home Screen">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
                   <ImageView fitHeight="435.0" fitWidth="700.0" layoutX="74.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/User%20Home%20Screen%20Screenshot.jpg" />
                      </image>
                   </ImageView>
-                  <Label layoutX="80.0" layoutY="520.0" prefHeight="326.0" prefWidth="337.0" text="1. Search Field&#10;2. List of Recipees&#10;3. Favourite a Recipe&#10;4. Recipe List&#10;5.  Short Description of Recipe&#10;6. Detailed Description of Recipe&#10;7. Comments on Recipe&#10;8. Add Comment&#10;9. Name&#10;10. Log Out Button&#10;11. Week Recipees&#10;12. Message Inbox to recieve messages&#10;13. Add a Comment button&#10;14. Add ingredients&#10;15. Add tags &#10;16.Modify or change a recipe&#10;17. Your weekly dinner&#10;18. Manage member access&#10;&#10;" />
+                  <TextFlow fx:id="textFlow2" layoutX="80.0" layoutY="520.0" prefHeight="326.0" prefWidth="337.0">
+                     <children>
+                        <Text text="1. Search Field&#10;2. List of Recipees&#10;3. Favourite a Recipe&#10;4. Recipe List&#10;5.  Short Description of Recipe&#10;6. Detailed Description of Recipe&#10;7. Comments on Recipe&#10;8. Add Comment&#10;9. Name&#10;10. Log Out Button&#10;11. Week Recipees&#10;12. Message Inbox to recieve messages&#10;13. Add a Comment button&#10;14. Add ingredients&#10;15. Add tags &#10;16.Modify or change a recipe&#10;17. Your weekly dinner&#10;18. Manage member access&#10;&#10;" />
+                     </children>
+                  </TextFlow>
                   <ImageView fitHeight="425.0" fitWidth="558.0" layoutX="74.0" layoutY="885.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/My%20Recipes%20Screen%20Screenshot.jpg" />
                      </image>
                   </ImageView>
-                  <Label layoutX="25.0" layoutY="845.0" text="2. My Recipe Screen">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="80.0" layoutY="1300.0" prefHeight="274.0" prefWidth="346.0" text="1. View recipes created only by you&#10;2. Click recipe that you want to edit&#10;3. Click recipe you want to delete then press delete button&#10;4. Return to home screen&#10;5. Create or modify recipe name&#10;6. Create or modify no. of servings&#10;7. Create or modify list of ingredients (seperated by comma)&#10;8.  Create or modify list of tags (seperated by comma)&#10;9.  Create or modify short description&#10;10.  Create or modify detailed description&#10;11. Enter recipe content and press create to make an new recipe&#10;12. Click on recipe and press modify to change it" />
-                  <Label layoutX="25.0" layoutY="1550.0" text="3. Manage Members Screen">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
+                  <TextFlow fx:id="textFlow3" layoutX="25.0" layoutY="845.0">
+                     <children>
+                        <Text text="2. My Recipe Screen">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
+                  <TextFlow fx:id="textFlow4" layoutX="80.0" layoutY="1300.0" prefHeight="274.0" prefWidth="346.0">
+                     <children>
+                        <Text text="1. View recipes created only by you&#10;2. Click recipe that you want to edit&#10;3. Click recipe you want to delete then press delete button&#10;4. Return to home screen&#10;5. Create or modify recipe name&#10;6. Create or modify no. of servings&#10;7. Create or modify list of ingredients (seperated by comma)&#10;8.  Create or modify list of tags (seperated by comma)&#10;9.  Create or modify short description&#10;10.  Create or modify detailed description&#10;11. Enter recipe content and press create to make an new recipe&#10;12. Click on recipe and press modify to change it" />
+                     </children>
+                  </TextFlow>
+                  <TextFlow fx:id="textFlow5" layoutX="25.0" layoutY="1550.0">
+                     <children>
+                        <Text text="3. Manage Members Screen">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
                   <ImageView fitHeight="449.0" fitWidth="682.0" layoutX="74.0" layoutY="1600.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/Manage%20Members%20Screenshot.jpg" />
                      </image>
                   </ImageView>
-                  <Label layoutX="80.0" layoutY="2030.0" prefHeight="210.0" prefWidth="310.0" text="1. View all members in the application&#10;2. Select members to modify/delete&#10;3. Create/modify username&#10;4. Create/modify password&#10;5. Show password&#10;6. Enter member details and create&#10;7. Click member anf modify&#10;8. Seclect member to delete&#10;9. Return to home screen" />
+                  <TextFlow fx:id="textFlow6" layoutX="80.0" layoutY="2030.0" prefHeight="210.0" prefWidth="310.0">
+                     <children>
+                        <Text text="1. View all members in the application&#10;2. Select members to modify/delete&#10;3. Create/modify username&#10;4. Create/modify password&#10;5. Show password&#10;6. Enter member details and create&#10;7. Click member anf modify&#10;8. Seclect member to delete&#10;9. Return to home screen" />
+                     </children>
+                  </TextFlow>
                </children>
             </AnchorPane>
         </content>
