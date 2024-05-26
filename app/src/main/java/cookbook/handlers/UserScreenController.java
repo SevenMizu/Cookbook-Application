@@ -191,9 +191,21 @@ public class UserScreenController {
     }
 
     public void setRecipeList() {
+        User loggedInUser = users.stream()
+                .filter(u -> u.getUserId() == DBUtils.getloggedInuser().getUserId())
+                .findFirst()
+                .orElse(null);
+    
         ObservableList<String> displayList = recipes.stream()
-                .map(recipe -> recipe.getRecipeId() + ": " + recipe.getName())
+                .map(recipe -> {
+                    String recipeDisplay = recipe.getRecipeId() + ": " + recipe.getName();
+                    if (loggedInUser != null && loggedInUser.getFavouriteRecipeIds().contains(recipe.getRecipeId())) {
+                        recipeDisplay = recipeDisplay + "       ★"; // Add Black Star symbol
+                    }
+                    return recipeDisplay;
+                })
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    
         recipesListView.setItems(displayList);
     }
 

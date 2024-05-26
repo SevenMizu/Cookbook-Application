@@ -52,9 +52,108 @@
 
 
 
-yess
-  yes
-  
+  # Sprint 2: Recipe Viewing and Searching
 
-NOTES:
-  -for scenes where custom info is not being passed then we dont need to retrieve the controller
+  ✔ ## User Story 9: Browse all recipes. @done (26/04/2024, 23:09:57)
+  - Acceptance Criteria:
+    ✔ - Users can access a comprehensive list of all available recipes. @done (26/04/2024, 23:10:01)
+    ✔ - Recipes are displayed in a visually organized manner, allowing for easy browsing. @done (26/04/2024, 23:10:03)
+    ✔ - Pagination or infinite scrolling is implemented for smooth navigation through large recipe collections. @done (26/04/2024, 23:10:04)
+    ✔ - Users can filter and sort recipes based on different criteria (e.g., name, category). @done (26/04/2024, 23:10:05)
+  
+  ## User Story 6: Search for a recipe by name.
+  - Acceptance Criteria:
+    ✔ - Users can enter a recipe name in the search bar. @done (26/04/2024, 23:10:10)
+    ✔ - The search function provides real-time suggestions as the user types. @done (26/04/2024, 23:10:12)
+    ✔ - Matching recipe names are displayed as search results. @done (26/04/2024, 23:10:15)
+    ☐ - Users can click on a search result to view the corresponding recipe.
+  
+  ✔ ## User Story 7: Search for a recipe by one or more ingredients. @done (27/04/2024, 14:03:11)
+  - Acceptance Criteria:
+    ☐ - Users can enter one or more ingredients in the search bar.
+    ☐ - The search function suggests ingredient options as the user types.
+    ☐ - Recipes containing all or some of the entered ingredients are displayed as search results.
+    ☐ - Users can further refine search results based on additional criteria.
+  
+  ✔ ## User Story 8: Search for a recipe by one or more tags. @done (27/04/2024, 14:03:08)
+  - Acceptance Criteria:
+    ☐ - Users can select one or more tags from a predefined list or enter custom tags.
+    ☐ - Recipes tagged with the selected tag(s) are displayed as search results.
+    ☐ - Tag suggestions are provided to assist users in selecting relevant tags.
+    ☐ - Users can combine tag searches with other search criteria for more specific results.
+  
+  ☐ ## User Story 10: See more of the short description of a dish from a search.
+  - Acceptance Criteria:
+    ☐ - When viewing search results, users can hover over or click on a recipe to see a preview of its short description.
+    ☐ - The short description preview provides enough information to give users a glimpse of the recipe's content and relevance.
+    ☐ - Users can easily distinguish between different recipes in the search results based on their short descriptions.
+  
+  ✔ ## User Story 13: See the selected recipe with formatting for easy viewing. @done (27/04/2024, 14:03:03)
+  - Acceptance Criteria:
+    ☐ - When a user selects a recipe from the search results or recipe list, it is displayed with clear formatting for easy reading.
+    ☐ - Recipe name is displayed prominently, possibly in bold or larger font size.
+    ☐ - Short description is presented in italics to differentiate it from other text.
+    ☐ - Ingredients are listed in a clear and structured format, possibly as a bulleted or numbered list.
+    ☐ - Detailed description is formatted for readability, possibly with appropriate line breaks and paragraph spacing.
+
+    ☐ # Sprint 3: Recipe Management and Customization
+
+✔ ## User Story 11: Create a new recipe @done (04/05/2024, 23:31:24)
+ - Access form or interface for creating new recipes.
+- Input recipe's name, short description, ingredients, and detailed description.
+- Ensure form submission adds recipe to the system.
+- Implement validation for required fields and formatting.
+- Confirm successful recipe creation to the user.
+
+✔ ## User Story 12: Add details to a recipe @done (04/05/2024, 23:31:35)
+- Access form or interface for editing recipe details.
+- Save changes to recipe details upon form submission.
+- Validate required fields and appropriate formatting.
+- Confirm successful update of recipe details to the user.
+
+## User Story 14: Add comments to a recipe
+- Provide functionality to add comments to recipes.
+- Ensure comments are visible to all users.
+- Support basic formatting in comments (e.g., bold, italic).
+- Confirm successful addition of comments.
+
+## User Story 15: Edit and remove comments
+- Allow users to edit their own comments.
+- Allow users to delete their own comments.
+- Reflect changes immediately in the interface.
+- Confirm successful modification or removal of comments.
+
+# Sprint 4: Recipe Customization and Organization
+
+## User Story 16: Adjust servings for a recipe
+- Enable adjustment of servings in a recipe.
+- Reflect changes in ingredient quantities based on servings.
+- Save changes to serving sizes.
+
+## User Story 17: Add tags to a recipe
+- Allow addition of predefined and custom tags to recipes.
+- Use tags for recipe filtering and searching.
+
+## User Story 18: Select from predefined tags
+- Provide access to a list of predefined tags.
+- Enable easy selection of relevant tags during recipe creation or editing.
+
+## User Story 19: Add custom tags to a recipe
+- Allow input of custom tags to classify recipes.
+- Save and make custom tags available for future use.
+
+## User Story 20: Star a recipe as a favorite
+- Allow users to mark recipes as favorites.
+- Display a visual indicator for favorited recipes.
+
+## User Story 21: Unstar a recipe
+- Allow users to remove recipes from their favorites.
+- Confirm successful removal of recipes from favorites.
+
+## User Story 26: Send a recipe to another user
+- Share recipes with messaging functionality.
+- Notify sender of successful recipe sharing.
+
+## User Story 27: Add a message to a shared recipe
+- Include personalized messages in shared recipes.
+- Confirm to the sender when messages are attached successfully.
