@@ -1,0 +1,83 @@
+Recipes
+Recipe Name: Margherita Pizza
+    Servings: 2
+    Ingredients: Pizza dough, tomato sauce, mozzarella cheese, basil leaves, olive oil
+    Tags: Italian, pizza, vegetarian
+    Short Description: Classic Margherita pizza with fresh ingredients.
+    Detailed Description:
+
+    Preheat oven to 475°F (245°C).
+    Roll out pizza dough on a floured surface.
+    Spread tomato sauce over the dough.
+    Top with mozzarella cheese and basil leaves.
+    Drizzle with olive oil.
+    Bake in the oven for 10-12 minutes.
+    Serve hot.
+    Enjoy your homemade pizza!
+Recipe Name: Avocado Toast
+    Servings: 1
+    Ingredients: Bread, avocado, salt, pepper, lemon juice
+    Tags: Breakfast, healthy, quick
+    Short Description: Simple and healthy avocado toast.
+    Detailed Description:
+
+    Toast the bread.\n
+    Mash avocado in a bowl.
+    Spread avocado on toast.
+    Season with salt, pepper, and lemon juice.
+    Serve immediately.
+    Perfect for a quick breakfast!
+    Enjoy your healthy meal.
+    Add extra toppings if desired.
+Recipe Name: Chicken Alfredo
+    Servings: 4
+    Ingredients: Chicken breast, fettuccine, heavy cream, Parmesan cheese, garlic, butter, black pepper
+    Tags: Italian, pasta, creamy
+    Short Description: Rich and creamy chicken Alfredo pasta.
+    Detailed Description:
+
+    Cook fettuccine according to package instructions.
+    In a pan, melt butter and sauté garlic.
+    Add heavy cream and bring to a simmer.
+    Stir in Parmesan cheese until melted.
+    Cook chicken breast and slice.
+    Toss pasta with sauce and chicken.
+    Season with black pepper.
+    Serve immediately and enjoy!
+Recipe Name: Greek Salad
+    Servings: 2
+    Ingredients: Cucumber, tomato, red onion, feta cheese, olives, olive oil, lemon juice, oregano
+    Tags: Salad, healthy, Greek
+    Short Description: Fresh and flavorful Greek salad.
+    Detailed Description:
+
+    Chop cucumber, tomato, and red onion.
+    Combine in a bowl with feta cheese and olives.
+    Drizzle with olive oil and lemon juice.
+    Sprinkle with oregano.
+    Toss to combine.
+    Serve immediately.
+    Enjoy your healthy salad!
+    Perfect for a refreshing meal.
+Recipe Name: Banana Bread
+    Servings: 8
+    Ingredients: Ripe bananas, flour, sugar, eggs, butter, baking soda, salt, vanilla extract
+    Tags: Dessert, baking, bread
+    Short Description: Moist and delicious banana bread.
+    Detailed Description:
+
+    Preheat oven to 350°F (175°C).
+    Mash ripe bananas in a bowl.
+    Mix in melted butter, sugar, eggs, and vanilla extract.
+    In a separate bowl, combine flour, baking soda, and salt.
+    Gradually add dry ingredients to wet ingredients.
+    Pour batter into a greased loaf pan.
+    Bake for 60 minutes.
+    Enjoy your homemade banana bread!
+Messages
+    To Sean: The Margherita Pizza turned out great! Thanks for the recommendation.
+    To Yusuf: Have you tried the Chicken Alfredo yet? It's really creamy and delicious.
+    To Samuel: The Banana Bread was a big hit with my family. You should try it!
+Comments
+    On Margherita Pizza: Loved the fresh ingredients. So tasty!
+    On Greek Salad: This salad is so refreshing and healthy!

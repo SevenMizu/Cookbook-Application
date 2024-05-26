@@ -1,0 +1,84 @@
+Sean.txt
+Recipes
+Recipe Name: Spaghetti Carbonara
+    Servings: 4
+    Ingredients: Spaghetti, eggs, Parmesan cheese, pancetta, black pepper, salt
+    Tags: Italian, pasta, quick
+    Short Description: Classic Italian pasta dish with a creamy sauce.
+    Detailed Description:
+
+    Cook spaghetti according to package instructions.
+    In a bowl, beat eggs and mix in Parmesan cheese.
+    Fry pancetta until crisp.
+    Add cooked spaghetti to pancetta.
+    Remove from heat and quickly stir in egg mixture.
+    Season with salt and black pepper.
+    Serve immediately with extra Parmesan.
+    Enjoy your meal!
+Recipe Name: Chicken Caesar Salad
+    Servings: 2
+    Ingredients: Chicken breast, Romaine lettuce, Caesar dressing, croutons, Parmesan cheese, black pepper
+    Tags: Salad, healthy, easy
+    Short Description: Fresh and crunchy Caesar salad with grilled chicken.
+    Detailed Description:
+
+    Grill chicken breast until cooked through.
+    Chop Romaine lettuce and place in a bowl.
+    Slice grilled chicken and add to the bowl.
+    Add Caesar dressing and toss to coat.
+    Sprinkle with croutons and Parmesan cheese.
+    Season with black pepper.
+    Serve immediately.
+    Enjoy your healthy salad!
+Recipe Name: Beef Tacos
+    Servings: 4
+    Ingredients: Ground beef, taco seasoning, taco shells, lettuce, tomato, cheese, sour cream
+    Tags: Mexican, quick, family
+    Short Description: Tasty and quick beef tacos for a family meal.
+    Detailed Description:
+
+    Cook ground beef in a skillet until browned.
+    Add taco seasoning and water, simmer until thickened.
+    Warm taco shells in the oven.
+    Fill taco shells with beef mixture.
+    Top with lettuce, tomato, cheese, and sour cream.
+    Serve with extra toppings on the side.
+    Enjoy your tacos!
+    Perfect for a family dinner.
+Recipe Name: Chocolate Chip Cookies
+    Servings: 24
+    Ingredients: Butter, sugar, brown sugar, eggs, vanilla extract, flour, baking soda, salt, chocolate chips
+    Tags: Dessert, baking, cookies
+    Short Description: Classic chocolate chip cookies with a chewy center.
+    Detailed Description:
+
+    Preheat oven to 350°F (175°C).
+    Cream together butter and sugars until fluffy.
+    Beat in eggs and vanilla extract.
+    In a separate bowl, mix flour, baking soda, and salt.
+    Gradually add dry ingredients to wet ingredients.
+    Stir in chocolate chips.
+    Drop by spoonfuls onto a baking sheet.
+    Bake for 10-12 minutes and enjoy!
+Recipe Name: Vegetable Stir-fry
+    Servings: 2
+    Ingredients: Mixed vegetables, soy sauce, garlic, ginger, sesame oil, rice
+    Tags: Vegetarian, quick, healthy
+    Short Description: Quick and healthy vegetable stir-fry.
+    Detailed Description:
+
+    Cook rice according to package instructions.
+    Heat sesame oil in a wok.
+    Add garlic and ginger, stir-fry for 1 minute.
+    Add mixed vegetables and stir-fry until tender.
+    Pour in soy sauce and mix well.
+    Serve vegetables over rice.
+    Enjoy your healthy meal!
+    Perfect for a quick dinner.
+Messages
+    To Bryan: Have you tried the Spaghetti Carbonara yet? It's so easy and delicious!
+    To Yusuf: The Chicken Caesar Salad is perfect for a light lunch. Give it a try!
+    To Frederick: Those Beef Tacos are great for a family dinner. Everyone loved them here.
+Comments
+    On Spaghetti Carbonara: This was super easy to make and so tasty!
+    On Chocolate Chip Cookies: These cookies were a hit with the kids!

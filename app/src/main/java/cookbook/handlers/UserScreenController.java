@@ -200,7 +200,8 @@ public class UserScreenController {
                 .map(recipe -> {
                     String recipeDisplay = recipe.getRecipeId() + ": " + recipe.getName();
                     if (loggedInUser != null && loggedInUser.getFavouriteRecipeIds().contains(recipe.getRecipeId())) {
-                        recipeDisplay = recipeDisplay + "       ★"; // Add Black Star symbol
+                        String starSymbol = "\u2605"; // Unicode Black Star symbol
+                        recipeDisplay = recipeDisplay + " " + starSymbol;
                     }
                     return recipeDisplay;
                 })

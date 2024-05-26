@@ -1,0 +1,83 @@
+Recipes
+Recipe Name: Lasagna
+    Servings: 6
+    Ingredients: Ground beef, lasagna noodles, ricotta cheese, mozzarella cheese, Parmesan cheese, tomato sauce, garlic, onion, Italian seasoning
+    Tags: Italian, pasta, baked
+    Short Description: Classic layered lasagna with rich flavors.
+    Detailed Description:
+
+    Cook lasagna noodles according to package instructions.
+    Sauté garlic and onion, add ground beef and cook until browned.
+    Stir in tomato sauce and Italian seasoning.
+    In a baking dish, layer noodles, meat sauce, and cheeses.
+    Repeat layers, ending with mozzarella and Parmesan on top.
+    Bake at 375°F (190°C) for 45 minutes.
+    Let cool slightly before serving.
+    Enjoy your hearty lasagna!
+Recipe Name: French Toast
+    Servings: 2
+    Ingredients: Bread, eggs, milk, cinnamon, vanilla extract, butter, maple syrup
+    Tags: Breakfast, easy, sweet
+    Short Description: Sweet and fluffy French toast.
+    Detailed Description:
+
+    Whisk eggs, milk, cinnamon, and vanilla extract in a bowl.
+    Dip bread slices in the mixture.
+    Melt butter in a skillet.
+    Cook bread slices until golden brown on both sides.
+    Serve with maple syrup.
+    Enjoy your sweet breakfast!
+    Perfect for a weekend morning.
+    Add fruit toppings if desired.
+Recipe Name: Baked Salmon
+    Servings: 4
+    Ingredients: Salmon fillets, lemon, dill, garlic, olive oil, salt, pepper
+    Tags: Seafood, healthy, baked
+    Short Description: Healthy and flavorful baked salmon.
+    Detailed Description:
+
+    Preheat oven to 375°F (190°C).
+    Place salmon fillets on a baking sheet.
+    Drizzle with olive oil and lemon juice.
+    Sprinkle with dill, garlic, salt, and pepper.
+    Bake for 20 minutes.
+    Serve with lemon wedges.
+    Enjoy your healthy meal!
+    Perfect for dinner.
+Recipe Name: Beef Stew
+    Servings: 6
+    Ingredients: Beef chunks, potatoes, carrots, onions, beef broth, garlic, thyme, salt, pepper
+    Tags: Dinner, hearty, comfort food
+    Short Description: Hearty and comforting beef stew.
+    Detailed Description:
+
+    Brown beef chunks in a pot.
+    Add garlic and onions, cook until softened.
+    Pour in beef broth and add potatoes and carrots.
+    Season with thyme, salt, and pepper.
+    Simmer until beef is tender.
+    Serve hot.
+    Enjoy your comforting stew!
+    Perfect for a cold night.
+Recipe Name: Caesar Salad
+    Servings: 2
+    Ingredients: Romaine lettuce, Caesar dressing, croutons, Parmesan cheese, lemon juice, black pepper
+    Tags: Salad, easy, classic
+    Short Description: Classic Caesar salad with a tangy dressing.
+    Detailed Description:
+
+    Chop Romaine lettuce and place in a bowl.
+    Add Caesar dressing and toss to coat.
+    Sprinkle with croutons and Parmesan cheese.
+    Squeeze lemon juice over salad.
+    Season with black pepper.
+    Serve immediately.
+    Enjoy your tangy salad!
+    Perfect for a light meal.
+Messages
+    To Sean: The Lasagna turned out great. Thanks for the recipe!
+    To Bryan: The Baked Salmon was a hit at dinner. You should try it.
+    To Yusuf: The Beef Stew is perfect for a hearty meal. Give it a go!
+Comments
+    On Lasagna: This lasagna is so rich and delicious. Loved it!
+    On French Toast: Sweet and fluffy. Perfect for a lazy morning!

@@ -1,0 +1,82 @@
+Recipe Name: Fish Tacos
+    Servings: 4
+    Ingredients: White fish fillets, taco seasoning, taco shells, cabbage, lime, cilantro, sour cream
+    Tags: Mexican, seafood, quick
+    Short Description: Light and flavorful fish tacos.
+    Detailed Description:
+
+    Season fish fillets with taco seasoning.
+    Grill or fry the fish until cooked through.
+    Warm taco shells.
+    Fill taco shells with fish, cabbage, and cilantro.
+    Squeeze lime juice over tacos.
+    Add a dollop of sour cream.
+    Serve immediately.
+    Enjoy your seafood tacos!
+Recipe Name: Pancakes
+    Servings: 4
+    Ingredients: Flour, milk, eggs, baking powder, sugar, salt, butter, maple syrup
+    Tags: Breakfast, easy, quick
+    Short Description: Fluffy homemade pancakes.
+    Detailed Description:
+
+    In a bowl, mix flour, baking powder, sugar, and salt.
+    Beat in milk and eggs.
+    Melt butter in a skillet.
+    Pour batter onto skillet to form pancakes.
+    Cook until bubbles form, then flip and cook until golden.
+    Serve with butter and maple syrup.
+    Enjoy your fluffy pancakes!
+    Perfect for breakfast.
+Recipe Name: Shrimp Scampi
+    Servings: 4
+    Ingredients: Shrimp, garlic, butter, lemon juice, parsley, spaghetti, olive oil
+    Tags: Seafood, pasta, quick
+    Short Description: Quick and easy shrimp scampi pasta.
+    Detailed Description:
+
+    Cook spaghetti according to package instructions.
+    In a pan, melt butter and sauté garlic.
+    Add shrimp and cook until pink.
+    Stir in lemon juice and parsley.
+    Toss shrimp with spaghetti.
+    Drizzle with olive oil.
+    Serve immediately.
+    Enjoy your seafood pasta!
+Recipe Name: Chocolate Cake
+    Servings: 8
+    Ingredients: Flour, sugar, cocoa powder, baking powder, eggs, milk, butter, vanilla extract
+    Tags: Dessert, baking, cake
+    Short Description: Rich and moist chocolate cake.
+    Detailed Description:
+
+    Preheat oven to 350°F (175°C).
+    In a bowl, mix flour, sugar, cocoa powder, and baking powder.
+    Beat in eggs, milk, melted butter, and vanilla extract.
+    Pour batter into a greased cake pan.
+    Bake for 30-35 minutes.
+    Let cool before serving.
+    Enjoy your chocolate cake!
+    Perfect for dessert.
+Recipe Name: Chicken Curry
+    Servings: 4
+    Ingredients: Chicken breast, curry powder, coconut milk, onion, garlic, ginger, tomatoes, cilantro
+    Tags: Indian, spicy, dinner
+    Short Description: Spicy and flavorful chicken curry.
+    Detailed Description:
+
+    Sauté onion, garlic, and ginger in a pot.
+    Add chicken and curry powder, cook until browned.
+    Pour in coconut milk and tomatoes.
+    Simmer until chicken is cooked through.
+    Garnish with cilantro.
+    Serve with rice.
+    Enjoy your spicy curry!
+    Perfect for dinner.
+Messages
+    To Bryan: The Shrimp Scampi is perfect for a quick dinner. Highly recommend it!
+    To Frederick: Have you tried the Chocolate Cake recipe? It's super rich and delicious.
+    To Samuel: The Chicken Curry was amazing. You should give it a try!
+Comments
+    On Fish Tacos: These were light and flavorful. A great recipe!
+    On Pancakes: Fluffy and delicious. Perfect breakfast!
