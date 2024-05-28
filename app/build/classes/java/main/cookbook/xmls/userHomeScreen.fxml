@@ -85,7 +85,7 @@
             <Cursor fx:constant="DISAPPEAR" />
          </cursor>
          <font>
-            <Font name="System Bold Italic" size="12.0" />
+            <Font name="System Italic" size="12.0" />
          </font></TextArea>
       <Button fx:id="manageMembersButton" layoutX="1063.0" layoutY="701.0" mnemonicParsing="false" onAction="#changeToMemberManagerScreen" prefHeight="65.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(#00BFFF, #0000FF); -fx-background-radius: 30; -fx-background-insets: 0; -fx-text-fill: white;" text="manage members" visible="false" />
       <Label layoutX="619.0" layoutY="173.0" text="detailed description">
