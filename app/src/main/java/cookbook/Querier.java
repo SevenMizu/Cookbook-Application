@@ -94,7 +94,6 @@ public class Querier {
                 .getConnection("jdbc:mysql://localhost/StarWars?user=tobias&password=abcd1234")) {
             Querier querier = new Querier(conn);
             String result = querier.checkForUser("exampleUser");
-            System.out.println("Result: " + result);
             querier.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -216,7 +215,6 @@ public class Querier {
             queryBuilder.append(")");
 
             String query = queryBuilder.toString();
-            System.out.println(query);
 
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 // Set values for each column
@@ -230,7 +228,6 @@ public class Querier {
             e.printStackTrace();
         } finally {
             // Close the connection after adding the row
-            System.out.println("handle closing connection");
         }
         return false; // Failed to add row
     }
@@ -252,7 +249,6 @@ public class Querier {
             queryBuilder.append(table).append(" SET ").append(setString).append(" WHERE ").append(rowSelector);
 
             String query = queryBuilder.toString();
-            System.out.println(query);
 
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 int affectedRows = stmt.executeUpdate();
@@ -416,7 +412,6 @@ public class Querier {
                 idsStringBuilder.append(", ");
             }
         }
-        System.out.println(idsStringBuilder.toString());
         return idsStringBuilder.toString();
     }
 
@@ -462,8 +457,7 @@ public class Querier {
                 String ingredients = (rs.getString("ingredients") != null) ? rs.getString("ingredients") : "";
                 String comments = (rs.getString("comments") != null) ? rs.getString("comments") : "";
 
-                System.out.println(name);
-                System.out.println(comments);
+
 
                 // Create a Recipe instance and add to the recipes list
                 Recipe recipe = new Recipe(id, name, shortDescription, detailedDescription, servings, userId,

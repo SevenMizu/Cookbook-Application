@@ -18,7 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ListCell;
@@ -36,9 +38,12 @@ public class MyRecipesController {
     private AnchorPane createAnchor, modifyAnchor, rootAnchor;
 
     @FXML
-    private TextField createDetailedField, createIngredientsField, createShortDescription, createTagsField,
+    private TextField createIngredientsField, createShortDescription, createTagsField,
             modifyRecipeName, modifyDetailedDescription, modifyIngredientsField, modifyShortDescription,
             modifyTagsField, modifyNumberOfServings, numberOfServingsField, recipeNameField;
+
+    @FXML
+    private TextArea createDetailedField;
 
     @FXML
     private ListView<String> recipeListView;
@@ -191,9 +196,9 @@ public class MyRecipesController {
      * @return true if all fields are valid, false otherwise.
      */
     private boolean validateFields() {
-        TextField[] fieldsToValidate = { recipeNameField, createShortDescription, createDetailedField,
+        TextInputControl[] fieldsToValidate = { recipeNameField, createShortDescription, createDetailedField,
                 numberOfServingsField, createIngredientsField, createTagsField };
-        for (TextField field : fieldsToValidate) {
+        for (TextInputControl field : fieldsToValidate) {
             if (field.getText().trim().isEmpty()) {
                 AlertUtils.createAlert(AlertType.WARNING, "Validation Error", "", "Please fill in all the fields.")
                         .showAndWait();
