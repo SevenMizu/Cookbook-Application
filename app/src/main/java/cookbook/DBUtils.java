@@ -327,7 +327,9 @@ public class DBUtils {
             UserScreenController userScreenController = loader.getController();
 
             if (user instanceof Admin) { // Check if the user is an Admin instance
-                userScreenController.setActiveUserLabel(user.getUsername().toUpperCase());
+                String shieldSymbol = " \u2694"; //  swords symbol
+
+                userScreenController.setActiveUserLabel(user.getUsername().toUpperCase() + shieldSymbol );
                 userScreenController.showManageMembersButton(); // Set label text with
                                                                                            // username in uppercase
             } else {
