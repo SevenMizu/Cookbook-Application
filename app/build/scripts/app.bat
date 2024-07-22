@@ -34,7 +34,7 @@ set APP_HOME=%DIRNAME%..
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and APP_OPTS to pass JVM options to this script.
-set DEFAULT_JVM_OPTS="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls" "--add-exports=javafx.graphics/com.sun.javafx.stage=org.controlsfx.controls" "--add-exports=javafx.controls/com.sun.javafx.scene.control=org.controlsfx.controls"
+set DEFAULT_JVM_OPTS="--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED" "--add-exports=javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED" "--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED"
 
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
